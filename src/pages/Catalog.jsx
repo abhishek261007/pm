@@ -338,9 +338,10 @@ const styles = `
     letter-spacing: 1.5px;
     text-transform: uppercase;
     border-radius: 10px;
-    transition: opacity 0.2s ease;
+    transition: transform 0.1s ease, opacity 0.2s ease;
   }
   .btn-add:hover { opacity: 0.85; }
+  .btn-add:active { transform: scale(0.96); opacity: 0.75; }
 
   /* ── STATES ── */
   .center-box {
@@ -617,7 +618,7 @@ export default function CatalogDetails() {
 
   /* ── Add to Cart (Stable Callback) ── */
   const handleAddToCart = useCallback((item) => {
-    navigator.vibrate?.([10, 20, 15]);
+    navigator.vibrate?.([20, 30, 20]);
     addToCart({
       _id: item._id,
       title: item.catalogName || 'Untitled',

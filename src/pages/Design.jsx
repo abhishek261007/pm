@@ -118,6 +118,7 @@ const styles = `
     max-width: 600px;
     margin: 0 auto;
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
   }
@@ -125,6 +126,7 @@ const styles = `
   /* ── SWIPE AREA ── */
   .swipe-area {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     touch-action: none;
@@ -237,9 +239,10 @@ const styles = `
     letter-spacing: 1.5px;
     text-transform: uppercase;
     border-radius: 14px;
-    transition: opacity 0.2s ease;
+    transition: transform 0.1s ease, opacity 0.2s ease;
   }
   .btn-cart:hover { opacity: 0.85; }
+  .btn-cart:active { transform: scale(0.96); opacity: 0.75; }
 
   /* ── STATES ── */
   .centered-state {
@@ -581,7 +584,7 @@ export default function Design() {
   }, [closeModal]);
 
   const handleAddToCart = (e) => {
-    navigator.vibrate?.([10, 20, 15]);
+    navigator.vibrate?.([20, 30, 20]);
     addFlyItem(e.currentTarget);
     addToCart({
       ...currentDesign,
