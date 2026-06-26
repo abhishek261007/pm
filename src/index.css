@@ -1,0 +1,29 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { background: #8B1A4A; }
+
+body {
+  margin: 0;
+  color: #18181A;
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+}
+
+#safari-top-bar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 89%;
+  height: 11px;
+  z-index: 10000;
+  pointer-events: none;
+  background: #8B1A4A;
+  mask-image: linear-gradient(to right, transparent, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, transparent);
+}
+
+
+img { display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
