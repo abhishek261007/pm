@@ -617,6 +617,7 @@ export default function CatalogDetails() {
 
   /* ── Add to Cart (Stable Callback) ── */
   const handleAddToCart = useCallback((item) => {
+    navigator.vibrate?.([10, 20, 15]);
     addToCart({
       _id: item._id,
       title: item.catalogName || 'Untitled',

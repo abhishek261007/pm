@@ -581,6 +581,7 @@ export default function Design() {
   }, [closeModal]);
 
   const handleAddToCart = (e) => {
+    navigator.vibrate?.([10, 20, 15]);
     addFlyItem(e.currentTarget);
     addToCart({
       ...currentDesign,
