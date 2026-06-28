@@ -6,10 +6,11 @@ import TabBar from '../components/TabBar';
 
 const API_BASE = 'https://apis.27012610.xyz';
 
-function buildHeroUrl(heroImageUrl) {
+function buildHeroUrl(heroImageUrl, updatedAt) {
   if (!heroImageUrl) return null;
-  if (heroImageUrl.startsWith('http')) return heroImageUrl;
-  return `${API_BASE}${heroImageUrl}`;
+  const cacheBuster = updatedAt ? `v=${encodeURIComponent(updatedAt)}` : `v=${Date.now()}`;
+  if (heroImageUrl.startsWith('http')) return `${heroImageUrl}${heroImageUrl.includes('?') ? '&' : '?'}${cacheBuster}`;
+  return `${API_BASE}${heroImageUrl}?${cacheBuster}`;
 }
 
 const styles = `
@@ -381,14 +382,14 @@ export default function Listing() {
           ) : (
             <div className="catalog-grid">
               {catalogs.map((catalog) => {
-                const heroUri = buildHeroUrl(catalog.heroImageUrl);
+                const heroUri = buildHeroUrl(catalog.heroImageUrl, catalog.updatedAt);
                 
                 return (
                   <Link key={catalog._id} to={`/catalog/${catalog._id}`} state={{ catalogName: catalog.name }} className="card-link">
                     <div className="card">
                       <div className="card-hero">
                         {heroUri ? (
-                          <img src={heroUri} alt={catalog.name} loading="lazy" />
+                          <img src={heroUri} alt={catalog.name} loading="lazy" onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/F7F6F3/C8C8C4?text=No+Image'; }} />
                         ) : (
                           <span className="hero-placeholder">◇</span>
                         )}
