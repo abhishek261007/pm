@@ -4,3 +4,5 @@ dist/
 *.local
 src/assets/videos/
 public/videos/compressed/
+# PDFs are too large for git - uploaded separately to the server
+public/reels/*.pdf

@@ -4,7 +4,7 @@ import TabBar from '../components/TabBar';
 
 const BASE = '/reels';
 
-const HERO_REEL = 'PM ORNA DEC REEL 1.mp4';
+const HERO_REEL = 'hero.mp4';
 
 const FEATURED = [
   { file: 'PM ORNA DEC REEL 2.mp4', caption: 'Evening Elegance' },
@@ -174,7 +174,7 @@ const styles = `
 
   /* ── SECTION COMMON ── */
   .section {
-    padding: 48px 20px 32px;
+    padding: 44px 20px 36px;
     max-width: 600px;
     margin: 0 auto;
   }
@@ -209,10 +209,10 @@ const styles = `
   .featured-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 14px;
     margin-top: 20px;
   }
-  .featured-item:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+  .featured-item:first-child { grid-column: 1 / -1; aspect-ratio: 9 / 16; }
   .featured-item:not(:first-child) { aspect-ratio: 9 / 16; }
   .featured-item {
     position: relative;
@@ -273,7 +273,7 @@ const styles = `
   /* ── FULL REEL GALLERY ── */
   .gallery-scroll {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -284,7 +284,7 @@ const styles = `
   .gallery-scroll::-webkit-scrollbar { display: none; }
 
   .gallery-item {
-    flex: 0 0 160px;
+    flex: 0 0 180px;
     scroll-snap-align: start;
     aspect-ratio: 9 / 16;
     border-radius: 14px;
@@ -336,8 +336,8 @@ const styles = `
   /* ── CATALOGUES ── */
   .catalogue-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 14px;
     margin-top: 16px;
   }
   .catalogue-card {
@@ -361,6 +361,7 @@ const styles = `
     aspect-ratio: 3 / 4;
     background: linear-gradient(135deg, #8B1A4A, #1B3A5C);
     overflow: hidden;
+    border-radius: 14px 14px 0 0;
   }
   .catalogue-thumb-img {
     position: absolute;
@@ -564,7 +565,7 @@ function PdfCard({ id, file, label }) {
   const weight = assignWeight(id);
 
   return (
-    <a href={pdfUrl(file)} target="_blank" rel="noopener noreferrer" className="catalogue-card">
+    <a href={pdfCoverUrl(file)} target="_blank" rel="noopener noreferrer" className="catalogue-card">
       <div className="catalogue-thumb">
         <img className="catalogue-thumb-img" src={pdfCoverUrl(file)} alt={label} loading="lazy" />
         <div className="catalogue-thumb-shade" />
