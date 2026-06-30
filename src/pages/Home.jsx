@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TabBar from '../components/TabBar';
 
+const REELS_BASE = 'https://apis.27012610.xyz/uploads';
+
 const REELS = [
   'PM ORNA DEC REEL 1.mp4',
   'PM ORNA DEC REEL 2.mp4',
@@ -243,7 +245,7 @@ function ReelCard({ src }) {
     >
       <video
         ref={videoRef}
-        src={`/reels/videos/${encodeURIComponent(src)}`}
+        src={`${REELS_BASE}/reels/${encodeURIComponent(src)}`}
         muted
         playsInline
         loop
@@ -260,7 +262,7 @@ function PdfCard({ src }) {
   const label = src.replace(/\.pdf$/i, '').replace(/^PM\s*/i, '').replace(/^pm\s*/i, '');
   return (
     <a
-      href={`/reels/pdfs/${encodeURIComponent(src)}`}
+      href={`${REELS_BASE}/reels/${encodeURIComponent(src)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="pdf-card"
