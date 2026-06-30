@@ -4,3 +4,4 @@ dist/
 *.local
 src/assets/videos/
 public/videos/compressed/
+public/reels/
