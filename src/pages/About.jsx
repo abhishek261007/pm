@@ -2,14 +2,12 @@ import { Link } from 'react-router-dom';
 import TabBar from '../components/TabBar';
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .about-root {
     min-height: 100vh;
     background: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
     -webkit-font-smoothing: antialiased;
@@ -33,7 +31,7 @@ const styles = `
     overflow: hidden;
   }
   .header-eyebrow {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 3px;
@@ -41,9 +39,9 @@ const styles = `
     margin-bottom: 2px;
   }
   .header-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 200;
     color: #FFFFFF;
     letter-spacing: -0.5px;
     line-height: 30px;
@@ -64,7 +62,7 @@ const styles = `
   }
   .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
   .header-cart-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -88,9 +86,9 @@ const styles = `
     margin-bottom: 16px;
   }
   .card-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #2C1810;
     margin-bottom: 16px;
   }
@@ -111,7 +109,7 @@ const styles = `
   .info-icon { font-size: 18px; width: 28px; flex-shrink: 0; text-align: center; }
   .info-content { flex: 1; }
   .info-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 1.5px;

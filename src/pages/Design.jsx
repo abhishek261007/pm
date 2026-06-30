@@ -5,14 +5,12 @@ import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .design-root {
     min-height: 100dvh;
     background: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
     -webkit-font-smoothing: antialiased;
@@ -48,7 +46,7 @@ const styles = `
     flex-shrink: 0;
   }
   .back-glyph {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-size: 20px;
     color: #FFFFFF;
@@ -59,7 +57,7 @@ const styles = `
     overflow: hidden;
   }
   .header-eyebrow {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 3px;
@@ -67,9 +65,9 @@ const styles = `
     margin-bottom: 2px;
   }
   .header-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 200;
     color: #FFFFFF;
     letter-spacing: -0.5px;
     line-height: 30px;
@@ -81,7 +79,7 @@ const styles = `
     margin-top: 4px;
   }
   .counter-text {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 500;
     color: rgba(255,255,255,0.7);
@@ -104,7 +102,7 @@ const styles = `
   }
   .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
   .header-cart-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -208,7 +206,7 @@ const styles = `
     padding: 10px;
   }
   .spec-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 8px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -217,9 +215,9 @@ const styles = `
     margin-bottom: 4px;
   }
   .spec-value {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #2C1810;
     line-height: 1;
   }
@@ -233,7 +231,7 @@ const styles = `
     border: none; cursor: pointer;
     background: #2C1810;
     color: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -264,8 +262,8 @@ const styles = `
     40%           { opacity: 1;   transform: scale(1); }
   }
   .error-text {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 2rem; font-weight: 300; font-style: italic;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2rem; font-weight: 200; font-style: italic;
     color: #C8C8C4;
   }
 
@@ -293,7 +291,7 @@ const styles = `
     position: fixed; bottom: 2rem; right: 2rem;
     padding: 0.75rem 1.25rem;
     background: #2C1810; color: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px; letter-spacing: 1.5px;
     text-transform: uppercase;
     z-index: 1000;

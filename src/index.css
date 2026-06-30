@@ -4,6 +4,7 @@ html { background: #8B1A4A; }
 
 body {
   margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #18181A;
   -webkit-font-smoothing: antialiased;
   touch-action: manipulation;

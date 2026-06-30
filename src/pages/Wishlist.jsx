@@ -3,14 +3,12 @@ import useWishlistStore from '../store/wishlistStore';
 import TabBar from '../components/TabBar';
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .wishlist-root {
     min-height: 100vh;
     background: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
     -webkit-font-smoothing: antialiased;
@@ -43,7 +41,7 @@ const styles = `
     flex-shrink: 0;
   }
   .back-glyph {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-size: 20px;
     color: #FFFFFF;
@@ -54,7 +52,7 @@ const styles = `
     overflow: hidden;
   }
   .header-eyebrow {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 3px;
@@ -62,9 +60,9 @@ const styles = `
     margin-bottom: 2px;
   }
   .header-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 28px;
-    font-weight: 600;
+    font-weight: 200;
     color: #FFFFFF;
     letter-spacing: -0.5px;
     line-height: 30px;
@@ -85,7 +83,7 @@ const styles = `
   }
   .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
   .header-cart-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -106,7 +104,7 @@ const styles = `
     margin-bottom: 16px;
   }
   .page-header-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 2px;
@@ -118,7 +116,7 @@ const styles = `
     border: 1.5px solid #E8E0D8;
     padding: 8px 14px;
     border-radius: 12px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -165,8 +163,8 @@ const styles = `
     object-fit: cover; display: block;
   }
   .image-placeholder {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 2rem; color: #C8C8C4;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2rem; font-weight: 200; color: #C8C8C4;
   }
   .card-body {
     padding: 12px;
@@ -176,9 +174,9 @@ const styles = `
     flex: 1;
   }
   .card-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 200;
     line-height: 1.2;
     color: #2C1810;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -194,7 +192,7 @@ const styles = `
     gap: 2px;
   }
   .chip-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 8px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -202,7 +200,7 @@ const styles = `
     color: #8A7A6B;
   }
   .chip-value {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: #2C1810;
@@ -218,7 +216,7 @@ const styles = `
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -237,13 +235,13 @@ const styles = `
     gap: 16px;
   }
   .empty-icon {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 3rem; color: #C8C8C4;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 3rem; font-weight: 200; color: #C8C8C4;
   }
   .empty-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #2C1810;
   }
   .empty-sub {
@@ -256,7 +254,7 @@ const styles = `
     background: #2C1810; color: #F7F6F3;
     text-decoration: none;
     border-radius: 14px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1.5px;

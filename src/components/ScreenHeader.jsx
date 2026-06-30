@@ -8,10 +8,10 @@ const styles = {
   },
   title: {
     fontSize: 24,
-    fontWeight: 300,
+    fontWeight: 200,
     color: '#1A1A1A',
     marginBottom: 4,
-    fontFamily: 'Georgia, serif',
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   },
   subtitle: {
     fontSize: 14,

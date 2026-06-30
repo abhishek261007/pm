@@ -14,14 +14,12 @@ function buildHeroUrl(heroImageUrl, updatedAt) {
 }
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .home-root {
     min-height: 100vh;
     background: #F7F6F3;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
     -webkit-font-smoothing: antialiased;
@@ -41,15 +39,15 @@ const styles = `
   }
   .header-left { flex-shrink: 1; }
   .header-brand {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #FFFFFF;
     letter-spacing: -0.02em;
     line-height: 1.1;
   }
   .header-sub {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.6rem;
     font-weight: 400;
     letter-spacing: 0.22em;
@@ -73,7 +71,7 @@ const styles = `
   }
   .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
   .header-cart-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1px;
@@ -94,7 +92,7 @@ const styles = `
     margin-bottom: 14px;
   }
   .count-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 2px;
@@ -106,7 +104,7 @@ const styles = `
     padding: 3px 10px;
   }
   .count-num {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
     color: #8B1A4A;
@@ -151,17 +149,18 @@ const styles = `
     display: block;
   }
   .hero-placeholder {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 2rem;
+    font-weight: 200;
     color: #C8C8C4;
   }
   .card-body {
     padding: 14px 16px;
   }
   .card-name {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 200;
     color: #2C1810;
     line-height: 1.2;
   }
@@ -190,27 +189,28 @@ const styles = `
     50% { opacity: 1; transform: scale(1.1); }
   }
   .loading-text {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #C8C8C4;
   }
   .empty-glyph {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 30px;
+    font-weight: 200;
     color: #8B1A4A;
     margin-bottom: 16px;
   }
   .empty-title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 200;
     color: #2C1810;
     margin-bottom: 8px;
   }
   .empty-subtitle {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 300;
     letter-spacing: 2px;
@@ -227,7 +227,7 @@ const styles = `
     color: #FFFFFF;
     border: none;
     cursor: pointer;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 2px;
@@ -246,14 +246,14 @@ const styles = `
     justify-content: space-between;
   }
   .footer-name {
-    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.95rem;
-    font-weight: 400;
+    font-weight: 200;
     letter-spacing: 0.06em;
     color: #2C1810;
   }
   .footer-addr {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.65rem;
     font-weight: 300;
     letter-spacing: 0.06em;

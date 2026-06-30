@@ -73,7 +73,7 @@ const tabStyle = {
   background: 'none',
   cursor: 'pointer',
   position: 'relative',
-  fontFamily: 'Outfit, sans-serif',
+  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   fontSize: 11,
   letterSpacing: '0.5px',
   textTransform: 'uppercase' ,

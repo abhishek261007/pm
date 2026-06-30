@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import TabBar from '../components/TabBar';
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .home-root {
@@ -33,7 +31,7 @@ const styles = `
 
   .home-link {
     margin-top: 8px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 400;
     color: #8A7A6B;
