@@ -47,6 +47,34 @@ export default defineConfig({
                 maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days
               }
             }
+          },
+          {
+            urlPattern: /\/reels\/.+\.webp$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'pm-reels-webp',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 60 // 60 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /\/reels\/.+\.mp4$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'pm-reels-video',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 60 // 60 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
           }
         ]
       },
