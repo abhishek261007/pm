@@ -26,26 +26,26 @@ export default function Home() {
             <div className="section-rule" />
           </div>
           <div className="featured-grid">
-            {FEATURED.map(({ file, caption }) => (
-              <FeaturedReel key={file} src={file} caption={caption} />
+            {FEATURED.map(({ file }) => (
+              <FeaturedReel key={file} src={file} />
             ))}
           </div>
         </section>
 
         {/* ── FULL REEL GALLERY ── */}
-        <section className="section" style={{ paddingBottom: 0 }}>
+        <section className="section">
           <div className="section-head">
             <HallmarkBadge label="Watch" />
             <h2 className="section-heading">
               All <em>Reels</em>
             </h2>
           </div>
+          <div className="gallery-scroll">
+            {GALLERY.map((src) => (
+              <GalleryReel key={src} src={src} />
+            ))}
+          </div>
         </section>
-        <div className="gallery-scroll">
-          {GALLERY.map((src) => (
-            <GalleryReel key={src} src={src} />
-          ))}
-        </div>
 
         {/* ── CATALOGUES ── */}
         <section className="section">

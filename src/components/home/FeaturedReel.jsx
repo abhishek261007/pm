@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useInView } from '../../hooks/useInView';
 import { videoUrl, reelPosterUrl } from '../../utils/media';
 
-export default function FeaturedReel({ src, caption }) {
+export default function FeaturedReel({ src }) {
   const [ref, inView] = useInView(0.2);
   const [ready, setReady] = useState(false);
   const videoRef = useRef(null);
@@ -11,15 +11,9 @@ export default function FeaturedReel({ src, caption }) {
     if (inView) videoRef.current?.play().catch(() => {});
   }, [inView]);
 
-  function toggle() {
-    const v = videoRef.current;
-    if (!v) return;
-    v.paused ? v.play() : v.pause();
-  }
-
   return (
-    <div ref={ref} className="featured-item" onClick={toggle}>
-      <img className="featured-poster" src={reelPosterUrl(src)} alt={caption} loading="lazy" />
+    <div ref={ref} className="featured-item">
+      <img className="featured-poster" src={reelPosterUrl(src)} alt="" loading="lazy" />
       {inView && (
         <video
           ref={videoRef}
@@ -33,9 +27,6 @@ export default function FeaturedReel({ src, caption }) {
         />
       )}
       <span className="featured-frame" aria-hidden="true" />
-      <div className="featured-caption">
-        <p className="featured-caption-text">{caption}</p>
-      </div>
     </div>
   );
 }

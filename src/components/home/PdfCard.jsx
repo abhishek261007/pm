@@ -1,5 +1,4 @@
 import { pdfCoverUrl } from '../../utils/media';
-import HallmarkBadge from './HallmarkBadge';
 
 export default function PdfCard({ file, label, category, weight }) {
   return (
@@ -11,9 +10,6 @@ export default function PdfCard({ file, label, category, weight }) {
     >
       <div className="catalogue-thumb">
         <img className="catalogue-thumb-img" src={pdfCoverUrl(file)} alt={label} loading="lazy" />
-        <span className="catalogue-thumb-shade" aria-hidden="true" />
-        <HallmarkBadge label={category} size="xs" />
-        <span className="catalogue-thumb-id">{label}</span>
       </div>
       <div className="catalogue-body">
         <span className="catalogue-title">{label}</span>

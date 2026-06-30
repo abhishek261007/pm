@@ -4,28 +4,17 @@ import { videoUrl, reelPosterUrl } from '../../utils/media';
 
 export default function GalleryReel({ src }) {
   const [ref, inView] = useInView(0.3);
-  const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
   const videoRef = useRef(null);
 
-  function toggle() {
-    if (!playing) {
-      setPlaying(true);
-      return;
-    }
-    const v = videoRef.current;
-    if (!v) return;
-    v.paused ? v.play() : v.pause();
-  }
-
   useEffect(() => {
-    if (playing) videoRef.current?.play().catch(() => {});
-  }, [playing]);
+    if (inView) videoRef.current?.play().catch(() => {});
+  }, [inView]);
 
   return (
-    <div ref={ref} className={`gallery-item${playing ? ' is-playing' : ''}`} onClick={toggle}>
+    <div ref={ref} className="gallery-item">
       <img className="gallery-poster" src={reelPosterUrl(src)} alt="" loading="lazy" />
-      {inView && playing && (
+      {inView && (
         <video
           ref={videoRef}
           className={ready ? 'is-ready' : ''}
@@ -37,9 +26,6 @@ export default function GalleryReel({ src }) {
           onCanPlay={() => setReady(true)}
         />
       )}
-      <div className="gallery-play" aria-hidden="true">
-        <span className="gallery-play-dot">▶</span>
-      </div>
     </div>
   );
 }
