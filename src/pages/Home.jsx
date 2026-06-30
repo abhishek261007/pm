@@ -2,14 +2,15 @@ import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import TabBar from '../components/TabBar';
 
-const REELS_BASE = 'https://apis.27012610.xyz/uploads';
-
-const REELS = [
-  'PM ORNA DEC REEL 1.mp4',
+const BASE = 'https://apis.27012610.xyz/uploads';
+const HERO_REEL = 'PM ORNA DEC REEL 1.mp4';
+const FEATURED = [
   'PM ORNA DEC REEL 2.mp4',
   'PM ORNA FEB REEL 1.mp4',
   'PM ORNA FEB REEL 2.mp4',
   'PM ORNA FEB REEL 3.mp4',
+];
+const GALLERY = [
   'PM ORNA FEB REEL 4.mp4',
   'PM ORNA FEB REEL 5.mp4',
   'PM ORNA FEB REEL 6.mp4',
@@ -19,256 +20,589 @@ const REELS = [
 
 const PDFS = Array.from({ length: 18 }, (_, i) => {
   const n = i + 1;
-  return n === 1 ? 'PM design1.pdf' : `pm design${n}.pdf`;
+  return { id: n, file: n === 1 ? 'PM design1.pdf' : `pm design${n}.pdf`, label: `Design ${n}` };
 });
 
+const CATEGORIES = ['Antique', 'Traditional', 'Contemporary', 'Festive', 'Bridal', 'Daily Wear'];
+function assignCategory(n) { return CATEGORIES[n % CATEGORIES.length]; }
+function assignWeight(n) { const w = [25, 40, 35, 50, 30, 45, 55, 28, 38, 42, 48, 32, 52, 36, 44, 60, 22, 58]; return w[n % w.length]; }
+
 const styles = `
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap');
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .home-root {
-    min-height: 100dvh;
-    background: #F7F6F3;
-    padding: 24px 0 80px;
+    background: #F5F0EB;
+    padding-bottom: 80px;
   }
 
-  .home-hero {
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(15,38,64,0.15) 0%,
+      rgba(139,26,74,0.4) 40%,
+      rgba(27,58,92,0.7) 70%,
+      rgba(15,38,64,0.95) 100%
+    );
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 24px 24px 32px;
-    gap: 16px;
+    padding: 0 24px;
+    gap: 20px;
+    transform: translateY(-5%);
   }
-
-  .home-logo {
-    max-width: 220px;
+  .hero-logo {
+    max-width: 200px;
     width: 100%;
     height: auto;
     display: block;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
   }
-
-  .home-divider {
-    width: 48px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  .hero-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
   }
-
-  .home-link {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border: 1px solid rgba(212,175,55,0.6);
+    background: rgba(212,175,55,0.1);
+    backdrop-filter: blur(8px);
+    font-family: 'Outfit', sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: #8A7A6B;
-    letter-spacing: 1.5px;
+    letter-spacing: 3px;
     text-transform: uppercase;
+    color: #D4AF37;
     text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .home-link:hover { color: #2C1810; }
-
-  .home-social {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
     margin-top: 8px;
   }
-  .home-social a {
+  .hero-cta:hover {
+    background: rgba(212,175,55,0.2);
+    border-color: #D4AF37;
+    transform: translateY(-1px);
+  }
+  .hero-cta:active { transform: scale(0.97); }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    animation: float 2s ease-in-out infinite;
+  }
+  .hero-scroll-hint span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .hero-scroll-line {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+  }
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(4px); }
+  }
+
+  /* ── SECTION COMMON ── */
+  .section {
+    padding: 48px 20px 32px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8B1A4A;
+    margin-bottom: 6px;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: #2C1810;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .section-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #8A7A6B;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  /* ── FEATURED REELS (editorial gallery) ── */
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .featured-item:first-child {
+    grid-column: 1 / -1;
+  }
+  .featured-item {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0 2px 12px rgba(15,38,64,0.06);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .featured-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15,38,64,0.12);
+  }
+  .featured-item:active { transform: scale(0.97); }
+  .featured-item:first-child { aspect-ratio: 16 / 9; }
+  .featured-item:not(:first-child) { aspect-ratio: 9 / 16; }
+
+  .featured-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: #F5F0EB;
+  }
+  .featured-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #F5F0EB, #E8E0D8);
+  }
+  .featured-poster-inner {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    transition: opacity 0.2s ease;
+    font-size: 28px;
+    color: #C8C8C4;
   }
-  .home-social a:active { opacity: 0.6; }
+  .featured-border {
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+  }
+  .featured-item:hover .featured-border {
+    border-color: rgba(212,175,55,0.5);
+  }
+  .featured-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 14px 14px;
+    background: linear-gradient(0deg, rgba(15,38,64,0.7) 0%, transparent 100%);
+  }
+  .featured-caption-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: #FFFFFF;
+    letter-spacing: 0.3px;
+  }
 
-  /* ── SECTION HEADER ── */
-  .section-header {
-    padding: 28px 20px 12px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-  .section-label {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: #D4AF37;
-    margin-bottom: 4px;
-  }
-  .section-title {
-    font-size: 22px;
-    font-weight: 200;
-    color: #2C1810;
-    letter-spacing: -0.3px;
-  }
-
-  /* ── REELS HORIZONTAL SCROLL ── */
-  .reels-scroll {
+  /* ── FULL REEL GALLERY ── */
+  .gallery-scroll {
     display: flex;
     gap: 10px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding: 0 20px 4px;
+    padding: 16px 20px 20px;
     scrollbar-width: none;
+    max-width: 100vw;
   }
-  .reels-scroll::-webkit-scrollbar { display: none; }
+  .gallery-scroll::-webkit-scrollbar { display: none; }
 
-  .reel-card {
-    flex: 0 0 200px;
+  .gallery-item {
+    flex: 0 0 160px;
     scroll-snap-align: start;
-    border-radius: 16px;
+    aspect-ratio: 9 / 16;
+    border-radius: 14px;
     overflow: hidden;
     background: #FFFFFF;
     box-shadow: 0 2px 8px rgba(15,38,64,0.06);
-    aspect-ratio: 9 / 16;
-    position: relative;
     cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease;
   }
-  .reel-card video {
+  .gallery-item:hover { transform: translateY(-2px); }
+  .gallery-item video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     pointer-events: none;
   }
-  .reel-play-indicator {
+  .gallery-poster {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F5F0EB, #E8E0D8);
+    color: #C8C8C4;
+    font-size: 24px;
+  }
+  .gallery-play {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 32px;
-    height: 32px;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.1);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .gallery-item:hover .gallery-play,
+  .gallery-item.playing .gallery-play { opacity: 0; }
+  .gallery-play-dot {
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(212,175,55,0.9);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #FFFFFF;
-    font-size: 14px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-  }
-  .reel-card:hover .reel-play-indicator,
-  .reel-card.paused .reel-play-indicator {
-    opacity: 1;
+    font-size: 16px;
+    backdrop-filter: blur(4px);
   }
 
-  /* ── PDFS GRID ── */
-  .pdfs-grid {
+  /* ── CATALOGUES ── */
+  .catalogue-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    padding: 0 20px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
   }
-  .pdf-card {
+  .catalogue-card {
     background: #FFFFFF;
     border-radius: 14px;
-    padding: 20px 14px;
+    overflow: hidden;
     box-shadow: 0 2px 8px rgba(15,38,64,0.06);
     text-decoration: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .pdf-card:hover {
+  .catalogue-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(15,38,64,0.1);
+    box-shadow: 0 8px 24px rgba(15,38,64,0.1);
   }
-  .pdf-card:active { transform: scale(0.96); }
-  .pdf-icon {
-    width: 40px;
-    height: 48px;
-    background: #C53030;
-    border-radius: 6px;
+  .catalogue-card:active { transform: scale(0.96); }
+
+  .catalogue-thumb {
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(135deg, #8B1A4A, #1B3A5C);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 16px;
+    position: relative;
+  }
+  .catalogue-thumb-icon {
+    width: 32px;
+    height: 40px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(212,175,55,0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFFFFF;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
+    font-size: 7px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #D4AF37;
   }
-  .pdf-name {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 10px;
+  .catalogue-thumb-id {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.5px;
+  }
+  .catalogue-thumb-category {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #D4AF37;
+    background: rgba(27,58,92,0.7);
+    padding: 2px 8px;
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+  }
+  .catalogue-body {
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .catalogue-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
     font-weight: 500;
     color: #2C1810;
-    line-height: 1.3;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .catalogue-weight {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    color: #8A7A6B;
+    background: #F5F0EB;
+    padding: 2px 8px;
+    border-radius: 8px;
   }
 `;
 
-function ReelCard({ src }) {
+function videoUrl(src) { return `${BASE}/reels/${encodeURIComponent(src)}`; }
+
+/* ── COMPONENTS ── */
+
+function Hero() {
+  return (
+    <section className="hero">
+      <video
+        className="hero-video"
+        src={videoUrl(HERO_REEL)}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+      />
+      <div className="hero-overlay" />
+      <div className="hero-content">
+        <img className="hero-logo" src="/logo.png" alt="PM Jewellers" />
+        <p className="hero-title">Silver &amp; Antique Jewellery</p>
+        <Link to="/listing" className="hero-cta">
+          Explore Collection
+          <span style={{fontSize:16,lineHeight:1}}>→</span>
+        </Link>
+      </div>
+      <div className="hero-scroll-hint">
+        <div className="hero-scroll-line" />
+        <span>Scroll</span>
+      </div>
+    </section>
+  );
+}
+
+/* Reel card with lazy video loading */
+function ReelCard({ src, className, style: cardStyle, posterContent }) {
   const videoRef = useRef(null);
-  const [paused, setPaused] = useState(true);
-  const [inView, setInView] = useState(false);
   const cardRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.5 }
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold: 0.3 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
   useEffect(() => {
+    if (!inView || loaded) return;
+    setLoaded(true);
+  }, [inView, loaded]);
+
+  useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
-    if (inView) {
-      v.play().catch(() => {});
-      setPaused(false);
-    } else {
-      v.pause();
-      setPaused(true);
-    }
-  }, [inView]);
+    if (!v || !loaded) return;
+    v.play().then(() => setPlaying(true)).catch(() => {});
+  }, [loaded]);
 
   function toggle() {
     const v = videoRef.current;
     if (!v) return;
-    if (v.paused) { v.play(); setPaused(false); }
-    else { v.pause(); setPaused(true); }
+    if (v.paused) { v.play(); setPlaying(true); }
+    else { v.pause(); setPlaying(false); }
   }
 
   return (
     <div
       ref={cardRef}
-      className={`reel-card${paused ? ' paused' : ''}`}
+      className={`${className}${playing ? ' playing' : ''}`}
+      style={cardStyle}
       onClick={toggle}
     >
-      <video
-        ref={videoRef}
-        src={`${REELS_BASE}/reels/${encodeURIComponent(src)}`}
-        muted
-        playsInline
-        loop
-        preload="metadata"
-      />
-      <div className="reel-play-indicator">
-        {paused ? '▶' : '❚❚'}
+      {loaded ? (
+        <video
+          ref={videoRef}
+          src={videoUrl(src)}
+          muted
+          playsInline
+          loop
+          preload="auto"
+        />
+      ) : (
+        <div className="gallery-poster">
+          {posterContent || '▶'}
+        </div>
+      )}
+      <div className="gallery-play">
+        <div className="gallery-play-dot">▶</div>
       </div>
     </div>
   );
 }
 
-function PdfCard({ src }) {
-  const label = src.replace(/\.pdf$/i, '').replace(/^PM\s*/i, '').replace(/^pm\s*/i, '');
+/* Featured reel with gradient caption */
+function FeaturedReel({ src, caption, isLarge }) {
+  const videoRef = useRef(null);
+  const cardRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView || loaded) return;
+    setLoaded(true);
+  }, [inView, loaded]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !loaded) return;
+    v.play().catch(() => {});
+  }, [loaded]);
+
+  function toggle() {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) v.play(); else v.pause();
+  }
+
+  return (
+    <div
+      ref={cardRef}
+      className="featured-item"
+      onClick={toggle}
+    >
+      {loaded ? (
+        <video
+          ref={videoRef}
+          src={videoUrl(src)}
+          muted
+          playsInline
+          loop
+          preload="auto"
+          className="featured-media"
+        />
+      ) : (
+        <div className="featured-poster">
+          <div className="featured-poster-inner">✦</div>
+        </div>
+      )}
+      <div className="featured-border" />
+      <div className="featured-caption">
+        <p className="featured-caption-text">{caption}</p>
+      </div>
+    </div>
+  );
+}
+
+function PdfCard({ id, file, label }) {
+  const category = assignCategory(id);
+  const weight = assignWeight(id);
+
   return (
     <a
-      href={`${REELS_BASE}/reels/${encodeURIComponent(src)}`}
+      href={videoUrl(file)}
       target="_blank"
       rel="noopener noreferrer"
-      className="pdf-card"
+      className="catalogue-card"
     >
-      <div className="pdf-icon">PDF</div>
-      <span className="pdf-name">{label}</span>
+      <div className="catalogue-thumb">
+        <span className="catalogue-thumb-category">{category}</span>
+        <div className="catalogue-thumb-icon">PDF</div>
+        <span className="catalogue-thumb-id">{label}</span>
+      </div>
+      <div className="catalogue-body">
+        <span className="catalogue-title">{label}</span>
+        <span className="catalogue-weight">{weight}g</span>
+      </div>
     </a>
   );
 }
@@ -278,53 +612,53 @@ export default function Home() {
     <>
       <style>{styles}</style>
       <div className="home-root">
-        <div className="home-hero">
-          <img className="home-logo" src="/logo.png" alt="PM Jewellers" />
-          <div className="home-divider" />
-          <Link to="/listing" className="home-link">View Catalog →</Link>
-          <div className="home-social">
-            <a href="https://www.instagram.com/2005_pmjewellers/" target="_blank" rel="noopener noreferrer">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E4405F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-              </svg>
-            </a>
-            <a href="https://wa.me/919712779146" target="_blank" rel="noopener noreferrer">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#25D366" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-              </svg>
-            </a>
-            <a href="https://maps.app.goo.gl/ThdbBRQB5zKAmia97" target="_blank" rel="noopener noreferrer">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EA4335" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-            </a>
+        <Hero />
+
+        {/* ── FEATURED REELS ── */}
+        <section className="section">
+          <p className="section-eyebrow">Curated</p>
+          <h2 className="section-heading">Featured Collections</h2>
+          <p className="section-desc">
+            A handpicked selection of our finest silver and antique designs.
+          </p>
+          <div className="featured-grid">
+            {FEATURED.map((src, i) => (
+              <FeaturedReel
+                key={src}
+                src={src}
+                isLarge={i === 0}
+                caption={
+                  ['Evening Elegance', 'Festive Radiance', 'Heritage Craft', 'Modern Grace'][i]
+                }
+              />
+            ))}
           </div>
-        </div>
+        </section>
 
-        {/* ── REELS ── */}
-        <div className="section-header">
-          <p className="section-label">Watch</p>
-          <h2 className="section-title">Reels</h2>
-        </div>
-        <div className="reels-scroll">
-          {REELS.map(src => (
-            <ReelCard key={src} src={src} />
+        {/* ── FULL REEL GALLERY ── */}
+        <section className="section" style={{ paddingTop: 16, paddingBottom: 8 }}>
+          <p className="section-eyebrow">Watch</p>
+          <h2 className="section-heading">All Reels</h2>
+        </section>
+        <div className="gallery-scroll">
+          {GALLERY.map(src => (
+            <ReelCard key={src} src={src} className="gallery-item" />
           ))}
         </div>
 
-        {/* ── PDFs ── */}
-        <div className="section-header">
-          <p className="section-label">Browse</p>
-          <h2 className="section-title">Designs</h2>
-        </div>
-        <div className="pdfs-grid">
-          {PDFS.map(src => (
-            <PdfCard key={src} src={src} />
-          ))}
-        </div>
+        {/* ── CATALOGUES ── */}
+        <section className="section">
+          <p className="section-eyebrow">Browse</p>
+          <h2 className="section-heading">Design Catalogues</h2>
+          <p className="section-desc">
+            Detailed silver jewellery catalogues with weights, categories, and full specs.
+          </p>
+          <div className="catalogue-grid">
+            {PDFS.map(p => (
+              <PdfCard key={p.id} {...p} />
+            ))}
+          </div>
+        </section>
       </div>
       <TabBar />
     </>
