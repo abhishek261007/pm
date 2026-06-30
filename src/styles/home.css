@@ -323,25 +323,3 @@
   object-fit: cover;
   display: block;
 }
-
-.catalogue-body {
-  padding: 10px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.catalogue-title {
-  font-family: var(--body);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--parchment);
-}
-.catalogue-weight {
-  font-family: var(--body);
-  font-size: 9px;
-  font-weight: 400;
-  color: var(--ink);
-  background: var(--silver);
-  padding: 2px 8px;
-  border-radius: 999px;
-}
