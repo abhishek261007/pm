@@ -6,7 +6,6 @@ export const HERO_REEL = 'hero.mp4';
 export const FEATURED = [
   { file: 'PM ORNA DEC REEL 2.mp4', caption: 'Evening Elegance' },
   { file: 'PM ORNA FEB REEL 1.mp4', caption: 'Festive Radiance' },
-  { file: 'PM ORNA FEB REEL 2.mp4', caption: 'Heritage Craft' },
   { file: 'PM ORNA FEB REEL 3.mp4', caption: 'Modern Grace' },
 ];
 
