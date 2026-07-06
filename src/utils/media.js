@@ -1,4 +1,4 @@
-const BASE = '/reels';
+const BASE = '/reels/opt';
 
 export function videoUrl(src) {
   return `${BASE}/${encodeURIComponent(src)}`;
