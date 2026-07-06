@@ -165,7 +165,7 @@ export default function TabBar() {
           transition={{ duration: 0.2 }}
           style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           onClick={(e) => {
-            if (open) { e.stopPropagation(); setOpen(false); }
+            if (open) { e.stopPropagation(); if (closeTimer.current) clearTimeout(closeTimer.current); setOpen(false); }
           }}
         >
           <HamburgerToggle open={open} />
