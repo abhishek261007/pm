@@ -145,6 +145,7 @@ const styles = `
     margin-bottom: 12px;
     flex: 1;
     min-height: 0;
+    max-height: 55vh;
   }
   .design-image {
     width: 100%; height: 100%;
