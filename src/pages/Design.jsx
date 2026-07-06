@@ -496,6 +496,14 @@ export default function Design() {
   const currentDesign = designs.length > 0 ? designs[activeIndex] : design;
   const catalogName = resolveCatalogName(state?.catalogName, currentDesign);
   const hasPrev = activeIndex > 0;
+
+  useEffect(() => {
+    if (currentDesign?.sku) {
+      document.title = `${catalogName} ${currentDesign.sku} — Silver Antique Juda`;
+    } else {
+      document.title = 'Silver Antique Juda — Handcrafted Silver';
+    }
+  }, [currentDesign, catalogName]);
   const hasNext = activeIndex < designs.length - 1;
 
   const goTo = useCallback((idx) => {
@@ -654,6 +662,22 @@ export default function Design() {
 
         {/* CONTENT */}
         {!loading && currentDesign && (
+          <>
+          <script type="application/ld+json" dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org/',
+              '@type': 'Product',
+              name: `${catalogName} — ${currentDesign.sku}`,
+              description: `Handcrafted ${catalogName} silver item (${currentDesign.sku})`,
+              image: currentDesign.imageUrl?.startsWith('http')
+                ? currentDesign.imageUrl
+                : `https://apis.27012610.xyz${currentDesign.imageUrl}`,
+              sku: currentDesign.sku,
+              weight: currentDesign.weight ? { '@type': 'QuantitativeValue', value: currentDesign.weight, unitCode: 'GRM' } : undefined,
+              brand: { '@type': 'Brand', name: 'Silver Antique Juda' },
+              offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', price: '0', priceCurrency: 'INR' },
+            }, null, 2),
+          }} />
           <div className="page-body">
             <div
               className="swipe-area"
@@ -675,7 +699,7 @@ export default function Design() {
                       e.currentTarget.src =
                         'https://placehold.co/1000x1000/F7F6F3/C8C8C4?text=No+Image';
                     }}
-                    alt={currentDesign.title || 'Design'}
+                    alt={`${catalogName} ${currentDesign.sku} — Handcrafted Silver Antique Juda`}
                     onClick={() => openModal(
                       currentDesign.imageUrl?.startsWith('http')
                         ? currentDesign.imageUrl
@@ -725,6 +749,7 @@ export default function Design() {
               </div>
             </div>
           </div>
+          </>
         )}
 
         {/* FLYING ITEMS */}
