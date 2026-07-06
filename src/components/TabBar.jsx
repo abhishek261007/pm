@@ -143,6 +143,7 @@ export default function TabBar() {
           pointerEvents: 'auto',
           border: '1px solid rgba(255,255,255,0.08)',
           overflow: 'hidden',
+          maxWidth: 'calc(100vw - 24px)',
         }}
         onClick={() => !open && setOpen(true)}
       >
@@ -163,7 +164,7 @@ export default function TabBar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            style={{ display: 'flex', alignItems: 'center', gap: 2 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 2, minWidth: 0, flexShrink: 1, overflow: 'hidden' }}
           >
             {tabs.map((tab, i) => {
               const isActive = tab.key === activeTab;

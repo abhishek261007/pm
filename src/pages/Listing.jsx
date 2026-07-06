@@ -123,15 +123,15 @@ const styles = `
     display: block;
   }
   .card {
-    background: #FFFFFF;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: #FFFBF4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
   .card-link:hover .card {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(15,38,64,0.1);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
   }
   .card-hero {
     width: 100%;
@@ -141,6 +141,7 @@ const styles = `
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-radius: 4px;
   }
   .card-hero img {
     width: 100%;
@@ -155,7 +156,8 @@ const styles = `
     color: #C8C8C4;
   }
   .card-body {
-    padding: 14px 16px;
+    padding: 0;
+    margin-top: 24px;
   }
   .card-name {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

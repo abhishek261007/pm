@@ -13,7 +13,7 @@ export default function GlassBall({
   cardScale = 0.4,
   cardRatio = 0.8,
   cardRadius = 12,
-  cardOpacity = 0.78,
+  cardOpacity = 0.92,
   depthFade = true,
   rotateSpeed = 0.06,
   tilt = 12,
@@ -61,6 +61,7 @@ export default function GlassBall({
 
   const list = images && images.length ? images : [''];
   const count = Math.max(1, Math.min(cardCount, 60));
+  const fallbackSrc = srcOf(list[0]);
 
   const cards = useRef([]);
   cards.current = Array.from({ length: count }, (_, i) => {
@@ -172,6 +173,12 @@ export default function GlassBall({
         perspective,
         cursor: enableDrag ? 'grab' : 'default',
         touchAction: enableDrag ? 'none' : 'auto',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none',
+        MozUserSelect: 'none',
+        msUserSelect: 'none',
+        WebkitTapHighlightColor: 'transparent',
         ...gridBg,
         ...style,
       }}
@@ -217,13 +224,15 @@ export default function GlassBall({
                 src={c.src}
                 alt=""
                 draggable={false}
+                onError={(e) => { if (e.currentTarget.src !== fallbackSrc) e.currentTarget.src = fallbackSrc; }}
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
                   display: 'block',
-                  opacity: 0.9,
-                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                  WebkitTouchCallout: 'none',
                 }}
               />
             )}
