@@ -284,16 +284,9 @@ const styles = `
   .wishlist-btn.active { color: #C53030; }
   .wishlist-btn.inactive { color: #C8C8C4; }
 
-  .card-body { padding: 0; margin-top: 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-body { padding: 0; margin-top: 4px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
-  .card-title {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0;
-    font-weight: 00;
-    line-height: 1.2;
-    color: #2C1810;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
+
 
   .card-chips { display: flex; gap: 6px; }
   .chip {
