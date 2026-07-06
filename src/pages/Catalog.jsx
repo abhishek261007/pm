@@ -240,15 +240,15 @@ const styles = `
   .designs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 1px;
   }
 
   /* ── DESIGN CARD ── */
   .design-card {
     background: #FFFBF4;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    padding: 16px;
+    padding: 6px;
     display: flex;
     flex-direction: column;
   }
@@ -288,8 +288,8 @@ const styles = `
 
   .card-title {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 1rem;
-    font-weight: 200;
+    font-size: 0;
+    font-weight: 00;
     line-height: 1.2;
     color: #2C1810;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -464,7 +464,7 @@ const DesignCard = memo(function DesignCard({ item, catalogId, catalogName, onAd
           </button>
         </div>
         <div className="card-body">
-          <h3 className="card-title">{item.catalogName}</h3>
+          
           
           <div className="card-chips">
             <div className="chip">
