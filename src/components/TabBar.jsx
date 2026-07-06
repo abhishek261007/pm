@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 
 function GridIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1" />
       <rect x="14" y="3" width="7" height="7" rx="1" />
       <rect x="3" y="14" width="7" height="7" rx="1" />
@@ -16,7 +16,7 @@ function GridIcon({ active }) {
 
 function HeartIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? '#fff' : 'none'} stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill={active ? '#fff' : 'none'} stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M19.5 12.6L12 21l-7.5-8.4A5 5 0 1 1 12 7.1a5 5 0 1 1 7.5 5.5z" />
     </svg>
   );
@@ -24,7 +24,7 @@ function HeartIcon({ active }) {
 
 function HomeIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
     </svg>
   );
@@ -32,7 +32,7 @@ function HomeIcon({ active }) {
 
 function InfoIcon({ active }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -69,29 +69,29 @@ function HamburgerToggle({ open }) {
   return (
     <motion.div
       style={{
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 4,
+        gap: 5,
       }}
     >
       <motion.span
-        animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+        animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
         transition={spring}
-        style={{ display: 'block', width: 18, height: 2, background: '#fff', borderRadius: 1 }}
+        style={{ display: 'block', width: 20, height: 2.5, background: '#fff', borderRadius: 1 }}
       />
       <motion.span
         animate={open ? { opacity: 0, x: -8 } : { opacity: 1, x: 0 }}
         transition={{ duration: 0.15 }}
-        style={{ display: 'block', width: 18, height: 2, background: '#fff', borderRadius: 1 }}
+        style={{ display: 'block', width: 20, height: 2.5, background: '#fff', borderRadius: 1 }}
       />
       <motion.span
-        animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+        animate={open ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
         transition={spring}
-        style={{ display: 'block', width: 18, height: 2, background: '#fff', borderRadius: 1 }}
+        style={{ display: 'block', width: 20, height: 2.5, background: '#fff', borderRadius: 1 }}
       />
     </motion.div>
   );
@@ -150,7 +150,7 @@ export default function TabBar() {
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           borderRadius: 40,
-          padding: open ? '6px 6px' : '12px',
+          padding: open ? '8px 8px' : '14px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           cursor: 'pointer',
           pointerEvents: 'auto',
@@ -193,16 +193,16 @@ export default function TabBar() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: compact ? 0 : 6,
+                    gap: compact ? 0 : 8,
                     padding: isActive
-                      ? (compact ? '7px 10px' : '7px 14px')
-                      : (compact ? '7px 8px' : '7px 10px'),
+                      ? (compact ? '10px 12px' : '10px 20px')
+                      : (compact ? '10px 10px' : '10px 14px'),
                     border: 'none',
                     borderRadius: 30,
                     background: isActive ? colors.bg : 'transparent',
                     color: '#fff',
                     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: isActive ? 600 : 400,
                     letterSpacing: '0.3px',
                     whiteSpace: 'nowrap',
@@ -220,17 +220,17 @@ export default function TabBar() {
                   {!compact && tab.label}
                   {tab.key === 'listing' && cart.length > 0 && (
                     <span style={{
-                      minWidth: 16,
-                      height: 16,
-                      borderRadius: 8,
+                      minWidth: 18,
+                      height: 18,
+                      borderRadius: 9,
                       background: '#F59E0B',
                       color: '#fff',
-                      fontSize: 9,
+                      fontSize: 10,
                       fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      padding: '0 4px',
+                      padding: '0 5px',
                       lineHeight: 1,
                     }}>
                       {cart.length > 99 ? '99+' : cart.length}
