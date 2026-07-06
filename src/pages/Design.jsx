@@ -134,15 +134,15 @@ const styles = `
 
   /* ── IMAGE ── */
   .image-wrap {
-    background: #FFFFFF;
-    border-radius: 20px;
+    background: #FFFBF4;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
-    margin-bottom: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12px;
     flex: 1;
     min-height: 0;
   }
@@ -187,10 +187,11 @@ const styles = `
 
   /* ── INFO CARD ── */
   .info-card {
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 12px;
-    margin-bottom: 8px;
+    background: #FFFBF4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    margin-bottom: 12px;
     flex-shrink: 0;
   }
 
@@ -236,7 +237,7 @@ const styles = `
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    border-radius: 14px;
+    border-radius: 8px;
     transition: transform 0.1s ease, opacity 0.2s ease;
   }
   .btn-cart:hover { opacity: 0.85; }

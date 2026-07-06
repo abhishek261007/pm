@@ -245,17 +245,18 @@ const styles = `
 
   /* ── DESIGN CARD ── */
   .design-card {
-    background: #FFFFFF;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
+    background: #FFFBF4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    padding: 16px;
     display: flex;
     flex-direction: column;
   }
   .card-link { text-decoration: none; display: flex; flex-direction: column; flex: 1; }
 
   .card-image-wrap {
-    aspect-ratio: 1 / 1.1;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
     position: relative;
     display: flex;
     align-items: center;
@@ -283,7 +284,7 @@ const styles = `
   .wishlist-btn.active { color: #C53030; }
   .wishlist-btn.inactive { color: #C8C8C4; }
 
-  .card-body { padding: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-body { padding: 0; margin-top: 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
   .card-title {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
