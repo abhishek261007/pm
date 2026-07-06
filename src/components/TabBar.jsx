@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 
 function GridIcon({ active }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1" />
       <rect x="14" y="3" width="7" height="7" rx="1" />
       <rect x="3" y="14" width="7" height="7" rx="1" />
@@ -16,7 +16,7 @@ function GridIcon({ active }) {
 
 function HeartIcon({ active }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? '#fff' : 'none'} stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? '#fff' : 'none'} stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M19.5 12.6L12 21l-7.5-8.4A5 5 0 1 1 12 7.1a5 5 0 1 1 7.5 5.5z" />
     </svg>
   );
@@ -24,7 +24,7 @@ function HeartIcon({ active }) {
 
 function HomeIcon({ active }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
     </svg>
   );
@@ -32,7 +32,7 @@ function HomeIcon({ active }) {
 
 function InfoIcon({ active }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <line x1="12" y1="16" x2="12" y2="12" />
       <line x1="12" y1="8" x2="12.01" y2="8" />
@@ -100,6 +100,7 @@ function HamburgerToggle({ open }) {
 export default function TabBar() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
+  const closeTimer = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { cart } = useCart();
@@ -115,9 +116,14 @@ export default function TabBar() {
   const activeTab = tabs.find(t => t.path === currentPath)?.key;
 
   function handleNavigate(path) {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
     navigate(path);
-    setOpen(false);
+    closeTimer.current = setTimeout(() => setOpen(false), 2000);
   }
+
+  useEffect(() => {
+    return () => { if (closeTimer.current) clearTimeout(closeTimer.current); };
+  }, []);
 
   return (
     <div
