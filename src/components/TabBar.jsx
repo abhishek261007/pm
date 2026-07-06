@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
-import { useColors } from '../colors';
 
 function GridIcon({ active }) {
   return (
@@ -100,9 +99,17 @@ function HamburgerToggle({ open }) {
 
 export default function TabBar() {
   const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { cart } = useCart();
+
+  useEffect(() => {
+    function check() { setCompact(window.innerWidth < 420); }
+    check();
+    addEventListener('resize', check);
+    return () => removeEventListener('resize', check);
+  }, []);
 
   const currentPath = location.pathname;
   const activeTab = tabs.find(t => t.path === currentPath)?.key;
@@ -132,7 +139,7 @@ export default function TabBar() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: open ? 4 : 0,
+          gap: open ? (compact ? 1 : 4) : 0,
           background: 'rgba(15, 15, 20, 0.88)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
@@ -180,8 +187,10 @@ export default function TabBar() {
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 6,
-                    padding: isActive ? '7px 14px' : '7px 10px',
+                    gap: compact ? 0 : 6,
+                    padding: isActive
+                      ? (compact ? '7px 10px' : '7px 14px')
+                      : (compact ? '7px 8px' : '7px 10px'),
                     border: 'none',
                     borderRadius: 30,
                     background: isActive ? colors.bg : 'transparent',
@@ -202,7 +211,7 @@ export default function TabBar() {
                   }}
                 >
                   <tab.Icon active={isActive} />
-                  {tab.label}
+                  {!compact && tab.label}
                   {tab.key === 'listing' && cart.length > 0 && (
                     <span style={{
                       minWidth: 16,
