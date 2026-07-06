@@ -112,7 +112,7 @@ const styles = `
 
   /* ── PAGE BODY ── */
   .page-body {
-    padding: 12px;
+    padding: 12px 12px 80px;
     max-width: 600px;
     margin: 0 auto;
     flex: 1;
