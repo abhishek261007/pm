@@ -266,7 +266,7 @@ const styles = `
   }
   .card-image {
     width: 100%; height: 100%;
-    object-fit: cover; display: block;
+    object-fit: contain; display: block;
   }
   .image-placeholder {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
