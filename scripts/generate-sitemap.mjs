@@ -1,5 +1,5 @@
 const API = 'https://apis.27012610.xyz';
-const SITE = 'https://pm.27012610.xyz';
+const SITE = 'https://pmjewellers.com';
 const OUT = 'public/sitemap.xml';
 
 async function main() {
