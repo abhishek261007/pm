@@ -134,18 +134,23 @@ const styles = `
 
   /* ── IMAGE ── */
   .image-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #FFFBF4;
-      overflow: hidden;
+    background: #FFFBF4;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12px;
+    flex: 1;
+    min-height: 0;
+    max-height: 55vh;
   }
   .design-image {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
+    width: auto; height: 100%;
+    object-fit: contain;
+    display: block;
   }
   .wishlist-btn {
     position: absolute; top: 12px; right: 12px;

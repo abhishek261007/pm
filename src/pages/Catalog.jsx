@@ -5,6 +5,8 @@ import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
 
 const API_BASE = 'https://apis.27012610.xyz';
+const PLAY_STORE_URL =
+  'https://play.google.com/store/apps/details?id=com.abhishek261007.pmj';
 
 /* ─── Pure helpers ─── */
 function buildImageUrl(imageUrl) {
@@ -485,7 +487,21 @@ export default function CatalogDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [catalogName, setCatalogName] = useState(state?.catalogName || 'Collection');
-  
+
+  /* ── Android App Links fallback ──
+     If a user lands on this page in a mobile browser, it means the PMJ
+     Android app either isn't installed or didn't intercept the link.
+     Since this route is a deep-link target, send Android visitors to
+     the Play Store instead of rendering the web catalog. */
+  useEffect(() => {
+    if (/Android/i.test(navigator.userAgent)) {
+      const timer = setTimeout(() => {
+        window.location.replace(PLAY_STORE_URL);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const { addToCart } = useCart();
   const wishlistItems = useWishlistStore((s) => s.items);
   const toggleWishlist = useWishlistStore((s) => s.toggle);
