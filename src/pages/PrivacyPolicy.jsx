@@ -17,29 +17,37 @@ export default function PrivacyPolicy() {
 
         <h2>Information We Collect</h2>
         <p>
-          When you submit an inquiry through the PM Jewellers application, we
-          may collect:
+          When you submit an inquiry through the PM Jewellers application, you
+          may optionally provide:
         </p>
 
         <ul>
           <li>Name</li>
           <li>Phone Number</li>
-          <li>Inquiry details and messages</li>
+          <li>Shop Phone Number</li>
+          <li>Email</li>
+          <li>Shop Name</li>
         </ul>
 
         <p>
-          We do not require user account registration or login to use the
+          All information is provided entirely voluntarily and is optional. We
+          do not require user account registration or login to use the
           application.
         </p>
 
         <h2>How We Use Information</h2>
-        <p>The information collected is used solely to:</p>
+        <p>The information collected is used solely to provide better services, including:</p>
 
         <ul>
           <li>Respond to customer inquiries</li>
           <li>Provide information about jewellery products and catalogs</li>
           <li>Improve customer support and service quality</li>
         </ul>
+
+        <p>
+          We do not use your information for any other purpose. It is stored
+          securely and never shared, sold, or rented to third parties.
+        </p>
 
         <h2>Data Storage</h2>
         <p>
