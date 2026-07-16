@@ -8,7 +8,8 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .design-root {
-    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
     background: #F7F6F3;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
@@ -112,8 +113,9 @@ const styles = `
 
   /* ── PAGE BODY ── */
   .page-body {
-    padding: 12px 12px 80px;
+    padding: 12px 12px 16px;
     max-width: 600px;
+    width: 100%;
     margin: 0 auto;
     flex: 1;
     min-height: 0;
@@ -145,7 +147,6 @@ const styles = `
     margin-bottom: 12px;
     flex: 1;
     min-height: 0;
-    max-height: 55vh;
   }
   .design-image {
     width: 100%; height: 100%;
