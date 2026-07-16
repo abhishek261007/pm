@@ -1,3 +1,20 @@
+# ─────────────────────────────────
+# PM Jewellers — robots.txt
+# ─────────────────────────────────
+
 User-agent: *
 Allow: /
+
+# Pages that are user-specific / not useful to index
+Disallow: /wishlist
+Disallow: /cart
+
+# Assets that shouldn't be crawled
+Disallow: /sw.js
+Disallow: /workbox-*.js
+
+# Sitemaps
 Sitemap: https://pmjewellers.com/sitemap.xml
+
+# Crawl rate (optional hint for well-behaved bots)
+Crawl-delay: 1
