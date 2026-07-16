@@ -31,14 +31,14 @@ export async function onRequest(context) {
   // 3. If we found a dynamic image, use HTMLRewriter to inject Open Graph tags
   if (imageUrl) {
     return new HTMLRewriter()
-      .on('head', {
-        element(e) {
-          // Inject dynamic Open Graph tags
-          e.append(`<meta property="og:title" content="${catalogName} | PM Jewellers" />`, { html: true });
-          e.append(`<meta property="og:image" content="${imageUrl}" />`, { html: true });
-          e.append(`<meta property="og:description" content="Browse our jewelry catalog." />`, { html: true });
-          e.append(`<meta name="twitter:card" content="summary_large_image" />`, { html: true });
-        }
+      .on('meta[property="og:title"]', {
+        element(e) { e.setAttribute('content', `${catalogName} | PM Jewellers`); }
+      })
+      .on('meta[property="og:image"]', {
+        element(e) { e.setAttribute('content', imageUrl); }
+      })
+      .on('meta[property="og:description"]', {
+        element(e) { e.setAttribute('content', 'Browse our jewelry catalog.'); }
       })
       .on('title', {
         element(e) {
