@@ -1,7 +1,8 @@
 const BASE = '/reels/opt';
+const VIDEO_BASE = '/reels';
 
 export function videoUrl(src) {
-  return `${BASE}/${encodeURIComponent(src)}`;
+  return `${VIDEO_BASE}/${encodeURIComponent(src)}`;
 }
 
 // Posters/covers are pre-generated at build time (ffmpeg frame grabs).
