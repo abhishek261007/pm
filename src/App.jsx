@@ -11,6 +11,7 @@ import Listing from './pages/Listing';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Wishlist from './pages/Wishlist';
 import About from './pages/About';
+import AppRedirect from './pages/AppRedirect';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/about" element={<About />} />
+      <Route path="/app" element={<AppRedirect />} />
     </Routes>
   );
 }
