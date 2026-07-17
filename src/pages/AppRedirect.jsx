@@ -6,7 +6,13 @@ export default function AppRedirect() {
 
     // Check for Android
     if (/android/i.test(userAgent)) {
-      window.location.href = "https://play.google.com/store/apps/details?id=com.abhishek261007.pmj";
+      // Try to open the Play Store app directly
+      window.location.replace("market://details?id=com.abhishek261007.pmj");
+      
+      // Fallback to web link if the app fails to open (e.g. no Play Store installed)
+      setTimeout(() => {
+        window.location.replace("https://play.google.com/store/apps/details?id=com.abhishek261007.pmj");
+      }, 2000);
     } else {
       // Redirect to pmjewellers.com for iPad, iOS, PC, etc.
       window.location.href = "https://pmjewellers.com";
