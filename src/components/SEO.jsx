@@ -1,6 +1,47 @@
 import { Helmet } from 'react-helmet-async';
 import { SITE_URL, SITE_NAME, DEFAULT_IMAGE } from './seoConstants';
 
+export function createCatalogSchema(catalog, designs = []) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `${catalog.name} — PM Jewellers`,
+    "description": `Browse ${designs.length} designs in the ${catalog.name} collection from PM Jewellers, Ahmedabad.`,
+    "numberOfItems": designs.length,
+    "itemListElement": designs.slice(0, 50).map((d, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": `${SITE_URL}/design/${d._id}?catalog=${catalog._id}`,
+      "name": d.sku || `Design ${i + 1}`,
+      "image": d.imageUrl?.startsWith('http') ? d.imageUrl : d.imageUrl ? `${SITE_URL}${d.imageUrl}` : undefined,
+    })),
+  };
+}
+
+export function createProductSchema({ _id, name, description, images = [], sku, weight, category }) {
+  const imageUrls = images
+    .filter(Boolean)
+    .map((img) => (img.startsWith('http') ? img : `${SITE_URL}${img}`));
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": `${name} — PM Jewellers`,
+    "description": description || `${name} silver jewellery from PM Jewellers`,
+    "sku": sku,
+    "brand": { "@type": "Brand", "name": SITE_NAME },
+    "category": category || "Silver Jewellery",
+    ...(imageUrls.length > 0 && { "image": imageUrls }),
+    "offers": {
+      "@type": "Offer",
+      "url": `${SITE_URL}/design/${_id}`,
+      "availability": "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": SITE_NAME },
+    },
+    ...(weight && { "weight": { "@type": "QuantitativeValue", "value": weight, "unitCode": "GRM" } }),
+  };
+}
+
 /**
  * SEO Component - Manages all document head elements
  *
