@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { useParams, useSearchParams, useLocation, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
@@ -360,6 +360,102 @@ const styles = `
   @media (min-width: 768px) {
     .page-body { padding: 24px 40px 90px; }
   }
+
+  /* ── PRODUCT CONTENT ── */
+  .product-content {
+    background: #FFFBF4;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .product-content h1 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #2C1810;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .product-description {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: #4A4A4A;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .product-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+  }
+  .product-features li {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #2C1810;
+    padding: 6px 0;
+    border-bottom: 1px solid #F0E8E0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .product-features li:last-child { border-bottom: none; }
+  .feature-icon { color: #8B1A4A; font-size: 10px; }
+  .product-section-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8A7A6B;
+    margin-bottom: 8px;
+  }
+  .care-text {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: #6A6A6A;
+    line-height: 1.5;
+  }
+
+  /* ── RELATED DESIGNS ── */
+  .related-section {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #F0E8E0;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .related-card {
+    background: #F5F0EB;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .related-card:active { transform: scale(0.96); }
+  .related-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    display: block;
+  }
+  .related-label {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: #8A7A6B;
+    padding: 4px 6px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 // Resolve the catalog name from all available sources, in priority order:
@@ -374,11 +470,113 @@ function resolveCatalogName(stateValue, design) {
   return stateValue || '';
 }
 
+// Generate contextual product content based on catalog name and product attributes
+function generateProductContent(catalogName, design) {
+  const name = (catalogName || '').toLowerCase();
+  const sku = design?.sku || '';
+  const weight = design?.weight || '';
+
+  // Category-specific content
+  const categories = {
+    juda: {
+      type: 'Hair Accessory',
+      features: ['Antique silver finish', 'Handcrafted', 'Bridal and festive design', 'Oxidized detailing', 'Premium quality'],
+      description: `This handcrafted silver juda is designed for bridal, festive, and traditional occasions. The intricate silver work and oxidized finish provide a classic appearance suitable for weddings, Navratri, and cultural events.`,
+      usage: 'Ideal for weddings, festive celebrations, traditional ceremonies, and cultural events.',
+      care: 'Store in a dry place. Avoid contact with perfumes and chemicals. Clean gently with a soft cloth.',
+    },
+    payal: {
+      type: 'Anklet',
+      features: ['Traditional silver payal', 'Handcrafted', 'Comfortable fit', 'Oxidized finish', 'Wholesale available'],
+      description: `This silver payal is handcrafted with traditional motifs and an oxidized finish. Designed for daily wear and special occasions, it adds elegance to both traditional and contemporary outfits.`,
+      usage: 'Perfect for daily wear, festivals, weddings, and traditional ceremonies.',
+      care: 'Avoid water and moisture. Store separately to prevent tangling. Clean with a dry soft cloth.',
+    },
+    kamarband: {
+      type: 'Waist Chain',
+      features: ['Silver kamarband', 'Traditional design', 'Adjustable fit', 'Handcrafted', 'Bridal accessory'],
+      description: `This silver kamarband (waist chain) is designed with traditional Indian motifs. Handcrafted with precision, it is a classic bridal accessory that complements lehengas and sarees.`,
+      usage: 'Ideal for weddings, bridal attire, traditional ceremonies, and festive occasions.',
+      care: 'Handle with care. Store in a jewelry box. Avoid contact with water and chemicals.',
+    },
+    purse: {
+      type: 'Clutch',
+      features: ['Silver purse', 'Antique design', 'Handcrafted', 'Party wear', 'Ethnic accessory'],
+      description: `This silver purse features antique silver work and intricate detailing. A premium accessory for parties, weddings, and festive occasions, it combines traditional craftsmanship with modern functionality.`,
+      usage: 'Perfect for parties, weddings, festive events, and special occasions.',
+      care: 'Store in a dry place. Avoid exposure to moisture. Clean with a soft dry cloth.',
+    },
+    bangles: {
+      type: 'Bangle',
+      features: ['Silver bangles', 'Handcrafted', 'Traditional design', 'Oxidized finish', 'Wholesale available'],
+      description: `These silver bangles are handcrafted with traditional patterns and an oxidized finish. Suitable for daily wear and special occasions, they add a touch of elegance to any outfit.`,
+      usage: 'Ideal for daily wear, festivals, weddings, and traditional events.',
+      care: 'Avoid dropping. Store in a bangle stand or soft cloth. Clean with a dry cloth.',
+    },
+    necklace: {
+      type: 'Necklace',
+      features: ['Silver necklace', 'Traditional design', 'Handcrafted', 'Oxidized finish', 'Premium quality'],
+      description: `This silver necklace is crafted with intricate traditional motifs and an oxidized finish. A statement piece for weddings, festivals, and cultural celebrations.`,
+      usage: 'Perfect for weddings, festive occasions, traditional ceremonies, and special events.',
+      care: 'Store in a jewelry box. Avoid contact with perfumes and chemicals. Clean gently.',
+    },
+    earrings: {
+      type: 'Earrings',
+      features: ['Silver earrings', 'Handcrafted', 'Traditional design', 'Comfortable wear', 'Oxidized finish'],
+      description: `These silver earrings feature traditional designs with an oxidized finish. Handcrafted for comfort and style, they complement both traditional and modern outfits.`,
+      usage: 'Suitable for daily wear, festivals, weddings, and special occasions.',
+      care: 'Store in an earring holder. Avoid contact with water and chemicals.',
+    },
+    rings: {
+      type: 'Ring',
+      features: ['Silver ring', 'Adjustable', 'Handcrafted', 'Traditional design', 'Premium quality'],
+      description: `This silver ring is handcrafted with traditional motifs and an oxidized finish. An adjustable design ensures a comfortable fit for various occasions.`,
+      usage: 'Ideal for daily wear, festivals, weddings, and casual outings.',
+      care: 'Avoid water and chemicals. Store separately. Clean with a soft cloth.',
+    },
+  };
+
+  // Find matching category
+  let matched = null;
+  for (const [key, content] of Object.entries(categories)) {
+    if (name.includes(key)) {
+      matched = content;
+      break;
+    }
+  }
+
+  // Default content if no category match
+  if (!matched) {
+    matched = {
+      type: 'Silver Jewellery',
+      features: ['Handcrafted silver', 'Premium quality', 'Oxidized finish', 'Traditional design', 'Wholesale available'],
+      description: `This handcrafted silver jewellery piece from PM Jewellers features traditional Indian design with an oxidized finish. Made with pure silver, it is suitable for weddings, festivals, and everyday elegance.`,
+      usage: 'Perfect for weddings, festivals, traditional events, and daily wear.',
+      care: 'Store in a dry place. Avoid contact with perfumes and chemicals. Clean with a soft cloth.',
+    };
+  }
+
+  return matched;
+}
+
+// Generate related designs text
+function getRelatedDesignsText(catalogName) {
+  const name = (catalogName || '').toLowerCase();
+  if (name.includes('juda')) return 'More Silver Juda Designs';
+  if (name.includes('payal')) return 'More Silver Payal Designs';
+  if (name.includes('kamarband')) return 'More Kamarband Designs';
+  if (name.includes('purse')) return 'More Silver Purse Designs';
+  if (name.includes('bangle')) return 'More Silver Bangles';
+  if (name.includes('necklace')) return 'More Silver Necklace Designs';
+  if (name.includes('earring')) return 'More Silver Earrings';
+  if (name.includes('ring')) return 'More Silver Rings';
+  return 'More Silver Jewellery Designs';
+}
+
 export default function Design() {
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  const catalogId = searchParams.get('catalog');
   const { state } = useLocation();
+  const catalogIdFromDesign = design?.catalogId || design?.catalog?._id || design?.catalog;
   const { addToCart } = useCart();
 
   const [design, setDesign] = useState(null);
@@ -450,39 +648,15 @@ export default function Design() {
     }
   };
 
-  const fetchDesigns = async () => {
+  const fetchDesigns = async (catalogId) => {
     if (!catalogId) return;
     try {
       const res = await api.get(`/public/designs?catalogId=${catalogId}`);
       const all = Array.isArray(res.data) ? res.data : [];
       const available = all.filter((d) => d.status === 'available');
 
-      // Apply forwarded filter from catalog
-      const fq = searchParams.get('q') || '';
-      const fMin = searchParams.get('minW') || '';
-      const fMax = searchParams.get('maxW') || '';
-      let filtered = available;
-      if (fq) {
-        const tokens = fq.split(/\s+/).filter(Boolean);
-        const regexes = tokens.map(
-          (t) => new RegExp(`(?:^|[\\s\\-_])${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i')
-        );
-        filtered = filtered.filter((item) => {
-          const haystack = `${item.catalogName ?? ''} ${item.sku ?? ''}`;
-          return regexes.every((re) => re.test(haystack));
-        });
-      }
-      const min = parseFloat(fMin);
-      const max = parseFloat(fMax);
-      if (fMin !== '' && !isNaN(min)) {
-        filtered = filtered.filter((item) => parseFloat(item.weight) >= min);
-      }
-      if (fMax !== '' && !isNaN(max)) {
-        filtered = filtered.filter((item) => parseFloat(item.weight) <= max);
-      }
-
-      setDesigns(filtered);
-      const idx = filtered.findIndex((d) => d._id === id);
+      setDesigns(available);
+      const idx = available.findIndex((d) => d._id === id);
       if (idx !== -1) setActiveIndex(idx);
     } catch (err) {
       console.log(err);
@@ -490,11 +664,17 @@ export default function Design() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchDesign();
-    if (catalogId) fetchDesigns();
+    const load = async () => {
+      await fetchDesign();
+    };
+    load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, catalogId, searchParams]);
+  }, [id]);
+
+  useEffect(() => {
+    if (catalogIdFromDesign) fetchDesigns(catalogIdFromDesign);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalogIdFromDesign]);
 
   const currentDesign = designs.length > 0 ? designs[activeIndex] : design;
   const catalogName = resolveCatalogName(state?.catalogName, currentDesign);
@@ -632,13 +812,13 @@ export default function Design() {
         }
         keywords={`${catalogName}, ${currentDesign?.sku}, silver jewellery, ${currentDesign?.weight}g, PM Jewellers, Ahmedabad, Gujarat, wholesale silver, buy silver jewellery online, antique silver, bridal silver, designer silver`}
         image={seoImageUrl}
-        url={currentDesign ? `/design/${currentDesign._id}?catalog=${catalogId}` : `/design/${id}`}
+        url={currentDesign ? `/design/${currentDesign._id}` : `/design/${id}`}
         type="product"
-        breadcrumbs={catalogId ? [
+        breadcrumbs={catalogIdFromDesign ? [
           { name: 'Home', url: '/' },
           { name: 'Catalogues', url: '/listing' },
-          { name: catalogName, url: `/catalog/${catalogId}` },
-          { name: currentDesign?.sku || 'Design', url: `/design/${currentDesign?._id}?catalog=${catalogId}` }
+          { name: catalogName, url: `/catalog/${catalogIdFromDesign}` },
+          { name: currentDesign?.sku || 'Design', url: `/design/${currentDesign?._id}` }
         ] : [
           { name: 'Home', url: '/' },
           { name: currentDesign?.sku || 'Design', url: `/design/${id}` }
@@ -771,6 +951,85 @@ export default function Design() {
                   Add to My Order
                 </button>
               </div>
+
+              {/* Product Content */}
+              {(() => {
+                const content = generateProductContent(catalogName, currentDesign);
+                return (
+                  <div className="product-content">
+                    <h1>{catalogName} — Silver {content.type}</h1>
+                    <p className="product-description">{content.description}</p>
+                    <p className="product-section-title">Features</p>
+                    <ul className="product-features">
+                      {content.features.map((f, i) => (
+                        <li key={i}><span className="feature-icon">◆</span> {f}</li>
+                      ))}
+                    </ul>
+                    <p className="product-section-title">Specifications</p>
+                    <div className="specs-grid" style={{ marginBottom: 16 }}>
+                      <div className="spec-cell">
+                        <p className="spec-label">Material</p>
+                        <p className="spec-value">Pure Silver</p>
+                      </div>
+                      <div className="spec-cell">
+                        <p className="spec-label">Type</p>
+                        <p className="spec-value">{content.type}</p>
+                      </div>
+                      <div className="spec-cell">
+                        <p className="spec-label">Weight</p>
+                        <p className="spec-value">{weight}g</p>
+                      </div>
+                      <div className="spec-cell">
+                        <p className="spec-label">SKU</p>
+                        <p className="spec-value">{sku}</p>
+                      </div>
+                    </div>
+                    <p className="product-section-title">Usage</p>
+                    <p className="care-text" style={{ marginBottom: 16 }}>{content.usage}</p>
+                    <p className="product-section-title">Care Instructions</p>
+                    <p className="care-text">{content.care}</p>
+
+                    {/* Related Designs */}
+                    {designs.length > 1 && (
+                      <div className="related-section">
+                        <p className="product-section-title">{getRelatedDesignsText(catalogName)}</p>
+                        <div className="related-grid">
+                          {designs
+                            .filter((d) => d._id !== currentDesign._id)
+                            .slice(0, 6)
+                            .map((d) => {
+                              const imgSrc = d.imageUrl?.startsWith('http')
+                                ? d.imageUrl
+                                : d.imageUrl
+                                  ? `https://apis.27012610.xyz${d.imageUrl}`
+                                  : '';
+                              return (
+                                <div
+                                  key={d._id}
+                                  className="related-card"
+                                  onClick={() => {
+                                    const idx = designs.findIndex((x) => x._id === d._id);
+                                    if (idx !== -1) goTo(idx);
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                  }}
+                                >
+                                  {imgSrc ? (
+                                    <img className="related-img" src={imgSrc} alt={d.sku || 'Design'} loading="lazy" />
+                                  ) : (
+                                    <div className="related-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F5F0EB' }}>
+                                      <span style={{ color: '#C8C8C4', fontSize: '1.5rem' }}>◇</span>
+                                    </div>
+                                  )}
+                                  <p className="related-label">{d.sku}</p>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           </div>
           </>

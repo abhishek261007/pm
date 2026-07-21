@@ -436,7 +436,7 @@ const DesignCard = memo(function DesignCard({ item, catalogId, catalogName, onAd
   return (
     <div className="design-card">
       <Link 
-        to={`/design/${item._id}?catalog=${catalogId}${filterQuery}`} 
+        to={`/design/${item._id}`}
         state={{ catalogName }} 
         className="card-link"
       >

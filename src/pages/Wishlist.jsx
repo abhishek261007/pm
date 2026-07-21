@@ -335,7 +335,7 @@ export default function Wishlist() {
                   return (
                     <div key={item._id} className="wishlist-card">
                       <Link
-                        to={`/design/${item._id}?catalog=${item._id}`}
+                        to={`/design/${item._id}`}
                         state={{ catalogName: item.catalogName }}
                         className="card-link"
                       >

@@ -65,7 +65,7 @@ export function createCatalogSchema(catalog, designs = []) {
     "itemListElement": designs.slice(0, 50).map((design, index) => ({
       "@type": "ListItem",
       "position": index + 1,
-      "url": `https://pmjewellers.com/design/${design._id || design.id}?catalog=${catalog._id || catalog.id}`,
+      "url": `https://pmjewellers.com/design/${design._id || design.id}`,
       "name": design.sku || design.name || `Silver Design ${index + 1}`,
       "image": (design.thumbnailUrl || design.imageUrl)
         ? ((design.thumbnailUrl || design.imageUrl).startsWith('http')

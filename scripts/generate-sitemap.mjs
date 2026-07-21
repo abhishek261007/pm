@@ -175,7 +175,7 @@ async function main() {
           if (Array.isArray(designs)) {
             for (const d of designs) {
               const designUrl = {
-                loc: `${SITE}/design/${d._id}?catalog=${cat._id}`,
+                loc: `${SITE}/design/${d._id}`,
                 priority: 0.6,
                 changefreq: 'weekly',
                 lastmod: d.updatedAt ? d.updatedAt.split('T')[0] : todayStr,
