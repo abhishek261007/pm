@@ -118,8 +118,15 @@ function breadcrumbSchema(items) {
   });
 }
 
+// ── Inject SEO head + body content into full HTML template ──
+function injectHtml(baseHtml, headTags, bodyContent) {
+  return baseHtml
+    .replace(/<head>/, `<head>\n    ${headTags}`)
+    .replace(/<div id="root"><\/div>/, bodyContent);
+}
+
 // ── Generate HTML for a design page ──
-function designHtml(baseHead, design, catalogName) {
+function designHtml(baseHtml, design, catalogName) {
   const title = `${catalogName} — ${design.sku} | ${SITE_NAME}`;
   const desc = `Handcrafted ${catalogName} silver jewellery design (${design.sku}, ${design.weight}g). Premium wholesale silver from ${SITE_NAME}, Ahmedabad. Buy silver jewellery online.`;
   const keywords = `${catalogName}, ${design.sku}, silver jewellery, ${design.weight}g, ${SITE_NAME}, Ahmedabad, Gujarat, wholesale silver, antique silver, bridal silver`;
@@ -153,7 +160,6 @@ function designHtml(baseHead, design, catalogName) {
     ])}</script>
     <script type="application/ld+json">${productSchema(design, catalogName)}</script>`;
 
-  // Visible pre-rendered content (React will hydrate on top)
   const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
     <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:24px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px">
       <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(catalogName)}</h1>
@@ -184,11 +190,11 @@ function designHtml(baseHead, design, catalogName) {
     </div>
   </div></div>`;
 
-  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+  return injectHtml(baseHtml, head, body);
 }
 
 // ── Generate HTML for a catalog page ──
-function catalogHtml(baseHead, catalog, designs) {
+function catalogHtml(baseHtml, catalog, designs) {
   const title = `${catalog.name} — Silver Jewellery Collection | ${SITE_NAME}`;
   const desc = `Explore ${designs.length}+ premium silver jewellery designs in the ${catalog.name} collection. Wholesale silver ornaments from ${SITE_NAME}, Ahmedabad.`;
   const keywords = `${catalog.name}, silver jewellery, wholesale silver, ${SITE_NAME}, Ahmedabad, Gujarat, buy silver jewellery online, antique silver`;
@@ -215,7 +221,6 @@ function catalogHtml(baseHead, catalog, designs) {
     ])}</script>
     <script type="application/ld+json">${catalogSchema(catalog, designs)}</script>`;
 
-  // Pre-rendered catalog grid
   const cards = designs.slice(0, 50).map(d => {
     const img = imageUrl(d.thumbnailUrl || d.imageUrl);
     return `<a href="/design/${d._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:4px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
@@ -240,14 +245,14 @@ function catalogHtml(baseHead, catalog, designs) {
     </div>
   </div></div>`;
 
-  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+  return injectHtml(baseHtml, head, body);
 }
 
 // ── Generate HTML for the Home page ──
-function homeHtml(baseHead, catalogs) {
+function homeHtml(baseHtml, catalogs) {
   const title = `${SITE_NAME} — Wholesale Silver Jewellery | Juda, Payal, Bangles, Rings, Earrings`;
-  const desc = `${SITE_NAME} is Ahmedabad's trusted wholesale silver jewellery supplier since 2005. Shop silver juda, payal, kamarband, purse, bangles, necklace, earrings, rings. 100+ designs. Buy pure silver online.`;
-  const keywords = 'silver jewellery, silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings, wholesale silver jewellery, antique silver, PM Jewellers, Ahmedabad';
+  const desc = `${SITE_NAME} is Ahmedabad's trusted wholesale silver jewellery supplier since 2005. Shop silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings. 100+ design catalogues. Buy pure silver jewellery online.`;
+  const keywords = 'silver jewellery, silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings, wholesale silver jewellery, antique silver jewellery, bridal silver jewellery, hallmarked silver, PM Jewellers, Ahmedabad, Gujarat, buy silver jewellery online';
 
   const catCards = catalogs.slice(0, 12).map(c => {
     const img = imageUrl(c.heroImageUrl);
@@ -302,14 +307,14 @@ function homeHtml(baseHead, catalogs) {
     </div>
   </div></div>`;
 
-  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+  return injectHtml(baseHtml, head, body);
 }
 
 // ── Generate HTML for the Listing page ──
-function listingHtml(baseHead, catalogs) {
+function listingHtml(baseHtml, catalogs) {
   const title = `Silver Jewellery Collections — Juda, Payal, Bangles, Rings, Earrings | ${SITE_NAME}`;
   const desc = `Browse ${catalogs.length}+ collections of premium silver jewellery at ${SITE_NAME}. Silver juda, payal, kamarband, purse, bangles, necklace, earrings, rings. Wholesale pricing from Ahmedabad.`;
-  const keywords = 'silver jewellery collections, wholesale catalogs, silver juda, silver payal, silver bangles, silver earrings, silver rings, silver necklace, silver purse, PM Jewellers, Ahmedabad';
+  const keywords = 'silver jewellery collections, wholesale catalogs, silver juda, silver payal, silver bangles, silver earrings, silver rings, silver necklace, silver purse, PM Jewellers, Ahmedabad, Gujarat';
 
   const cards = catalogs.map(c => {
     const img = imageUrl(c.heroImageUrl);
@@ -351,24 +356,18 @@ function listingHtml(baseHead, catalogs) {
     </div>
   </div></div>`;
 
-  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+  return injectHtml(baseHtml, head, body);
 }
 
 async function main() {
   const t0 = Date.now();
   console.log('Pre-rendering all pages from API data...\n');
 
-  // Read the base HTML (has CSS/JS links, fonts, etc.)
   const baseHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
-  // Extract just the <head> content up to </head>
-  const baseHeadMatch = baseHtml.match(/<head>[\s\S]*?<\/head>/);
-  if (!baseHeadMatch) { console.error('Could not parse index.html'); process.exit(1); }
-  const baseHead = baseHeadMatch[0];
 
   let designCount = 0;
   let catalogCount = 0;
 
-  // Fetch all catalogs
   let catalogs = [];
   try {
     const res = await fetch(`${API}/public/catalogs`);
@@ -380,17 +379,14 @@ async function main() {
   }
   console.log(`Found ${catalogs.length} catalogs`);
 
-  // Write Home page
-  fs.writeFileSync(path.join(DIST, 'index.html'), homeHtml(baseHead, catalogs), 'utf-8');
+  fs.writeFileSync(path.join(DIST, 'index.html'), homeHtml(baseHtml, catalogs), 'utf-8');
   console.log('  ✓ Home page');
 
-  // Write Listing page
   const listingDir = path.join(DIST, 'listing');
   fs.mkdirSync(listingDir, { recursive: true });
-  fs.writeFileSync(path.join(listingDir, 'index.html'), listingHtml(baseHead, catalogs), 'utf-8');
+  fs.writeFileSync(path.join(listingDir, 'index.html'), listingHtml(baseHtml, catalogs), 'utf-8');
   console.log('  ✓ Listing page');
 
-  // Process each catalog
   for (const cat of catalogs) {
     let designs = [];
     try {
@@ -400,17 +396,15 @@ async function main() {
       designs = designs.filter(d => d.status === 'available');
     } catch { /* skip */ }
 
-    // Write catalog page
     const catDir = path.join(DIST, 'catalog', cat._id);
     fs.mkdirSync(catDir, { recursive: true });
-    fs.writeFileSync(path.join(catDir, 'index.html'), catalogHtml(baseHead, cat, designs), 'utf-8');
+    fs.writeFileSync(path.join(catDir, 'index.html'), catalogHtml(baseHtml, cat, designs), 'utf-8');
     catalogCount++;
 
-    // Write design pages
     for (const d of designs) {
       const designDir = path.join(DIST, 'design', d._id);
       fs.mkdirSync(designDir, { recursive: true });
-      fs.writeFileSync(path.join(designDir, 'index.html'), designHtml(baseHead, d, cat.name), 'utf-8');
+      fs.writeFileSync(path.join(designDir, 'index.html'), designHtml(baseHtml, d, cat.name), 'utf-8');
       designCount++;
     }
 
