@@ -981,11 +981,11 @@ export default function Design() {
                       </div>
                       <div className="spec-cell">
                         <p className="spec-label">Weight</p>
-                        <p className="spec-value">{weight}g</p>
+                        <p className="spec-value">{currentDesign.weight}g</p>
                       </div>
                       <div className="spec-cell">
                         <p className="spec-label">SKU</p>
-                        <p className="spec-value">{sku}</p>
+                        <p className="spec-value">{currentDesign.sku}</p>
                       </div>
                     </div>
                     <p className="product-section-title">Usage</p>

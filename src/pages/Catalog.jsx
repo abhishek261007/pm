@@ -489,7 +489,7 @@ export default function CatalogDetails() {
   const { id } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [catalogName, setCatalogName] = useState(state?.catalogName || 'Collection');
+  const [catalogName, setCatalogName] = useState(state?.catalogName || '');
 
   /* ── Android App Links fallback ──
      If a user lands on this page in a mobile browser, it means the PMJ
@@ -572,11 +572,11 @@ export default function CatalogDetails() {
       const fetchedDesigns = Array.isArray(res.data) ? res.data : [];
       setDesigns(fetchedDesigns.filter((d) => d.status === 'available'));
       
-      if (!state?.catalogName && fetchedDesigns.length > 0) {
+      if (!state?.catalogName && fetchedDesigns.length > 0 && !catalogName) {
         setCatalogName(
           fetchedDesigns[0]?.catalogName || 
           fetchedDesigns[0]?.catalog?.name || 
-          'Collection'
+          'Silver Jewellery'
         );
       }
     } catch (err) {
@@ -591,6 +591,19 @@ export default function CatalogDetails() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchDesigns();
   }, [id]);
+
+  useEffect(() => {
+    if (state?.catalogName) return;
+    const fetchCatalogName = async () => {
+      try {
+        const res = await api.get('/public/catalogs');
+        const all = Array.isArray(res.data) ? res.data : [];
+        const match = all.find((c) => c._id === id);
+        if (match?.name) setCatalogName(match.name);
+      } catch { /* ignore */ }
+    };
+    fetchCatalogName();
+  }, [id, state?.catalogName]);
 
   /* ── Filtered List ── */
   const filteredDesigns = useMemo(() => {
@@ -657,7 +670,7 @@ export default function CatalogDetails() {
   return (
     <>
       <SEO 
-        title={`${catalogName} — Silver Jewellery Collection`}
+        title={`${catalogName || 'Collection'} — Silver Jewellery Collection`}
         description={`Explore ${filteredDesigns.length}+ premium silver jewellery designs in the ${catalogName} collection. Wholesale silver ornaments from PM Jewellers, Ahmedabad. Buy silver jewellery online — antique, bridal, designer, handcrafted.`}
         keywords={`${catalogName}, silver jewellery, wholesale silver, ${catalogName} designs, PM Jewellers, Ahmedabad, Gujarat, buy silver jewellery online, antique silver, bridal silver, designer silver`}
         url={`/catalog/${id}`}
