@@ -159,7 +159,7 @@ function designHtml(baseHead, design, catalogName) {
       <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(catalogName)}</h1>
     </div>
     <div style="padding:16px;max-width:600px;margin:0 auto">
-      <img src="${imgUrl}" alt="Premium ${esc(catalogName)} silver ${design.sku} ${design.weight}g design" style="width:100%;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);margin-bottom:16px" width="600" height="600">
+      <img src="${imgUrl}" alt="Premium ${esc(catalogName)} silver ${design.sku} ${design.weight}g design" style="width:100%;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);margin-bottom:16px" width="600" height="600" fetchpriority="high">
       <div style="background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:16px;margin-bottom:16px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
           <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Tag</p><p style="font-size:1.2rem;font-weight:200;margin:0">${esc(design.sku)}</p></div>
@@ -243,6 +243,117 @@ function catalogHtml(baseHead, catalog, designs) {
   return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
 }
 
+// ── Generate HTML for the Home page ──
+function homeHtml(baseHead, catalogs) {
+  const title = `${SITE_NAME} — Wholesale Silver Jewellery | Juda, Payal, Bangles, Rings, Earrings`;
+  const desc = `${SITE_NAME} is Ahmedabad's trusted wholesale silver jewellery supplier since 2005. Shop silver juda, payal, kamarband, purse, bangles, necklace, earrings, rings. 100+ designs. Buy pure silver online.`;
+  const keywords = 'silver jewellery, silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings, wholesale silver jewellery, antique silver, PM Jewellers, Ahmedabad';
+
+  const catCards = catalogs.slice(0, 12).map(c => {
+    const img = imageUrl(c.heroImageUrl);
+    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:4px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
+      <img src="${img}" alt="Silver ${esc(c.name)} collection, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px" loading="lazy" width="400" height="400">
+      <div style="padding:6px 4px;text-align:center"><span style="font-size:12px;font-weight:500;color:#2C1810">${esc(c.name)}</span></div>
+    </a>`;
+  }).join('\n          ');
+
+  const head = `<title>${esc(title)}</title>
+    <meta name="description" content="${esc(desc)}">
+    <meta name="keywords" content="${esc(keywords)}">
+    <link rel="canonical" href="${SITE}/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="${SITE_NAME}">
+    <meta property="og:title" content="${esc(title)}">
+    <meta property="og:description" content="${esc(desc)}">
+    <meta property="og:image" content="${SITE}/logo.png">
+    <meta property="og:url" content="${SITE}/">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${esc(title)}">
+    <meta name="twitter:description" content="${esc(desc)}">
+    <script type="application/ld+json">${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "JewelryStore",
+      "name": SITE_NAME,
+      "description": desc,
+      "url": SITE,
+      "logo": `${SITE}/logo.png`,
+      "address": { "@type": "PostalAddress", "streetAddress": "Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk", "addressLocality": "Ahmedabad", "addressRegion": "Gujarat", "postalCode": "380001", "addressCountry": "IN" },
+      "areaServed": { "@type": "City", "name": "Ahmedabad" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "150", "bestRating": "5" }
+    })}</script>`;
+
+  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
+    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:40px 20px 32px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;text-align:center">
+      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,0.75);margin:0 0 4px">Since 2005</p>
+      <h1 style="font-size:32px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0 0 8px">${esc(SITE_NAME)}</h1>
+      <p style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.85);line-height:1.5;margin:0">Wholesale Silver Jewellery — Ahmedabad, Gujarat</p>
+    </div>
+    <div style="padding:20px 16px">
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8A7A6B;margin:0 0 14px">CATALOGUES</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          ${catCards}
+      </div>
+      <div style="margin-top:24px;background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:16px">
+        <h2 style="font-size:16px;font-weight:400;margin:0 0 8px">Silver Jewellery Collections</h2>
+        <p style="font-size:12px;font-weight:300;color:#4A4A4A;line-height:1.6;margin:0 0 8px">Explore handcrafted silver juda, payal, kamarband, purse, bangles, necklace, earrings, and rings from PM Jewellers. Pure silver with traditional Indian craftsmanship, available for wholesale.</p>
+        <p style="font-size:12px;font-weight:300;color:#4A4A4A;line-height:1.6;margin:0">Trusted by 500+ retailers across Gujarat. Visit us at Manekchowk, Ahmedabad or shop online.</p>
+      </div>
+    </div>
+  </div></div>`;
+
+  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+}
+
+// ── Generate HTML for the Listing page ──
+function listingHtml(baseHead, catalogs) {
+  const title = `Silver Jewellery Collections — Juda, Payal, Bangles, Rings, Earrings | ${SITE_NAME}`;
+  const desc = `Browse ${catalogs.length}+ collections of premium silver jewellery at ${SITE_NAME}. Silver juda, payal, kamarband, purse, bangles, necklace, earrings, rings. Wholesale pricing from Ahmedabad.`;
+  const keywords = 'silver jewellery collections, wholesale catalogs, silver juda, silver payal, silver bangles, silver earrings, silver rings, silver necklace, silver purse, PM Jewellers, Ahmedabad';
+
+  const cards = catalogs.map(c => {
+    const img = imageUrl(c.heroImageUrl);
+    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
+      <img src="${img}" alt="Silver ${esc(c.name)} collection gallery, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px" loading="lazy" width="400" height="400">
+      <div style="padding:6px 4px"><span style="font-size:12px;font-weight:500;color:#2C1810">${esc(c.name)}</span></div>
+    </a>`;
+  }).join('\n          ');
+
+  const head = `<title>${esc(title)}</title>
+    <meta name="description" content="${esc(desc)}">
+    <meta name="keywords" content="${esc(keywords)}">
+    <link rel="canonical" href="${SITE}/listing">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="${SITE_NAME}">
+    <meta property="og:title" content="${esc(title)}">
+    <meta property="og:description" content="${esc(desc)}">
+    <meta property="og:image" content="${SITE}/logo.png">
+    <meta property="og:url" content="${SITE}/listing">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${esc(title)}">
+    <meta name="twitter:description" content="${esc(desc)}">
+    <script type="application/ld+json">${breadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Catalogues', url: '/listing' }
+    ])}</script>`;
+
+  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
+    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:24px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px">
+      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,0.85);margin:0 0 2px">Since 2005</p>
+      <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(SITE_NAME)}</h1>
+    </div>
+    <div style="padding:16px">
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8A7A6B;margin:0 0 14px">COLLECTIONS <span style="font-weight:600;color:#8B1A4A">${catalogs.length}</span></p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+          ${cards}
+      </div>
+    </div>
+  </div></div>`;
+
+  return baseHead.replace(/<head>/, `<head>\n    ${head}`).replace(/<div id="root"><\/div>/, body);
+}
+
 async function main() {
   const t0 = Date.now();
   console.log('Pre-rendering all pages from API data...\n');
@@ -268,6 +379,16 @@ async function main() {
     process.exit(1);
   }
   console.log(`Found ${catalogs.length} catalogs`);
+
+  // Write Home page
+  fs.writeFileSync(path.join(DIST, 'index.html'), homeHtml(baseHead, catalogs), 'utf-8');
+  console.log('  ✓ Home page');
+
+  // Write Listing page
+  const listingDir = path.join(DIST, 'listing');
+  fs.mkdirSync(listingDir, { recursive: true });
+  fs.writeFileSync(path.join(listingDir, 'index.html'), listingHtml(baseHead, catalogs), 'utf-8');
+  console.log('  ✓ Listing page');
 
   // Process each catalog
   for (const cat of catalogs) {
@@ -297,7 +418,7 @@ async function main() {
   }
 
   const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
-  console.log(`\nDone: ${catalogCount} catalog + ${designCount} design pages in ${elapsed}s`);
+  console.log(`\nDone: Home + Listing + ${catalogCount} catalog + ${designCount} design pages in ${elapsed}s`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

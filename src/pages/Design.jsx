@@ -576,10 +576,10 @@ function getRelatedDesignsText(catalogName) {
 export default function Design() {
   const { id } = useParams();
   const { state } = useLocation();
-  const catalogIdFromDesign = design?.catalogId || design?.catalog?._id || design?.catalog;
   const { addToCart } = useCart();
 
   const [design, setDesign] = useState(null);
+  const catalogIdFromDesign = design?.catalogId || design?.catalog?._id || design?.catalog;
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(false);
   const cartRef = useRef(null);
@@ -904,6 +904,10 @@ export default function Design() {
                         'https://placehold.co/1000x1000/F7F6F3/C8C8C4?text=No+Image';
                     }}
                     alt={`Premium ${catalogName} silver ${currentDesign.sku} ${currentDesign.weight}g design, handcrafted antique jewellery from PM Jewellers`}
+                    width={600}
+                    height={600}
+                    loading="eager"
+                    fetchPriority="high"
                     onClick={() => openModal(
                       currentDesign.imageUrl?.startsWith('http')
                         ? currentDesign.imageUrl
