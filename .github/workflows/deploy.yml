@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Chrome for prerendering
+        run: npx puppeteer browsers install chrome
+
       - name: Build & Prerender
         run: npm run build:prod
         env:
