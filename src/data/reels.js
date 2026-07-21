@@ -17,7 +17,7 @@ export const GALLERY = [
   'PM ORNA FEB REEL 7.1.mp4',
 ];
 
-export const CATEGORIES = ['Antique', 'Traditional', 'Contemporary', 'Festive', 'Bridal', 'Daily Wear'];
+export const CATEGORIES = ['Antique Silver', 'Silver Juda', 'Silver Payal', 'Bridal Collection', 'Silver Bangles', 'Silver Earrings', 'Silver Rings', 'Silver Necklace', 'Designer Silver', 'Traditional Silver'];
 
 const WEIGHTS = [25, 40, 35, 50, 30, 45, 55, 28, 38, 42, 48, 32, 52, 36, 44, 60, 22, 58];
 

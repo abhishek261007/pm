@@ -311,9 +311,9 @@ export default function Listing() {
   return (
     <>
       <SEO
-        title="Catalogues — Silver Jewellery Collections — PM Jewellers"
-        description="Browse 100+ collections of premium silver jewellery designs. Wholesale silver ornaments, antique jewellery catalogues from PM Jewellers, Manekchowk, Ahmedabad."
-        keywords="silver jewellery collections, wholesale catalogs, silver ornaments catalog, antique jewellery designs, PM Jewellers catalogues, Ahmedabad silver, catalog search"
+        title="Silver Jewellery Collections — Juda, Payal, Bangles, Rings, Earrings"
+        description="Browse 100+ collections of premium silver jewellery at PM Jewellers. Silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings. Wholesale pricing. Buy silver jewellery online from Ahmedabad."
+        keywords="silver jewellery collections, wholesale catalogs, silver juda, silver payal, silver bangles, silver earrings, silver rings, silver necklace, silver purse, antique silver jewellery, bridal silver jewellery, PM Jewellers, Ahmedabad Gujarat"
         url="/listing"
         type="website"
         breadcrumbs={[

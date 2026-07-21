@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { SITE_URL, SITE_NAME, DEFAULT_IMAGE } from './seoConstants';
+import { SITE_URL, SITE_NAME, DEFAULT_IMAGE, DEFAULT_DESCRIPTION, DEFAULT_KEYWORDS } from './seoConstants';
 
 export function createCatalogSchema(catalog, designs = []) {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": `${catalog.name} — PM Jewellers`,
-    "description": `Browse ${designs.length} designs in the ${catalog.name} collection from PM Jewellers, Ahmedabad.`,
+    "description": `Browse ${designs.length} designs in the ${catalog.name} collection from PM Jewellers, Ahmedabad. Wholesale silver jewellery — ${catalog.name}, antique, bridal, designer.`,
     "numberOfItems": designs.length,
     "itemListElement": designs.slice(0, 50).map((d, i) => ({
       "@type": "ListItem",
@@ -27,16 +27,28 @@ export function createProductSchema({ _id, name, description, images = [], sku, 
     "@context": "https://schema.org",
     "@type": "Product",
     "name": `${name} — PM Jewellers`,
-    "description": description || `${name} silver jewellery from PM Jewellers`,
+    "description": description || `${name} silver jewellery from PM Jewellers, Ahmedabad. Wholesale silver, antique, bridal designs.`,
     "sku": sku,
     "brand": { "@type": "Brand", "name": SITE_NAME },
     "category": category || "Silver Jewellery",
+    "material": "Silver",
     ...(imageUrls.length > 0 && { "image": imageUrls }),
     "offers": {
       "@type": "Offer",
       "url": `${SITE_URL}/design/${_id}`,
       "availability": "https://schema.org/InStock",
-      "seller": { "@type": "Organization", "name": SITE_NAME },
+      "seller": {
+        "@type": "JewelryStore",
+        "name": SITE_NAME,
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk",
+          "addressLocality": "Ahmedabad",
+          "addressRegion": "Gujarat",
+          "postalCode": "380001",
+          "addressCountry": "IN"
+        }
+      },
     },
     ...(weight && { "weight": { "@type": "QuantitativeValue", "value": weight, "unitCode": "GRM" } }),
   };
@@ -60,8 +72,8 @@ export function createProductSchema({ _id, name, description, images = [], sku, 
  */
 export default function SEO({
   title,
-  description = 'PM Jewellers is a trusted wholesaler of pure silver ornaments, antique jewellery, and 100+ design catalogues. Supplying retailers across India since 2005 from Manekchowk, Ahmedabad.',
-  keywords = 'silver jewellery wholesale, silver ornaments, antique jewellery, wholesale silver, PM Jewellers, Manekchowk, Ahmedabad',
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
   image = DEFAULT_IMAGE,
   url,
   type = 'website',
@@ -125,6 +137,7 @@ export default function SEO({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={title || SITE_NAME} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:locale" content="en_IN" />
 

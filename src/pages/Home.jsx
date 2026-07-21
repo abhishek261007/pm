@@ -8,6 +8,7 @@ import ScrollReveal from '../components/home/ScrollReveal';
 import CategoryShowcase from '../components/home/CategoryShowcase';
 import TrustMarquee from '../components/home/TrustMarquee';
 import LuxeFooter from '../components/home/LuxeFooter';
+import SEOContent from '../components/home/SEOContent';
 import SEO from '../components/SEO';
 import { FEATURED, GALLERY, PDFS } from '../data/reels';
 import { reelPosterUrl, pdfCoverUrl } from '../utils/media';
@@ -18,11 +19,14 @@ export default function Home() {
   return (
     <>
       <SEO 
-        title="Wholesale Silver & Antique Jewellery"
-        description="PM Jewellers is a trusted wholesaler of pure silver ornaments, antique jewellery, and 100+ design catalogues. Supplying retailers across India since 2005 from Manekchowk, Ahmedabad."
-        keywords="silver jewellery wholesale, silver ornaments, antique jewellery, wholesale silver, PM Jewellers, Manekchowk, Ahmedabad, silver 925, silver articles, bridal jewellery, traditional silver"
+        title="Wholesale Silver Jewellery — Juda, Payal, Kamarband, Bangles, Rings"
+        description="PM Jewellers is Ahmedabad's trusted wholesale silver jewellery supplier since 2005. Shop silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings. 100+ design catalogues. Buy pure silver jewellery online."
+        keywords="silver jewellery, silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings, wholesale silver jewellery, antique silver jewellery, bridal silver jewellery, hallmarked silver, PM Jewellers, Ahmedabad, Gujarat, buy silver jewellery online"
         url="/"
         type="website"
+        breadcrumbs={[
+          { name: 'Home', url: '/' }
+        ]}
       />
       <div className="home-root">
         <Hero />
@@ -111,6 +115,9 @@ export default function Home() {
             </div>
           </ScrollReveal>
         </section>
+
+        {/* ── KEYWORD-RICH PRODUCT CATEGORIES (SEO) ── */}
+        <SEOContent />
 
         {/* ── TRUST MARQUEE ── */}
         <TrustMarquee />

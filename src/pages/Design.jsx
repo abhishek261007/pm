@@ -627,10 +627,10 @@ export default function Design() {
       <SEO 
         title={currentDesign ? `${catalogName} — ${currentDesign.sku}` : 'Silver Jewellery Design'}
         description={currentDesign 
-          ? `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g). Premium wholesale silver from PM Jewellers, Ahmedabad.`
-          : 'Explore premium silver jewellery designs from PM Jewellers, Ahmedabad.'
+          ? `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g). Premium wholesale silver from PM Jewellers, Ahmedabad. Buy silver jewellery online — antique, bridal, designer.`
+          : 'Explore premium silver jewellery designs from PM Jewellers, Ahmedabad. Wholesale silver — juda, payal, bangles, rings, earrings, necklace.'
         }
-        keywords={`${catalogName}, ${currentDesign?.sku}, silver jewellery, ${currentDesign?.weight}g, PM Jewellers, Ahmedabad, wholesale silver`}
+        keywords={`${catalogName}, ${currentDesign?.sku}, silver jewellery, ${currentDesign?.weight}g, PM Jewellers, Ahmedabad, Gujarat, wholesale silver, buy silver jewellery online, antique silver, bridal silver, designer silver`}
         image={seoImageUrl}
         url={currentDesign ? `/design/${currentDesign._id}?catalog=${catalogId}` : `/design/${id}`}
         type="product"
@@ -646,7 +646,7 @@ export default function Design() {
         jsonLd={currentDesign ? createProductSchema({
           _id: currentDesign._id,
           name: `${catalogName} — ${currentDesign.sku}`,
-          description: `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g)`,
+          description: `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g). Wholesale silver jewellery from PM Jewellers, Ahmedabad.`,
           images: currentDesign.imageUrl ? [currentDesign.imageUrl] : [],
           sku: currentDesign.sku,
           weight: currentDesign.weight,

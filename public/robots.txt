@@ -4,6 +4,7 @@
 
 User-agent: *
 Allow: /
+Allow: /uploads/
 
 # Pages that are user-specific / not useful to index
 Disallow: /wishlist
@@ -12,6 +13,15 @@ Disallow: /cart
 # Assets that shouldn't be crawled
 Disallow: /sw.js
 Disallow: /workbox-*.js
+
+# Allow Googlebot to crawl images
+User-agent: Googlebot
+Allow: /
+Allow: /uploads/
+
+# Allow Bingbot
+User-agent: Bingbot
+Allow: /
 
 # Sitemaps
 Sitemap: https://pmjewellers.com/sitemap.xml

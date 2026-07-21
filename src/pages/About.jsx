@@ -146,8 +146,8 @@ export default function About() {
     <>
       <SEO
         title="About PM Jewellers — Wholesale Silver Jewellery, Manekchowk, Ahmedabad"
-        description="Learn about PM Jewellers: Established in 2005, trusted wholesaler of pure silver jewellery, antique articles, and designer collections. Based in Manekchowk, Ahmedabad since 2005."
-        keywords="PM Jewellers about us, silver jewelers Mumbai, silver wholesale supplier, antique jewellery manufacturer, Manekchowk Ahmedabad, Bhavik Jain"
+        description="Learn about PM Jewellers: Established in 2005, trusted wholesaler of pure silver jewellery, antique articles, and designer collections. Silver juda, payal, kamarband, purse, bangles, necklace, earrings, rings. Based in Manekchowk, Ahmedabad."
+        keywords="PM Jewellers about us, silver jewellery Ahmedabad, silver wholesale supplier, antique jewellery manufacturer, Manekchowk Ahmedabad, Bhavik Jain, PM Jewellers silver, silver juda, silver payal, silver bangles"
         url="/about"
         type="website"
         jsonLd={{

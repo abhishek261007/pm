@@ -197,8 +197,8 @@ export default function Contact() {
     <>
       <SEO
         title="Contact PM Jewellers — Wholesale Silver Jewellery, Ahmedabad"
-        description="Get in touch with PM Jewellers. We're located in Manekchowk, Ahmedabad and ship nationwide. Contact us for silver jewellery wholesale inquiries."
-        keywords="PM Jewellers contact, silver jewellers Ahmedabad, wholesale silver contact, Manekchowk jewellers, silver jewellery suppliers"
+        description="Get in touch with PM Jewellers. We're located in Manekchowk, Ahmedabad and ship nationwide. Contact us for silver jewellery wholesale inquiries — silver juda, payal, bangles, rings, earrings, necklace."
+        keywords="PM Jewellers contact, silver jewellers Ahmedabad, wholesale silver contact, Manekchowk jewellers, silver jewellery suppliers, PM Jewellers phone, silver jewellery Gujarat"
         url="/contact"
         type="website"
         jsonLd={{

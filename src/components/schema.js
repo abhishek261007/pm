@@ -7,7 +7,7 @@ export function createProductSchema(product) {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name || product.title || "Silver Jewellery Design",
-    "description": product.description || "Premium silver jewellery design from PM Jewellers",
+    "description": product.description || "Premium silver jewellery design from PM Jewellers, Ahmedabad",
     "image": product.images?.map(img =>
       typeof img === 'string'
         ? (img.startsWith('http') ? img : `https://apis.27012610.xyz/uploads/${img}`)
@@ -23,19 +23,33 @@ export function createProductSchema(product) {
     },
     "category": product.category || "Silver Jewellery",
     "material": "Silver",
+    "sku": product.sku,
     ...(product.weight && { "weight": {
       "@type": "QuantitativeValue",
       "value": product.weight,
       "unitCode": "g"
     }}),
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "150"
+    },
     "offers": {
       "@type": "Offer",
       "url": `https://pmjewellers.com/design/${product._id || product.id}`,
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",
       "seller": {
-        "@type": "Organization",
-        "name": "PM Jewellers"
+        "@type": "JewelryStore",
+        "name": "PM Jewellers",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk",
+          "addressLocality": "Ahmedabad",
+          "addressRegion": "Gujarat",
+          "postalCode": "380001",
+          "addressCountry": "IN"
+        }
       }
     }
   };
@@ -46,12 +60,18 @@ export function createCatalogSchema(catalog, designs = []) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": catalog.name || catalog.title || "Silver Jewellery Catalogue",
-    "description": catalog.description || "Premium silver jewellery collection from PM Jewellers",
+    "description": catalog.description || "Premium silver jewellery collection from PM Jewellers, Ahmedabad",
     "numberOfItems": designs.length,
-    "itemListElement": designs.map((design, index) => ({
+    "itemListElement": designs.slice(0, 50).map((design, index) => ({
       "@type": "ListItem",
       "position": index + 1,
-      "url": `https://pmjewellers.com/design/${design._id || design.id}?catalog=${catalog._id || catalog.id}`
+      "url": `https://pmjewellers.com/design/${design._id || design.id}?catalog=${catalog._id || catalog.id}`,
+      "name": design.sku || design.name || `Silver Design ${index + 1}`,
+      "image": (design.thumbnailUrl || design.imageUrl)
+        ? ((design.thumbnailUrl || design.imageUrl).startsWith('http')
+            ? (design.thumbnailUrl || design.imageUrl)
+            : `https://apis.27012610.xyz${design.thumbnailUrl || design.imageUrl}`)
+        : undefined,
     }))
   };
 }

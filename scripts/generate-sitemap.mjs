@@ -4,7 +4,7 @@
  * Builds a comprehensive, SEO-optimized sitemap with:
  *  - <lastmod> timestamps from API data
  *  - Proper <priority> hierarchy
- *  - <image:image> entries for design pages (Google Image Search)
+ *  - <image:image> entries with keyword-rich titles/captions for Google Image Search
  *  - Catalog listing pages as separate URLs
  *  - Sitemap index when > 5000 URLs (Google's recommended split)
  */
@@ -14,6 +14,25 @@ const SITE = 'https://pmjewellers.com';
 const OUT  = 'public/sitemap.xml';
 const OUT_INDEX = 'public/sitemap-index.xml';
 const MAX_PER_SITEMAP = 5000; // Google recommends max 50,000, but smaller is faster to parse
+
+// ── KEYWORD MAPS for rich image metadata ──
+const CATEGORY_KEYWORDS = {
+  'silver': ['silver jewellery', 'silver jewelry', 'pure silver', 'sterling silver', 'hallmarked silver', 'silver ornaments'],
+  'juda': ['silver juda', 'juda pin', 'antique juda', 'bridal juda', 'hair juda', 'bun pin', 'hair accessories', 'juda for wedding'],
+  'payal': ['silver payal', 'silver anklet', 'anklets for women', 'antique payal', 'bridal payal', 'heavy payal', 'oxidised payal'],
+  'kamarband': ['silver kamarband', 'leg chain', 'anklet chain', 'waist chain'],
+  'purse': ['silver purse', 'silver clutch', 'antique purse', 'bridal purse', 'ethnic purse', 'handbag', 'party purse'],
+  'bangles': ['silver bangles', 'silver bracelet', 'kada', 'antique bangles', 'bridal bangles', 'handmade bangles', 'wrist jewellery'],
+  'necklace': ['silver necklace', 'silver chain', 'silver pendant', 'antique necklace', 'choker', 'temple jewellery', 'bridal necklace'],
+  'earrings': ['silver earrings', 'jhumka', 'silver jhumka', 'antique earrings', 'stud earrings', 'hoop earrings', 'oxidised earrings'],
+  'rings': ['silver ring', 'finger ring', 'antique ring', 'couple ring', 'adjustable ring', 'sterling silver ring'],
+  'antique': ['antique silver jewellery', 'antique ornaments', 'traditional indian silver'],
+  'bridal': ['bridal silver jewellery', 'wedding jewellery', 'wedding accessories', 'bridal collection'],
+  'designer': ['designer silver jewellery', 'designer collection', 'premium silver'],
+};
+
+const SITE_NAME = 'PM Jewellers';
+const LOCATION = 'Ahmedabad, Gujarat';
 
 function today() {
   return new Date().toISOString().split('T')[0]; // YYYY-MM-DD
@@ -26,6 +45,37 @@ function escapeXml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
+}
+
+/**
+ * Generate keyword-rich image title and caption from design data.
+ * Tries to match design name/catalog name to known category keywords.
+ */
+function generateImageMeta(design, catalogName) {
+  const name = (design.name || design.title || '').toLowerCase();
+  const cat = (catalogName || design.catalogName || design.category || '').toLowerCase();
+  const combined = `${name} ${cat}`;
+
+  // Find matching categories
+  const matchedCategories = [];
+  for (const [key, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (combined.includes(key) || cat.includes(key)) {
+      matchedCategories.push(...keywords.slice(0, 3));
+    }
+  }
+
+  // Fallback keywords if no match
+  if (matchedCategories.length === 0) {
+    matchedCategories.push('silver jewellery', 'handcrafted silver', 'PM Jewellers');
+  }
+
+  const title = design.name || design.title || design.sku || `Silver Design`;
+  const uniqueKeywords = [...new Set(matchedCategories)].slice(0, 6);
+
+  return {
+    title: `${title} — ${uniqueKeywords.join(', ')} | ${SITE_NAME}`,
+    caption: `${title} silver jewellery design by ${SITE_NAME}, ${LOCATION}. ${uniqueKeywords.slice(0, 4).join(', ')}. Wholesale silver jewellery.`,
+  };
 }
 
 function urlEntry({ loc, priority, changefreq, lastmod, images }) {
@@ -67,7 +117,7 @@ ${sitemaps.map(s => `  <sitemap>
 async function main() {
   const todayStr = today();
 
-  // ── STATIC PAGES ──
+  // ── STATIC PAGES with keyword-rich descriptions ──
   const urls = [
     {
       loc: `${SITE}/`,
@@ -83,6 +133,12 @@ async function main() {
     },
     {
       loc: `${SITE}/about`,
+      priority: 0.6,
+      changefreq: 'monthly',
+      lastmod: todayStr,
+    },
+    {
+      loc: `${SITE}/contact`,
       priority: 0.6,
       changefreq: 'monthly',
       lastmod: todayStr,
@@ -125,17 +181,38 @@ async function main() {
                 lastmod: d.updatedAt ? d.updatedAt.split('T')[0] : todayStr,
               };
 
-              // Add image entries for Google Image Search indexing
+              // Add image entries with keyword-rich metadata for Google Image Search
               if (d.images && d.images.length) {
-                designUrl.images = d.images.map((img, idx) => ({
-                  loc: typeof img === 'string'
+                const meta = generateImageMeta(d, cat.name);
+                designUrl.images = d.images.map((img, idx) => {
+                  const imgLoc = typeof img === 'string'
                     ? (img.startsWith('http') ? img : `${API}/uploads/${img}`)
-                    : (img.url || img.src || ''),
-                  title: d.name || d.title || `Silver Design ${d._id}`,
-                  caption: d.category
-                    ? `${d.category} silver jewellery by PM Jewellers, Ahmedabad`
-                    : 'Wholesale silver jewellery design by PM Jewellers',
-                })).filter(i => i.loc);
+                    : (img.url || img.src || '');
+                  if (!imgLoc) return null;
+                  return {
+                    loc: imgLoc,
+                    title: idx === 0 ? meta.title : `${meta.title} — Image ${idx + 1}`,
+                    caption: meta.caption,
+                  };
+                }).filter(Boolean);
+              }
+
+              // Also add thumbnail image if available
+              if (d.thumbnailUrl || d.imageUrl) {
+                if (!designUrl.images) designUrl.images = [];
+                const thumbUrl = (d.thumbnailUrl || d.imageUrl).startsWith('http')
+                  ? (d.thumbnailUrl || d.imageUrl)
+                  : `${API}${d.thumbnailUrl || d.imageUrl}`;
+                const meta = generateImageMeta(d, cat.name);
+                // Check if thumbnail is already in images
+                const isDuplicate = designUrl.images.some(i => i.loc === thumbUrl);
+                if (!isDuplicate) {
+                  designUrl.images.unshift({
+                    loc: thumbUrl,
+                    title: meta.title,
+                    caption: meta.caption,
+                  });
+                }
               }
 
               urls.push(designUrl);

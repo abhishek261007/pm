@@ -658,8 +658,8 @@ export default function CatalogDetails() {
     <>
       <SEO 
         title={`${catalogName} — Silver Jewellery Collection`}
-        description={`Explore ${filteredDesigns.length}+ premium silver jewellery designs in the ${catalogName} collection. Wholesale silver ornaments from PM Jewellers, Ahmedabad.`}
-        keywords={`${catalogName}, silver jewellery, wholesale silver, ${catalogName} designs, PM Jewellers, Ahmedabad`}
+        description={`Explore ${filteredDesigns.length}+ premium silver jewellery designs in the ${catalogName} collection. Wholesale silver ornaments from PM Jewellers, Ahmedabad. Buy silver jewellery online — antique, bridal, designer, handcrafted.`}
+        keywords={`${catalogName}, silver jewellery, wholesale silver, ${catalogName} designs, PM Jewellers, Ahmedabad, Gujarat, buy silver jewellery online, antique silver, bridal silver, designer silver`}
         url={`/catalog/${id}`}
         breadcrumbs={[
           { name: 'Home', url: '/' },
