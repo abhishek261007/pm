@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/generate-sitemap.mjs && vite build",
+    "build:prod": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -29,6 +30,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "puppeteer": "^25.3.0",
     "vite": "^8.0.12",
     "vite-plugin-pwa": "^1.3.0"
   }
