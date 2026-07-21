@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import TabBar from '../components/TabBar';
+import SEO from '../components/SEO';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -143,6 +144,51 @@ export default function About() {
 
   return (
     <>
+      <SEO
+        title="About PM Jewellers — Wholesale Silver Jewellery, Manekchowk, Ahmedabad"
+        description="Learn about PM Jewellers: Established in 2005, trusted wholesaler of pure silver jewellery, antique articles, and designer collections. Based in Manekchowk, Ahmedabad since 2005."
+        keywords="PM Jewellers about us, silver jewelers Mumbai, silver wholesale supplier, antique jewellery manufacturer, Manekchowk Ahmedabad, Bhavik Jain"
+        url="/about"
+        type="website"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "PM Jewellers",
+          "image": "https://pmjewellers.com/logo.png",
+          "telephone": "+919712779146",
+          "telephoneAlt": "+919662279707",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Chandidham Complex, 1204/F2, MGH Road",
+            "addressLocality": "Old City",
+            "addressRegion": "GJ",
+            "postalCode": "380001",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 23.0409,
+            "longitude": 72.5408
+          },
+          "url": "https://pmjewellers.com",
+          "sameAs": [
+            "https://play.google.com/store/apps/details?id=com.abhishek261007.pmj"
+          ],
+          "priceRange": "INR ₹",
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "09:00",
+              "closes": "20:00"
+            }
+          ]
+        }}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'About', url: '/about' }
+        ]}
+      />
       <style>{styles}</style>
       <div className="about-root">
 
@@ -168,7 +214,7 @@ export default function About() {
             <h2 className="card-title">Store Info</h2>
             <div className="info-grid">
               <div className="info-row">
-                <span className="info-icon">📍</span>
+                <span className="info-icon" aria-hidden="true">📍</span>
                 <div className="info-content">
                   <p className="info-label">Address</p>
                   <p className="info-value">
@@ -219,6 +265,18 @@ export default function About() {
             <p className="story-text">
               We ship pan-India to wholesalers and retailers nationwide.
             </p>
+            <div style={{ textAlign: 'center', marginTop: '12px' }}>
+              <Link to="/contact" style={{
+                fontSize: '11px',
+                fontWeight: '400',
+                color: '#8B1A4A',
+                textDecoration: 'none',
+                letterSpacing: '1px',
+                textTransform: 'uppercase'
+              }}>
+                Contact for shipping rates
+              </Link>
+            </div>
           </div>
 
         </div>

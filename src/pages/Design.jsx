@@ -3,6 +3,7 @@ import { useParams, useSearchParams, useLocation, Link } from 'react-router-dom'
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
+import SEO, { createProductSchema } from '../components/SEO';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -614,8 +615,44 @@ export default function Design() {
     });
   };
 
+  // Build image URL for SEO
+  const seoImageUrl = currentDesign?.imageUrl?.startsWith('http')
+    ? currentDesign.imageUrl
+    : currentDesign?.imageUrl
+      ? `https://apis.27012610.xyz${currentDesign.imageUrl}`
+      : 'https://pmjewellers.com/logo.png';
+
   return (
     <>
+      <SEO 
+        title={currentDesign ? `${catalogName} — ${currentDesign.sku}` : 'Silver Jewellery Design'}
+        description={currentDesign 
+          ? `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g). Premium wholesale silver from PM Jewellers, Ahmedabad.`
+          : 'Explore premium silver jewellery designs from PM Jewellers, Ahmedabad.'
+        }
+        keywords={`${catalogName}, ${currentDesign?.sku}, silver jewellery, ${currentDesign?.weight}g, PM Jewellers, Ahmedabad, wholesale silver`}
+        image={seoImageUrl}
+        url={currentDesign ? `/design/${currentDesign._id}?catalog=${catalogId}` : `/design/${id}`}
+        type="product"
+        breadcrumbs={catalogId ? [
+          { name: 'Home', url: '/' },
+          { name: 'Catalogues', url: '/listing' },
+          { name: catalogName, url: `/catalog/${catalogId}` },
+          { name: currentDesign?.sku || 'Design', url: `/design/${currentDesign?._id}?catalog=${catalogId}` }
+        ] : [
+          { name: 'Home', url: '/' },
+          { name: currentDesign?.sku || 'Design', url: `/design/${id}` }
+        ]}
+        jsonLd={currentDesign ? createProductSchema({
+          _id: currentDesign._id,
+          name: `${catalogName} — ${currentDesign.sku}`,
+          description: `Handcrafted ${catalogName} silver jewellery design (${currentDesign.sku}, ${currentDesign.weight}g)`,
+          images: currentDesign.imageUrl ? [currentDesign.imageUrl] : [],
+          sku: currentDesign.sku,
+          weight: currentDesign.weight,
+          category: catalogName
+        }) : null}
+      />
       <style>{styles}</style>
       <div className="design-root">
 
@@ -665,21 +702,6 @@ export default function Design() {
         {/* CONTENT */}
         {!loading && currentDesign && (
           <>
-          <script type="application/ld+json" dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org/',
-              '@type': 'Product',
-              name: `${catalogName} — ${currentDesign.sku}`,
-              description: `Handcrafted ${catalogName} silver item (${currentDesign.sku})`,
-              image: currentDesign.imageUrl?.startsWith('http')
-                ? currentDesign.imageUrl
-                : `https://apis.27012610.xyz${currentDesign.imageUrl}`,
-              sku: currentDesign.sku,
-              weight: currentDesign.weight ? { '@type': 'QuantitativeValue', value: currentDesign.weight, unitCode: 'GRM' } : undefined,
-              brand: { '@type': 'Brand', name: 'Silver Antique Juda' },
-              offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', price: '0', priceCurrency: 'INR' },
-            }, null, 2),
-          }} />
           <div className="page-body">
             <div
               className="swipe-area"
@@ -701,7 +723,7 @@ export default function Design() {
                       e.currentTarget.src =
                         'https://placehold.co/1000x1000/F7F6F3/C8C8C4?text=No+Image';
                     }}
-                    alt={`${catalogName} ${currentDesign.sku} — Handcrafted Silver Antique Juda`}
+                    alt={`Premium ${catalogName} silver ${currentDesign.sku} ${currentDesign.weight}g design, handcrafted antique jewellery from PM Jewellers`}
                     onClick={() => openModal(
                       currentDesign.imageUrl?.startsWith('http')
                         ? currentDesign.imageUrl
@@ -778,8 +800,10 @@ export default function Design() {
             <img
               className="zoom-image"
               src={modalImageUrl}
-              alt="Zoom"
+              alt={`Full size ${catalogName} ${currentDesign.sku} ${currentDesign.weight}g silver jewellery design`}
               draggable={false}
+              width={1200}
+              height={1200}
               style={{ transform: modalTransform }}
               onTouchStart={handleImgTouchStart}
               onTouchMove={handleImgTouchMove}

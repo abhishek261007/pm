@@ -8,6 +8,7 @@ import ScrollReveal from '../components/home/ScrollReveal';
 import CategoryShowcase from '../components/home/CategoryShowcase';
 import TrustMarquee from '../components/home/TrustMarquee';
 import LuxeFooter from '../components/home/LuxeFooter';
+import SEO from '../components/SEO';
 import { FEATURED, GALLERY, PDFS } from '../data/reels';
 import { reelPosterUrl, pdfCoverUrl } from '../utils/media';
 import { Link } from 'react-router-dom';
@@ -16,6 +17,13 @@ import '../styles/home.css';
 export default function Home() {
   return (
     <>
+      <SEO 
+        title="Wholesale Silver & Antique Jewellery"
+        description="PM Jewellers is a trusted wholesaler of pure silver ornaments, antique jewellery, and 100+ design catalogues. Supplying retailers across India since 2005 from Manekchowk, Ahmedabad."
+        keywords="silver jewellery wholesale, silver ornaments, antique jewellery, wholesale silver, PM Jewellers, Manekchowk, Ahmedabad, silver 925, silver articles, bridal jewellery, traditional silver"
+        url="/"
+        type="website"
+      />
       <div className="home-root">
         <Hero />
 

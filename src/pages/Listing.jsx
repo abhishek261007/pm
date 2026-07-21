@@ -1,8 +1,9 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import TabBar from '../components/TabBar';
+import SEO from '../components/SEO';
 
 const API_BASE = 'https://apis.27012610.xyz';
 
@@ -282,10 +283,7 @@ export default function Listing() {
   const [catalogs, setCatalogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  
-  const [copiedId, setCopiedId] = useState(null);
-  const [showToast, setShowToast] = useState(false);
-  const { cart } = useCart();
+  useCart();
 
   const fetchData = useCallback(async () => {
     setError(false);
@@ -310,25 +308,19 @@ export default function Listing() {
     loadInitial();
   }, [loadInitial]);
 
-  const cartCount = cart?.length || 0;
-
-  const handleShare = useCallback((e, catalogId) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const url = `${window.location.origin}/catalog/${catalogId}`;
-    if (navigator.share) {
-      navigator.share({ title: 'PM Jewellers', url });
-    } else {
-      navigator.clipboard.writeText(url).then(() => {
-        setCopiedId(catalogId);
-        setShowToast(true);
-        setTimeout(() => { setCopiedId(null); setShowToast(false); }, 2000);
-      });
-    }
-  }, []);
-
   return (
     <>
+      <SEO
+        title="Catalogues — Silver Jewellery Collections — PM Jewellers"
+        description="Browse 100+ collections of premium silver jewellery designs. Wholesale silver ornaments, antique jewellery catalogues from PM Jewellers, Manekchowk, Ahmedabad."
+        keywords="silver jewellery collections, wholesale catalogs, silver ornaments catalog, antique jewellery designs, PM Jewellers catalogues, Ahmedabad silver, catalog search"
+        url="/listing"
+        type="website"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Catalogues', url: '/listing' }
+        ]}
+      />
       <style>{styles}</style>
       <div className="home-root">
 
@@ -391,7 +383,14 @@ export default function Listing() {
                     <div className="card">
                       <div className="card-hero">
                         {heroUri ? (
-                          <img src={heroUri} alt={catalog.name} loading="lazy" onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/F7F6F3/C8C8C4?text=No+Image'; }} />
+                          <img
+                            src={heroUri}
+                            alt={`Silver ${catalog.name} collection gallery, PM Jewellers`}
+                            width={400}
+                            height={400}
+                            loading="lazy"
+                            onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/F7F6F3/C8C8C4?text=No+Image'; }}
+                          />
                         ) : (
                           <span className="hero-placeholder">◇</span>
                         )}

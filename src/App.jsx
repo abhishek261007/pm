@@ -1,6 +1,7 @@
 import {
   Routes,
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 
 import Home from './pages/Home';
@@ -12,6 +13,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Wishlist from './pages/Wishlist';
 import About from './pages/About';
 import AppRedirect from './pages/AppRedirect';
+import NotFound from './pages/NotFound';
+import Contact from './pages/Contact';
 
 export default function App() {
   return (
@@ -25,6 +28,9 @@ export default function App() {
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/about" element={<About />} />
       <Route path="/app" element={<AppRedirect />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/404" element={<NotFound />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 }

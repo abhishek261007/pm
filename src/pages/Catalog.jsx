@@ -3,6 +3,7 @@ import { useParams, Link, useLocation, useNavigate, useSearchParams } from 'reac
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
+import SEO, { createCatalogSchema } from '../components/SEO';
 
 const API_BASE = 'https://apis.27012610.xyz';
 const PLAY_STORE_URL =
@@ -441,10 +442,12 @@ const DesignCard = memo(function DesignCard({ item, catalogId, catalogName, onAd
       >
         <div className="card-image-wrap">
           {imageUri ? (
-            <img 
-              className="card-image" 
-              src={imageUri} 
-              alt={item.catalogName || 'Design'} 
+            <img
+              className="card-image"
+              src={imageUri}
+              alt={`Silver ${catalogName} design by PM Jewellers, SKU ${item.sku}, ${item.weight}g`}
+              width={400}
+              height={400}
               loading="lazy"
             />
           ) : (
@@ -653,6 +656,18 @@ export default function CatalogDetails() {
 
   return (
     <>
+      <SEO 
+        title={`${catalogName} — Silver Jewellery Collection`}
+        description={`Explore ${filteredDesigns.length}+ premium silver jewellery designs in the ${catalogName} collection. Wholesale silver ornaments from PM Jewellers, Ahmedabad.`}
+        keywords={`${catalogName}, silver jewellery, wholesale silver, ${catalogName} designs, PM Jewellers, Ahmedabad`}
+        url={`/catalog/${id}`}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Catalogues', url: '/listing' },
+          { name: catalogName, url: `/catalog/${id}` }
+        ]}
+        jsonLd={createCatalogSchema({ _id: id, name: catalogName }, filteredDesigns)}
+      />
       <style>{styles}</style>
       <div className="catalog-root">
 
