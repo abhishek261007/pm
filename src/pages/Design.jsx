@@ -9,8 +9,8 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   .design-root {
-    height: 100dvh;
-    overflow: hidden;
+    min-height: 100dvh;
+    overflow-x: hidden;
     background: #F7F6F3;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
@@ -119,9 +119,9 @@ const styles = `
     width: 100%;
     margin: 0 auto;
     flex: 1;
-    min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   /* ── SWIPE AREA ── */
@@ -147,7 +147,8 @@ const styles = `
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     margin-bottom: 12px;
     flex: 1;
-    min-height: 0;
+    min-height: 280px;
+    aspect-ratio: 1 / 1;
   }
   .design-image {
     width: 100%; height: 100%;
@@ -471,10 +472,8 @@ function resolveCatalogName(stateValue, design) {
 }
 
 // Generate contextual product content based on catalog name and product attributes
-function generateProductContent(catalogName, design) {
+function generateProductContent(catalogName) {
   const name = (catalogName || '').toLowerCase();
-  const sku = design?.sku || '';
-  const weight = design?.weight || '';
 
   // Category-specific content
   const categories = {
@@ -672,6 +671,7 @@ export default function Design() {
   }, [id]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (catalogIdFromDesign) fetchDesigns(catalogIdFromDesign);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalogIdFromDesign]);
@@ -958,7 +958,7 @@ export default function Design() {
 
               {/* Product Content */}
               {(() => {
-                const content = generateProductContent(catalogName, currentDesign);
+                const content = generateProductContent(catalogName);
                 return (
                   <div className="product-content">
                     <h1>{catalogName} — Silver {content.type}</h1>
