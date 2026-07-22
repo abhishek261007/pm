@@ -132,8 +132,6 @@ function designHtml(baseHtml, design, catalogName) {
   const keywords = `${catalogName}, ${design.sku}, silver jewellery, ${design.weight}g, ${SITE_NAME}, Ahmedabad, Gujarat, wholesale silver, antique silver, bridal silver`;
   const imgUrl = imageUrl(design.imageUrl);
   const canonical = `${SITE}/design/${design._id}`;
-  const cat = getCatalogContent(catalogName);
-
   const head = `<title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}">
     <meta name="keywords" content="${esc(keywords)}">
@@ -171,21 +169,6 @@ function designHtml(baseHtml, design, catalogName) {
           <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Tag</p><p style="font-size:1.2rem;font-weight:200;margin:0">${esc(design.sku)}</p></div>
           <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Weight</p><p style="font-size:1.2rem;font-weight:200;margin:0">${design.weight}g</p></div>
         </div>
-      </div>
-      <div style="background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:16px;margin-bottom:16px">
-        <h2 style="font-size:18px;font-weight:400;margin:0 0 12px">${esc(catalogName)} — Silver ${cat.type}</h2>
-        <p style="font-size:13px;font-weight:300;color:#4A4A4A;line-height:1.6;margin:0 0 16px">${esc(cat.description)}</p>
-        <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#8A7A6B;margin:0 0 8px">Features</p>
-        <ul style="list-style:none;padding:0;margin:0 0 16px">${cat.features.map(f => `<li style="font-size:12px;font-weight:400;padding:6px 0;border-bottom:1px solid #F0E8E0">◆ ${esc(f)}</li>`).join('')}</ul>
-        <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#8A7A6B;margin:0 0 8px">Specifications</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">
-          <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Material</p><p style="font-size:1.2rem;font-weight:200;margin:0">Pure Silver</p></div>
-          <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Type</p><p style="font-size:1.2rem;font-weight:200;margin:0">${esc(cat.type)}</p></div>
-        </div>
-        <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#8A7A6B;margin:0 0 8px">Usage</p>
-        <p style="font-size:12px;font-weight:300;color:#6A6A6A;line-height:1.5;margin:0 0 16px">${esc(cat.usage)}</p>
-        <p style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#8A7A6B;margin:0 0 8px">Care Instructions</p>
-        <p style="font-size:12px;font-weight:300;color:#6A6A6A;line-height:1.5;margin:0">${esc(cat.care)}</p>
       </div>
     </div>
   </div></div>`;
