@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import TabBar from '../components/TabBar';
+import OrderIcon from '../components/OrderIcon';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,19 +63,22 @@ const styles = `
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1px;
+    gap: 3px;
     text-decoration: none;
     flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.15s ease;
   }
-
-  .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
+  .header-cart-btn:hover {
+    background: rgba(255,255,255,0.22);
+  }
   .header-cart-label {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.95);
+    line-height: 1;
   }
 
   /* Page Body */
@@ -236,10 +241,10 @@ export default function Contact() {
               <p className="header-eyebrow">Get in touch</p>
               <h1 className="header-title">Contact Us</h1>
             </div>
-            <a className="header-cart-btn" href="/cart">
-              <span style={{fontSize: '28px', lineHeight: 1}}>🛍</span>
+            <Link className="header-cart-btn" to="/cart">
+              <OrderIcon />
               <span className="header-cart-label">My Order</span>
-            </a>
+            </Link>
           </div>
         </div>
 

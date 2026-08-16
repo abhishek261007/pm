@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import TabBar from '../components/TabBar';
 
@@ -64,19 +64,22 @@ const styles = `
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1px;
+    gap: 3px;
     text-decoration: none;
     flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.15s ease;
   }
-
-  .header-cart-btn span:first-child { font-size: 22px !important; line-height: 1 !important; }
+  .header-cart-btn:hover {
+    background: rgba(255,255,255,0.22);
+  }
   .header-cart-label {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.95);
+    line-height: 1;
   }
 
   /* Page Body */
@@ -170,10 +173,12 @@ export default function NotFound() {
               <p className="header-eyebrow">Error</p>
               <h1 className="header-title">Page Not Found</h1>
             </div>
-            <a className="header-cart-btn" href="/">
-              <span style={{fontSize: '28px', lineHeight: 1}}>🛍</span>
+            <Link className="header-cart-btn" to="/">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block', flexShrink: 0 }}>
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
               <span className="header-cart-label">Home</span>
-            </a>
+            </Link>
           </div>
         </div>
 

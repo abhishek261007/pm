@@ -8,7 +8,6 @@ import ScrollReveal from '../components/home/ScrollReveal';
 import CategoryShowcase from '../components/home/CategoryShowcase';
 import TrustMarquee from '../components/home/TrustMarquee';
 import LuxeFooter from '../components/home/LuxeFooter';
-import SEOContent from '../components/home/SEOContent';
 import SEO from '../components/SEO';
 import { FEATURED, GALLERY, PDFS } from '../data/reels';
 import { reelPosterUrl, pdfCoverUrl } from '../utils/media';
@@ -115,9 +114,6 @@ export default function Home() {
             </div>
           </ScrollReveal>
         </section>
-
-        {/* ── KEYWORD-RICH PRODUCT CATEGORIES (SEO) ── */}
-        <SEOContent />
 
         {/* ── TRUST MARQUEE ── */}
         <TrustMarquee />
