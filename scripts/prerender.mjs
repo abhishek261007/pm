@@ -158,16 +158,16 @@ function designHtml(baseHtml, design, catalogName) {
     ])}</script>
     <script type="application/ld+json">${productSchema(design, catalogName)}</script>`;
 
-  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
-    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:24px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px">
-      <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(catalogName)}</h1>
+  const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
+    <div style="background:#FCF9F1;padding:24px 20px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(catalogName)}</h1>
     </div>
     <div style="padding:16px;max-width:600px;margin:0 auto">
-      <img src="${imgUrl}" alt="Premium ${esc(catalogName)} silver ${design.sku} ${design.weight}g design" style="width:100%;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);margin-bottom:16px" width="600" height="600" fetchpriority="high">
-      <div style="background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:16px;margin-bottom:16px">
+      <img src="${imgUrl}" alt="Premium ${esc(catalogName)} silver ${design.sku} ${design.weight}g design" style="width:100%;border-radius:18px;border:1px solid #E4D6B6;box-shadow:0 10px 30px rgba(30,24,16,0.07);margin-bottom:14px" width="600" height="600" fetchpriority="high">
+      <div style="background:#FFFDF7;border:1px solid #E4D6B6;border-radius:18px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:16px;margin-bottom:14px">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-          <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Tag</p><p style="font-size:1.2rem;font-weight:200;margin:0">${esc(design.sku)}</p></div>
-          <div style="background:#F5F0EB;border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B;margin:0 0 4px">Weight</p><p style="font-size:1.2rem;font-weight:200;margin:0">${design.weight}g</p></div>
+          <div style="background:rgba(185,138,47,0.07);border:1px solid rgba(185,138,47,0.18);border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8C6A24;margin:0 0 4px">Tag</p><p style="font-size:1.2rem;font-weight:200;margin:0">${esc(design.sku)}</p></div>
+          <div style="background:rgba(185,138,47,0.07);border:1px solid rgba(185,138,47,0.18);border-radius:10px;padding:10px"><p style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8C6A24;margin:0 0 4px">Weight</p><p style="font-size:1.2rem;font-weight:200;margin:0">${design.weight}g</p></div>
         </div>
       </div>
     </div>
@@ -206,23 +206,23 @@ function catalogHtml(baseHtml, catalog, designs) {
 
   const cards = designs.slice(0, 50).map(d => {
     const img = imageUrl(d.thumbnailUrl || d.imageUrl);
-    return `<a href="/design/${d._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:4px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
-      <img src="${img}" alt="Silver ${esc(catalog.name)} ${esc(d.sku)} ${d.weight}g" style="width:100%;aspect-ratio:1;object-fit:contain;border-radius:4px" loading="lazy" width="400" height="400">
-      <div style="padding:4px;display:flex;gap:6px">
-        <div style="flex:1;background:#F5F0EB;border-radius:8px;padding:6px 8px"><span style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B">SKU</span><br><span style="font-size:11px;font-weight:500;color:#2C1810">${esc(d.sku)}</span></div>
-        <div style="flex:1;background:#F5F0EB;border-radius:8px;padding:6px 8px"><span style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8A7A6B">Wt</span><br><span style="font-size:11px;font-weight:500;color:#2C1810">${d.weight}g</span></div>
+    return `<a href="/design/${d._id}" style="text-decoration:none;display:block;background:#FFFDF7;border:1px solid #E4D6B6;border-radius:20px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:12px">
+      <img src="${img}" alt="Silver ${esc(catalog.name)} ${esc(d.sku)} ${d.weight}g" style="width:100%;aspect-ratio:1;object-fit:contain;border-radius:14px" loading="lazy" width="400" height="400">
+      <div style="padding:10px 4px 4px;display:flex;gap:6px">
+        <div style="flex:1;background:rgba(185,138,47,0.07);border:1px solid rgba(185,138,47,0.18);border-radius:8px;padding:6px 8px"><span style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8C6A24">SKU</span><br><span style="font-size:11px;font-weight:500;color:#1E1810">${esc(d.sku)}</span></div>
+        <div style="flex:1;background:rgba(185,138,47,0.07);border:1px solid rgba(185,138,47,0.18);border-radius:8px;padding:6px 8px"><span style="font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#8C6A24">Wt</span><br><span style="font-size:11px;font-weight:500;color:#1E1810">${d.weight}g</span></div>
       </div>
     </a>`;
   }).join('\n          ');
 
-  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
-    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:24px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px">
-      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,0.85);margin:0 0 2px">Collection</p>
-      <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(catalog.name)}</h1>
+  const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
+    <div style="background:#FCF9F1;padding:24px 20px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
+      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:#8C6A24;margin:0 0 2px">Collection</p>
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(catalog.name)}</h1>
     </div>
     <div style="padding:16px">
-      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8A7A6B;margin:0 0 14px">DESIGNS <span style="font-weight:600;color:#8B1A4A">${designs.length}</span></p>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px">
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8C7C64;margin:0 0 14px">DESIGNS <span style="font-weight:600;color:#8C6A24">${designs.length}</span></p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
           ${cards}
       </div>
     </div>
@@ -239,9 +239,9 @@ function homeHtml(baseHtml, catalogs) {
 
   const catCards = catalogs.slice(0, 12).map(c => {
     const img = imageUrl(c.heroImageUrl);
-    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:4px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
-      <img src="${img}" alt="Silver ${esc(c.name)} collection, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px" loading="lazy" width="400" height="400">
-      <div style="padding:6px 4px;text-align:center"><span style="font-size:12px;font-weight:500;color:#2C1810">${esc(c.name)}</span></div>
+    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFDF7;border:1px solid #E4D6B6;border-radius:20px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:12px">
+      <img src="${img}" alt="Silver ${esc(c.name)} collection, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px" loading="lazy" width="400" height="400">
+      <div style="padding:10px 4px 4px;text-align:center"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;font-weight:500;color:#1E1810">${esc(c.name)}</span></div>
     </a>`;
   }).join('\n          ');
 
@@ -271,21 +271,21 @@ function homeHtml(baseHtml, catalogs) {
       "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "150", "bestRating": "5" }
     })}</script>`;
 
-  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
-    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:40px 20px 32px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;text-align:center">
-      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,0.75);margin:0 0 4px">Since 2005</p>
-      <h1 style="font-size:32px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0 0 8px">${esc(SITE_NAME)}</h1>
-      <p style="font-size:13px;font-weight:300;color:rgba(255,255,255,0.85);line-height:1.5;margin:0">Wholesale Silver Jewellery — Ahmedabad, Gujarat</p>
+  const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
+    <div style="background:#FCF9F1;padding:48px 20px 36px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px;text-align:center">
+      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:#8C6A24;margin:0 0 8px">Since 2005 · Manekchowk</p>
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:34px;font-weight:500;color:#1E1810;margin:0 0 10px">Jewellery That Becomes Your Legacy</h1>
+      <p style="font-size:13px;font-weight:300;color:#8C7C64;line-height:1.6;margin:0">Handcrafted heirlooms in silver, kundan and polki — made to be inherited.</p>
     </div>
     <div style="padding:20px 16px">
-      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8A7A6B;margin:0 0 14px">CATALOGUES</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8C6A24;margin:0 0 14px">CURATED COLLECTIONS</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
           ${catCards}
       </div>
-      <div style="margin-top:24px;background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:16px">
-        <h2 style="font-size:16px;font-weight:400;margin:0 0 8px">Silver Jewellery Collections</h2>
-        <p style="font-size:12px;font-weight:300;color:#4A4A4A;line-height:1.6;margin:0 0 8px">Explore handcrafted silver juda, payal, kamarband, purse, bangles, necklace, earrings, and rings from PM Jewellers. Pure silver with traditional Indian craftsmanship, available for wholesale.</p>
-        <p style="font-size:12px;font-weight:300;color:#4A4A4A;line-height:1.6;margin:0">Trusted by 500+ retailers across Gujarat. Visit us at Manekchowk, Ahmedabad or shop online.</p>
+      <div style="margin-top:24px;background:#FFFDF7;border:1px solid #E4D6B6;border-radius:18px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:18px">
+        <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:500;margin:0 0 8px">Silver Jewellery Collections</h2>
+        <p style="font-size:12px;font-weight:300;color:#5C5344;line-height:1.6;margin:0 0 8px">Explore handcrafted silver juda, payal, kamarband, purse, bangles, necklace, earrings, and rings from PM Jewellers. Pure silver with traditional Indian craftsmanship, available for wholesale.</p>
+        <p style="font-size:12px;font-weight:300;color:#5C5344;line-height:1.6;margin:0">Trusted by 500+ retailers across Gujarat. Visit us at Manekchowk, Ahmedabad or shop online.</p>
       </div>
     </div>
   </div></div>`;
@@ -301,9 +301,9 @@ function listingHtml(baseHtml, catalogs) {
 
   const cards = catalogs.map(c => {
     const img = imageUrl(c.heroImageUrl);
-    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFBF4;border-radius:8px;box-shadow:0 2px 5px rgba(0,0,0,0.25);padding:6px">
-      <img src="${img}" alt="Silver ${esc(c.name)} collection gallery, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px" loading="lazy" width="400" height="400">
-      <div style="padding:6px 4px"><span style="font-size:12px;font-weight:500;color:#2C1810">${esc(c.name)}</span></div>
+    return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFDF7;border:1px solid #E4D6B6;border-radius:20px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:12px">
+      <img src="${img}" alt="Silver ${esc(c.name)} collection gallery, PM Jewellers" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px" loading="lazy" width="400" height="400">
+      <div style="padding:10px 4px 4px"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:15px;font-weight:500;color:#1E1810">${esc(c.name)}</span></div>
     </a>`;
   }).join('\n          ');
 
@@ -326,13 +326,13 @@ function listingHtml(baseHtml, catalogs) {
       { name: 'Catalogues', url: '/listing' }
     ])}</script>`;
 
-  const body = `<div id="root"><div style="min-height:100vh;background:#F7F6F3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#2C1810">
-    <div style="background:linear-gradient(135deg,#8B1A4A,#1B3A5C,#4A8B7C);padding:24px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px">
-      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:rgba(255,255,255,0.85);margin:0 0 2px">Since 2005</p>
-      <h1 style="font-size:28px;font-weight:200;color:#FFF;letter-spacing:-0.5px;margin:0">${esc(SITE_NAME)}</h1>
+  const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
+    <div style="background:#FCF9F1;padding:24px 20px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
+      <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:#8C6A24;margin:0 0 2px">Since 2005</p>
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(SITE_NAME)}</h1>
     </div>
     <div style="padding:16px">
-      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8A7A6B;margin:0 0 14px">COLLECTIONS <span style="font-weight:600;color:#8B1A4A">${catalogs.length}</span></p>
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8C6A24;margin:0 0 14px">COLLECTIONS <span style="font-weight:600;color:#8C6A24">${catalogs.length}</span></p>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
           ${cards}
       </div>

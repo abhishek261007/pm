@@ -1,6 +1,6 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { background: #8B1A4A; }
+html { background: #F6F0E2; }
 
 body {
   margin: 0;
@@ -19,7 +19,7 @@ body {
   height: 11px;
   z-index: 10000;
   pointer-events: none;
-  background: #8B1A4A;
+  background: #F6F0E2;
   mask-image: linear-gradient(to right, transparent, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, transparent);
 }
