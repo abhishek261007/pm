@@ -107,7 +107,7 @@ const styles = `
   .items-wrap {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 16px;
   }
   .cart-item {

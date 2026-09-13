@@ -151,6 +151,7 @@ const styles = `
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px;
   }
   .wishlist-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(44, 24, 16, 0.12); }
   .card-link {
@@ -161,6 +162,7 @@ const styles = `
   }
   .card-image-wrap {
     aspect-ratio: 1 / 1.1;
+    border-radius: 12px;
     position: relative;
     display: flex;
     align-items: center;

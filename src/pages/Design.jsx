@@ -121,7 +121,7 @@ const styles = `
 
   /* ── PAGE BODY ── */
   .page-body {
-    padding: 12px 12px 16px;
+    padding: 16px 16px 24px;
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
@@ -146,14 +146,14 @@ const styles = `
   .image-wrap {
     background: linear-gradient(135deg, #FFFBF4, #F5F0EB);
     border: 1px solid #EDE6DD;
-    border-radius: 10px;
+    border-radius: 18px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     box-shadow: 0 4px 16px rgba(44, 24, 16, 0.1);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     flex: 1;
     min-height: 280px;
     aspect-ratio: 1 / 1;
@@ -204,7 +204,7 @@ const styles = `
     border-radius: 10px;
     box-shadow: 0 4px 16px rgba(44, 24, 16, 0.1);
     padding: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     flex-shrink: 0;
   }
 
@@ -280,6 +280,17 @@ const styles = `
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 2rem; font-weight: 200; font-style: italic;
     color: #C8C8C4;
+  }
+
+  /* ── SCREEN-READER / CRAWLER ONLY (visually hidden) ── */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* ── TOAST ── */
@@ -861,29 +872,20 @@ export default function Design() {
                 </div>
               </div>
 
-              {/* Craftsmanship */}
-              <div className="craft-block">
-                <p className="craft-kicker">Craftsmanship</p>
-                <p className="craft-title">Hand-finished in Manekchowk</p>
-                <p className="craft-text">
+              {/* SEO-only craft copy: hidden visually, readable by crawlers */}
+              <div className="sr-only">
+                <h2>Craftsmanship — hand-finished in Manekchowk</h2>
+                <p>
                   Every piece is shaped, engraved and polished by heritage silversmiths —
                   no two finishes are exactly alike.
                 </p>
-              </div>
-
-              {/* Materials & styling */}
-              <div className="craft-block">
-                <p className="craft-kicker">Materials & Care</p>
-                <p className="craft-title">Hallmarked silver, made to last</p>
-                <p className="craft-text">
+                <h2>Materials and care — hallmarked silver, made to last</h2>
+                <p>
                   Crafted in hallmarked silver. Store dry, wipe with a soft cloth,
                   and keep away from perfume to preserve the finish.
                 </p>
-              </div>
-              <div className="craft-block">
-                <p className="craft-kicker">Styling</p>
-                <p className="craft-title">From trousseau to festive</p>
-                <p className="craft-text">
+                <h2>Styling — from trousseau to festive</h2>
+                <p>
                   Pairs with silk, velvet and bridal couture — layer with heirlooms
                   for weddings, wear solo for quiet luxury.
                 </p>

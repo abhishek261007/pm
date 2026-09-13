@@ -302,7 +302,7 @@ const styles = `
   .wishlist-btn.active { color: #C53030; }
   .wishlist-btn.inactive { color: #C8C8C4; }
 
-  .card-body { padding: 0; margin-top: 4px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-body { padding: 0; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 
 
 

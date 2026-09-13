@@ -298,3 +298,58 @@ body .related-card {
 .home-root .footer-tagline {
   color: var(--muted);
 }
+
+/* ── SIGNATURE SHAPES: arches, mats & pills ──
+   One language: soft 18–20px cards, matted image frames,
+   pill CTAs, and a Mughal-arch hero moment. */
+body .header-block {
+  border-radius: 0 0 22px 22px;
+}
+body .card,
+body .design-card,
+body .wishlist-card {
+  border-radius: 20px;
+  padding: 12px;
+}
+body .cart-item,
+body .summary-card,
+body .info-card,
+body .contact-card,
+body .faq-item,
+body .product-content,
+body .craft-block {
+  border-radius: 18px;
+}
+body .card-hero,
+body .card-image-wrap,
+body .item-img {
+  border-radius: 14px;
+}
+body .btn-add,
+body .btn-cart,
+body .wa-cta,
+body .browse-btn,
+body .btn-home,
+body .retry-btn,
+body .clear-btn {
+  border-radius: 999px;
+}
+.home-root .featured-item {
+  border-radius: 16px;
+}
+/* Arch-topped hero feature — the heritage signature */
+.home-root .featured-item--hero {
+  border-radius: 150px 150px 18px 18px;
+}
+.home-root .featured-item--hero .featured-frame {
+  border-radius: inherit;
+}
+.home-root .gallery-item {
+  border-radius: 14px;
+}
+.home-root .hero-cta,
+.home-root .section-cta,
+.home-root .footer-whatsapp,
+.home-root .footer-phone {
+  border-radius: 999px;
+}
