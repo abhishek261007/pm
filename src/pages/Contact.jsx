@@ -8,7 +8,7 @@ const styles = `
 
   .contact-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -17,10 +17,12 @@ const styles = `
 
   /* Gradient Header */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(16px + env(safe-area-inset-top, 36px)) 16px 16px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
 
   .header-inner {
@@ -91,9 +93,10 @@ const styles = `
   /* Contact Cards */
   .contact-card {
     background: #FFFFFF;
+    border: 1px solid #EDE6DD;
     border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
+    box-shadow: 0 6px 20px rgba(44, 24, 16, 0.08);
     margin-bottom: 16px;
   }
 

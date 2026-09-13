@@ -1,0 +1,300 @@
+/* ──────────────────────────────────────────────
+   LUXURY HOUSE THEME
+   Warm ivory editorial · heritage gold · emerald · ruby
+   A single override layer: every rule below outranks the
+   per-page inline <style> blocks via `body` scoping, so the
+   whole app can be re-toned from this one file.
+   ────────────────────────────────────────────── */
+:root {
+  --lux-ivory: #f6f0e2;
+  --lux-cream: #fcf9f1;
+  --lux-card: #fffdf7;
+  --lux-gold: #b98a2f;
+  --lux-gold-deep: #8c6a24;
+  --lux-gold-soft: #e9d9ae;
+  --lux-emerald: #0e3b2e;
+  --lux-ruby: #7a1e2b;
+  --lux-ink: #1e1810;
+  --lux-muted: #8c7c64;
+  --lux-hairline: #e4d6b6;
+  --lux-display: 'Cormorant Garamond', Georgia, serif;
+  --lux-body: 'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: var(--lux-ivory);
+  font-family: var(--lux-body);
+}
+
+/* ── FLAT IVORY HEADERS (replaces colorful gradients) ── */
+body .header-block {
+  background: rgba(252, 249, 241, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--lux-hairline);
+  box-shadow: 0 8px 24px rgba(30, 24, 16, 0.06);
+}
+body .header-title,
+body .header-brand {
+  font-family: var(--lux-display);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--lux-ink);
+}
+body .header-eyebrow,
+body .header-sub,
+body .count-label {
+  color: var(--lux-gold-deep);
+}
+body .back-btn,
+body .header-cart-btn {
+  background: transparent;
+  border: 1px solid var(--lux-hairline);
+  color: var(--lux-ink);
+}
+body .back-glyph,
+body .header-cart-label {
+  color: var(--lux-ink);
+}
+body .header-cart-btn svg,
+body .back-btn svg {
+  stroke: var(--lux-ink);
+}
+body .header-cart-btn:hover,
+body .back-btn:hover {
+  background: rgba(185, 138, 47, 0.08);
+  border-color: var(--lux-gold-soft);
+}
+
+/* ── EDITORIAL TYPOGRAPHY ── */
+body .card-name,
+body .card-title,
+body .summary-title,
+body .empty-title,
+body .error-title,
+body .item-sku,
+body .product-content h1 {
+  font-family: var(--lux-display);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+body .section-heading {
+  font-weight: 500;
+}
+
+/* ── RESTRAINED GOLD/BLACK CTAS ── */
+body .btn-add,
+body .btn-cart,
+body .wa-cta,
+body .browse-btn,
+body .btn-home,
+body .retry-btn {
+  background: var(--lux-ink);
+  color: #f3e8c8;
+  border: 1px solid var(--lux-ink);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(30, 24, 16, 0.22);
+}
+body .btn-add:hover,
+body .btn-cart:hover,
+body .wa-cta:hover,
+body .browse-btn:hover,
+body .btn-home:hover,
+body .retry-btn:hover {
+  opacity: 1;
+  border-color: var(--lux-gold);
+  box-shadow: 0 12px 28px rgba(30, 24, 16, 0.28);
+}
+
+/* ── PILL FILTERS & CHIPS ── */
+body .filter-pill,
+body .weight-filter,
+body .search-row {
+  border-color: var(--lux-hairline);
+  background: var(--lux-card);
+}
+body .filter-pill.wishlist.active {
+  border-color: var(--lux-ruby);
+  background: var(--lux-ruby);
+}
+body .chip,
+body .meta-pill,
+body .count-pill,
+body .spec-cell,
+body .summary-cell {
+  background: rgba(185, 138, 47, 0.07);
+  border: 1px solid rgba(185, 138, 47, 0.18);
+}
+body .chip-label,
+body .spec-label,
+body .summary-cell-label {
+  color: var(--lux-gold-deep);
+}
+
+/* ── EDITORIAL CARDS ── */
+body .card,
+body .design-card,
+body .wishlist-card,
+body .cart-item,
+body .summary-card,
+body .info-card,
+body .contact-card,
+body .faq-item,
+body .product-content,
+body .empty-panel {
+  background: var(--lux-card);
+  border: 1px solid var(--lux-hairline);
+  box-shadow: 0 10px 30px rgba(30, 24, 16, 0.07);
+}
+body .catalog-root,
+body .design-root,
+body .cart-root,
+body .wishlist-root,
+body .about-root,
+body .contact-root,
+body .error-root {
+  background: var(--lux-ivory);
+}
+body .card-hero,
+body .card-image-wrap,
+body .item-img {
+  background: linear-gradient(135deg, #f3ead3, #e9dcc0);
+  border: 1px solid rgba(185, 138, 47, 0.16);
+}
+
+/* ── MASONRY DISCOVERY GRIDS ── */
+body .designs-grid,
+body .catalog-grid,
+body .wishlist-grid {
+  display: block;
+  columns: 2 168px;
+  column-gap: 14px;
+}
+body .designs-grid > *,
+body .catalog-grid > *,
+body .wishlist-grid > * {
+  break-inside: avoid;
+  margin: 0 0 14px;
+}
+body .designs-grid .center-box,
+body .catalog-grid .center-box {
+  column-span: all;
+}
+body .card-image-wrap,
+body .card-hero {
+  aspect-ratio: auto;
+}
+body .card-image,
+body .card-hero img {
+  height: auto;
+}
+@media (min-width: 768px) {
+  body .designs-grid,
+  body .catalog-grid,
+  body .wishlist-grid {
+    columns: 3 200px;
+    column-gap: 18px;
+  }
+  body .designs-grid > *,
+  body .catalog-grid > *,
+  body .wishlist-grid > * {
+    margin-bottom: 18px;
+  }
+}
+
+/* ── DESIGN PAGE: CRAFT EDITORIAL ── */
+body .craft-block {
+  background: var(--lux-card);
+  border: 1px solid var(--lux-hairline);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(30, 24, 16, 0.07);
+  padding: 18px;
+  margin-bottom: 12px;
+}
+body .craft-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--lux-gold-deep);
+  margin-bottom: 8px;
+}
+body .craft-title {
+  font-family: var(--lux-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--lux-ink);
+  margin-bottom: 8px;
+}
+body .craft-text {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #5c5344;
+}
+body .related-card {
+  border: 1px solid var(--lux-hairline);
+  border-radius: 12px;
+}
+
+/* ── HOME: IVORY EDITORIAL CONVERSION ── */
+.home-root {
+  --ink: #f6f0e2;
+  --ink-soft: #efe6d0;
+  --wine: #7a1e2b;
+  --wine-deep: #3d0a20;
+  --gold: #b98a2f;
+  --gold-bright: #8c6a24;
+  --champagne: #e9d9ae;
+  --silver: #6b5f45;
+  --parchment: #1e1810;
+  --muted: #8c7c64;
+  --hairline: rgba(140, 106, 36, 0.28);
+  background: var(--ink);
+}
+.home-root .hero-scrim {
+  background:
+    radial-gradient(120% 70% at 50% 18%, rgba(246, 240, 226, 0.25) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(246, 240, 226, 0.25) 0%, rgba(246, 240, 226, 0.55) 45%, rgba(246, 240, 226, 0.97) 100%);
+}
+.home-root .hero-shimmer {
+  opacity: 0.35;
+}
+.home-root .hero-logo {
+  filter: none;
+}
+.home-root .hero-cta,
+.home-root .section-cta {
+  background: var(--lux-ink);
+  border: 1px solid var(--lux-ink);
+  color: #f3e8c8;
+  box-shadow: 0 10px 28px rgba(30, 24, 16, 0.25);
+}
+.home-root .hero-cta:hover,
+.home-root .section-cta:hover {
+  background: #2a2115;
+  border-color: var(--gold);
+}
+.home-root .category-card {
+  background: var(--lux-card);
+  border: 1px solid var(--lux-hairline);
+  box-shadow: 0 6px 18px rgba(30, 24, 16, 0.07);
+  color: var(--lux-ink);
+}
+.home-root .category-icon {
+  color: var(--lux-gold-deep);
+}
+.home-root .marquee-section {
+  background: linear-gradient(180deg, rgba(185, 138, 47, 0.08), transparent 60%);
+}
+.home-root .marquee-badge {
+  background: rgba(255, 253, 247, 0.7);
+  border-color: rgba(140, 106, 36, 0.3);
+  color: var(--lux-gold-deep);
+}
+.home-root .footer-logo {
+  filter: none;
+}
+.home-root .footer-tagline {
+  color: var(--muted);
+}

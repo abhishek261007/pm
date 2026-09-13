@@ -11,7 +11,10 @@ export default function FeaturedReel({ src, caption, index = 0 }) {
   const isVisible = useInView(motionRef, { once: true, margin: '-40px 0px' });
 
   useEffect(() => {
-    if (inView) videoRef.current?.play().catch(() => {});
+    const v = videoRef.current;
+    if (!v) return;
+    if (inView) v.play().catch(() => {});
+    else v.pause();
   }, [inView]);
 
   return (

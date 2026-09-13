@@ -22,7 +22,7 @@ const styles = `
 
   .catalog-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -31,10 +31,12 @@ const styles = `
 
   /* ── GRADIENT HEADER ── */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(20px + env(safe-area-inset-top, 40px)) 20px 22px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
   .header-inner {
     display: flex;
@@ -248,28 +250,36 @@ const styles = `
   .designs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
+    gap: 12px;
   }
 
   /* ── DESIGN CARD ── */
   .design-card {
     background: #FFFBF4;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    padding: 6px;
+    border: 1px solid #EDE6DD;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(44, 24, 16, 0.08);
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .design-card:hover {
+    transform: translateY(-2px);
+    border-color: #D9CFC2;
+    box-shadow: 0 10px 24px rgba(44, 24, 16, 0.12);
   }
   .card-link { text-decoration: none; display: flex; flex-direction: column; flex: 1; }
 
   .card-image-wrap {
     aspect-ratio: 1 / 1;
-    border-radius: 4px;
+    border-radius: 6px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #F5F0EB;
+    background: linear-gradient(135deg, #F5F0EB, #EFE7DD);
+    border: 1px solid rgba(44, 24, 16, 0.06);
     overflow: hidden;
   }
   .card-image {
@@ -326,8 +336,9 @@ const styles = `
     padding: 10px;
     border: none;
     cursor: pointer;
-    background: #2C1810;
-    color: #F7F6F3;
+    background: linear-gradient(135deg, #7A1E3F, #4A0E28);
+    color: #FFF6DE;
+    box-shadow: 0 4px 14px rgba(122, 30, 63, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,7 +380,8 @@ const styles = `
   .empty-subtitle { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 300; letter-spacing: 2px; color: #8A7A6B; text-align: center; text-transform: uppercase; }
   .retry-btn {
     margin-top: 24px; padding: 12px 32px; border-radius: 14px;
-    background: #8B1A4A; color: #FFFFFF; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #7A1E3F, #4A0E28); color: #FFFFFF; border: none; cursor: pointer;
+    box-shadow: 0 6px 18px rgba(122, 30, 63, 0.3);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 600;
     letter-spacing: 2px; text-transform: uppercase;
   }
@@ -454,6 +466,7 @@ const DesignCard = memo(function DesignCard({ item, catalogId, catalogName, onAd
               width={400}
               height={400}
               loading="lazy"
+              onError={(e) => { if (e.currentTarget.dataset.fbk) return; e.currentTarget.dataset.fbk = '1'; e.currentTarget.src = 'https://placehold.co/400x400/F5F0EB/C8C8C4?text=No+Image'; }}
             />
           ) : (
             <span className="image-placeholder">◇</span>
@@ -472,11 +485,11 @@ const DesignCard = memo(function DesignCard({ item, catalogId, catalogName, onAd
           <div className="card-chips">
             <div className="chip">
               <span className="chip-label">SKU</span>
-              <span className="chip-value">{item.sku}</span>
+              <span className="chip-value">{item.sku || '—'}</span>
             </div>
             <div className="chip">
               <span className="chip-label">Wt</span>
-              <span className="chip-value">{item.weight}g</span>
+              <span className="chip-value">{item.weight != null && item.weight !== '' ? `${item.weight}g` : '—'}</span>
             </div>
           </div>
 

@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
 import './index.css';
+import './styles/luxury.css';
 import { registerSW } from 'virtual:pwa-register';
 
 import { AppContextProvider } from './context/AppContextProvider';

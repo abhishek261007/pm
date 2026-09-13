@@ -11,8 +11,8 @@ const styles = `
 
   .design-root {
     min-height: 100dvh;
-    overflow-x: hidden;
-    background: #F7F6F3;
+    overflow-x: clip;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -24,10 +24,12 @@ const styles = `
 
   /* ── GRADIENT HEADER ── */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(16px + env(safe-area-inset-top, 36px)) 16px 16px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
   .header-inner {
     display: flex;
@@ -142,14 +144,15 @@ const styles = `
 
   /* ── IMAGE ── */
   .image-wrap {
-    background: #FFFBF4;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #FFFBF4, #F5F0EB);
+    border: 1px solid #EDE6DD;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px rgba(44, 24, 16, 0.1);
     margin-bottom: 12px;
     flex: 1;
     min-height: 280px;
@@ -197,8 +200,9 @@ const styles = `
   /* ── INFO CARD ── */
   .info-card {
     background: #FFFBF4;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    border: 1px solid #EDE6DD;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(44, 24, 16, 0.1);
     padding: 16px;
     margin-bottom: 12px;
     flex-shrink: 0;
@@ -239,17 +243,18 @@ const styles = `
   .btn-cart {
     width: 100%; height: 56px;
     border: none; cursor: pointer;
-    background: #2C1810;
+    background: linear-gradient(135deg, #2C1810, #4A2E1E);
     color: #F7F6F3;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    border-radius: 8px;
-    transition: transform 0.1s ease, opacity 0.2s ease;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(44, 24, 16, 0.3);
+    transition: transform 0.1s ease, opacity 0.2s ease, box-shadow 0.2s ease;
   }
-  .btn-cart:hover { opacity: 0.85; }
+  .btn-cart:hover { opacity: 0.92; box-shadow: 0 8px 22px rgba(44, 24, 16, 0.35); }
   .btn-cart:active { transform: scale(0.96); opacity: 0.75; }
 
   /* ── STATES ── */
@@ -370,8 +375,9 @@ const styles = `
   /* ── PRODUCT CONTENT ── */
   .product-content {
     background: #FFFBF4;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    border: 1px solid #EDE6DD;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(44, 24, 16, 0.1);
     padding: 16px;
     margin-bottom: 12px;
   }
@@ -804,6 +810,8 @@ export default function Design() {
                         : `https://apis.27012610.xyz${currentDesign.imageUrl}`
                     }
                     onError={(e) => {
+                      if (e.currentTarget.dataset.fbk) return;
+                      e.currentTarget.dataset.fbk = '1';
                       e.currentTarget.src =
                         'https://placehold.co/1000x1000/F7F6F3/C8C8C4?text=No+Image';
                     }}
@@ -844,13 +852,41 @@ export default function Design() {
                 <div className="specs-grid">
                   <div className="spec-cell">
                     <p className="spec-label">Tag</p>
-                    <p className="spec-value">{currentDesign.sku}</p>
+                    <p className="spec-value">{currentDesign.sku || '—'}</p>
                   </div>
                   <div className="spec-cell">
                     <p className="spec-label">Weight</p>
-                    <p className="spec-value">{currentDesign.weight}g</p>
+                    <p className="spec-value">{currentDesign.weight != null && currentDesign.weight !== '' ? `${currentDesign.weight}g` : '—'}</p>
                   </div>
                 </div>
+              </div>
+
+              {/* Craftsmanship */}
+              <div className="craft-block">
+                <p className="craft-kicker">Craftsmanship</p>
+                <p className="craft-title">Hand-finished in Manekchowk</p>
+                <p className="craft-text">
+                  Every piece is shaped, engraved and polished by heritage silversmiths —
+                  no two finishes are exactly alike.
+                </p>
+              </div>
+
+              {/* Materials & styling */}
+              <div className="craft-block">
+                <p className="craft-kicker">Materials & Care</p>
+                <p className="craft-title">Hallmarked silver, made to last</p>
+                <p className="craft-text">
+                  Crafted in hallmarked silver. Store dry, wipe with a soft cloth,
+                  and keep away from perfume to preserve the finish.
+                </p>
+              </div>
+              <div className="craft-block">
+                <p className="craft-kicker">Styling</p>
+                <p className="craft-title">From trousseau to festive</p>
+                <p className="craft-text">
+                  Pairs with silk, velvet and bridal couture — layer with heirlooms
+                  for weddings, wear solo for quiet luxury.
+                </p>
               </div>
 
               {/* Actions */}

@@ -36,10 +36,10 @@ export default function Home() {
             <div className="section-head">
               <HallmarkBadge label="Curated" />
               <h2 className="section-heading">
-                Featured <em>Collections</em>
+                Curated <em>Collections</em>
               </h2>
               <p className="section-desc">
-                A handpicked selection of our finest silver and antique designs.
+                Heirloom silver, kundan and polki — handpicked for the season.
               </p>
               <div className="section-rule" />
             </div>
@@ -58,9 +58,9 @@ export default function Home() {
         <section className="section">
           <ScrollReveal>
             <div className="section-head">
-              <HallmarkBadge label="Gallery" />
+              <HallmarkBadge label="Trending" />
               <h2 className="section-heading">
-                Our <em>Reels</em>
+                Trending <em>Now</em>
               </h2>
               <div className="section-rule" />
             </div>
@@ -73,7 +73,7 @@ export default function Home() {
                 }))}
                 layout={{ itemWidth: 130, itemHeight: 231, spacing: 14, imageFit: 'cover' }}
                 effects3D={{ arcDepth: 0.4, scaleDepth: 0.25, verticalDepth: 0.25, rotationDepth: 0.25 }}
-                appearance={{ backgroundColor: '#0f1620', edgeFadeWidth: 12, edgeFadeOpacity: 1, showShadow: true }}
+                appearance={{ backgroundColor: 'transparent', edgeFadeWidth: 12, edgeFadeOpacity: 1, showShadow: true }}
                 autoPlaySettings={{ autoPlay: true, autoPlaySpeed: 1.5, pauseOnHover: true }}
               />
             </div>
@@ -94,6 +94,7 @@ export default function Home() {
           <ScrollReveal delay={0.15}>
             <div style={{ marginTop: 18, height: 420 }}>
               <GlassBall
+                backgroundColor="transparent"
                 images={PDFS.map((p) => pdfCoverUrl(p.file))}
                 cardCount={16}
                 coverage={0.92}

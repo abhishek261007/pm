@@ -28,3 +28,13 @@ body {
 img { display: block; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; }
+
+/* ── STICKY HEADERS (all pages) ──
+   Each page renders its own .header-block; pin it to the top
+   instead of scrolling away. z-index sits above cards/grids
+   but below modals, toasts and the TabBar. */
+.header-block {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}

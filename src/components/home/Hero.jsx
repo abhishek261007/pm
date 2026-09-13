@@ -79,7 +79,10 @@ export default function Hero() {
           variants={fadeSlide}
         />
         <motion.p className="hero-title" variants={fadeSlide}>
-          Silver &amp; Antique Jewellery, Crafted for Trade
+          Jewellery That Becomes Your Legacy
+        </motion.p>
+        <motion.p className="hero-sub" variants={fadeSlide}>
+          Handcrafted heirlooms in silver, kundan and polki — made to be inherited.
         </motion.p>
         <motion.div variants={fadeSlide}>
           <Link to="/listing" className="hero-cta">

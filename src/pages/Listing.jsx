@@ -20,7 +20,7 @@ const styles = `
 
   .home-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #F6F0E2;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -29,10 +29,12 @@ const styles = `
 
   /* ── GRADIENT HEADER ── */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(16px + env(safe-area-inset-top, 36px)) 16px 16px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
   .header-inner {
     display: flex;
@@ -130,24 +132,27 @@ const styles = `
   }
   .card {
     background: #FFFBF4;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    padding: 16px;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    border: 1px solid #EDE6DD;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(44, 24, 16, 0.08);
+    padding: 12px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
   }
   .card-link:hover .card {
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    border-color: #D9CFC2;
+    box-shadow: 0 10px 24px rgba(44, 24, 16, 0.14);
   }
   .card-hero {
     width: 100%;
     aspect-ratio: 1;
-    background: #F5F0EB;
+    background: linear-gradient(135deg, #F5F0EB, #EFE7DD);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 6px;
+    border: 1px solid rgba(44, 24, 16, 0.06);
   }
   .card-hero img {
     width: 100%;
@@ -162,15 +167,16 @@ const styles = `
     color: #C8C8C4;
   }
   .card-body {
-    padding: 0;
-    margin-top: 24px;
+    padding: 2px 2px 0;
+    margin-top: 12px;
   }
   .card-name {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 1.2rem;
-    font-weight: 200;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
     color: #2C1810;
-    line-height: 1.2;
+    line-height: 1.3;
   }
 
   /* ── STATES ── */
@@ -231,7 +237,8 @@ const styles = `
     margin-top: 24px;
     padding: 12px 32px;
     border-radius: 14px;
-    background: #8B1A4A;
+    background: linear-gradient(135deg, #7A1E3F, #4A0E28);
+    box-shadow: 0 6px 18px rgba(122, 30, 63, 0.3);
     color: #FFFFFF;
     border: none;
     cursor: pointer;
@@ -380,11 +387,11 @@ export default function Listing() {
             </div>
           ) : (
             <div className="catalog-grid">
-              {catalogs.map((catalog) => {
+              {catalogs.map((catalog, i) => {
                 const heroUri = buildHeroUrl(catalog.heroImageUrl, catalog.updatedAt);
                 
                 return (
-                  <Link key={catalog._id} to={`/catalog/${catalog._id}`} state={{ catalogName: catalog.name }} className="card-link">
+                  <Link key={catalog._id || `catalog-${i}`} to={`/catalog/${catalog._id}`} state={{ catalogName: catalog.name }} className="card-link">
                     <div className="card">
                       <div className="card-hero">
                         {heroUri ? (
@@ -394,14 +401,14 @@ export default function Listing() {
                             width={400}
                             height={400}
                             loading="lazy"
-                            onError={(e) => { e.currentTarget.src = 'https://placehold.co/400x400/F7F6F3/C8C8C4?text=No+Image'; }}
+                            onError={(e) => { if (e.currentTarget.dataset.fbk) return; e.currentTarget.dataset.fbk = '1'; e.currentTarget.src = 'https://placehold.co/400x400/F7F6F3/C8C8C4?text=No+Image'; }}
                           />
                         ) : (
                           <span className="hero-placeholder">◇</span>
                         )}
                       </div>
                       <div className="card-body">
-                        <h2 className="card-name">{catalog.name}</h2>
+                        <h2 className="card-name">{catalog.name || 'Unnamed collection'}</h2>
                       </div>
                     </div>
                   </Link>

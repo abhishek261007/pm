@@ -1,9 +1,9 @@
-import "./PrivacyPolicy.css";
+import "./Policy.css";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="privacy-container">
-      <div className="privacy-content">
+    <div className="policy-container">
+      <div className="policy-content">
         <h1>Privacy Policy</h1>
 
         <p className="last-updated">

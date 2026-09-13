@@ -9,7 +9,7 @@ import Catalog from './pages/Catalog';
 import Design from './pages/Design';
 import Cart from './pages/Cart';
 import Listing from './pages/Listing';
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PrivacyPolicy from "./pages/Policy";
 import Wishlist from './pages/Wishlist';
 import About from './pages/About';
 import AppRedirect from './pages/AppRedirect';
@@ -25,6 +25,7 @@ export default function App() {
       <Route path="/cart" element={<Cart />} />
       <Route path="/listing" element={<Listing />} />
       <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/policy" element={<PrivacyPolicy />} />
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/about" element={<About />} />
       <Route path="/app" element={<AppRedirect />} />

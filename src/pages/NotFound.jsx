@@ -7,7 +7,7 @@ const styles = `
 
   .error-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -18,7 +18,7 @@ const styles = `
 
   /* Gradient Header */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(16px + env(safe-area-inset-top, 36px)) 16px 16px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
@@ -184,7 +184,7 @@ export default function NotFound() {
 
         {/* Content */}
         <div className="page-body">
-          <div className="error-code">4✎</div>
+          <div className="error-code">404</div>
           <h2 className="error-title">Oops! Something went wrong</h2>
           <p className="error-message">
             The page you're looking for doesn't exist or has been moved. Check the URL and try again, or visit our home page to explore our collections.

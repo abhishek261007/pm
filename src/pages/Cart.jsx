@@ -7,7 +7,7 @@ const styles = `
 
   .cart-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -16,10 +16,12 @@ const styles = `
 
   /* ── GRADIENT HEADER ── */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(20px + env(safe-area-inset-top, 40px)) 20px 22px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
   .header-inner {
     display: flex;
@@ -114,8 +116,9 @@ const styles = `
     gap: 14px;
     padding: 14px;
     background: #FFFFFF;
+    border: 1px solid #EDE6DD;
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
+    box-shadow: 0 4px 14px rgba(44, 24, 16, 0.08);
   }
   .item-img {
     width: 80px; height: 80px;
@@ -174,9 +177,10 @@ const styles = `
   /* ── SUMMARY ── */
   .summary-card {
     background: #FFFFFF;
+    border: 1px solid #EDE6DD;
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
+    box-shadow: 0 6px 20px rgba(44, 24, 16, 0.1);
     margin-bottom: 16px;
   }
   .summary-title {
@@ -236,8 +240,9 @@ const styles = `
   .wa-cta {
     display: flex; align-items: center; justify-content: center;
     gap: 8px; width: 100%; height: 56px;
-    background: #2C1810;
-    color: #F7F6F3;
+    background: linear-gradient(135deg, #7A1E3F, #4A0E28);
+    color: #FFF6DE;
+    box-shadow: 0 8px 22px rgba(122, 30, 63, 0.35);
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -431,7 +436,7 @@ export default function Cart() {
               {/* ITEMS */}
               <div className="items-wrap">
                 {cart.map((item, i) => (
-                  <div key={`${item._id}-${item.sku}`} className="cart-item">
+                  <div key={`${item._id}-${item.sku}-${i}`} className="cart-item">
                     <img
                       className="item-img"
                       src={
@@ -440,6 +445,8 @@ export default function Cart() {
                           : `https://apis.27012610.xyz${item.imageUrl}`
                       }
                       onError={(e) => {
+                        if (e.currentTarget.dataset.fbk) return;
+                        e.currentTarget.dataset.fbk = '1';
                         e.currentTarget.src =
                           'https://placehold.co/500x500/F7F6F3/C8C8C4?text=No+Image';
                       }}
@@ -447,10 +454,10 @@ export default function Cart() {
                     />
                     <div className="item-info">
                       <p className="item-collection">{item.catalogName || 'Collection'}</p>
-                      <p className="item-sku">{item.sku}</p>
+                      <p className="item-sku">{item.sku || '—'}</p>
                       <div className="item-meta">
                         <span className="meta-pill">#{i + 1}</span>
-                        <span className="meta-pill">{item.weight}g</span>
+                        <span className="meta-pill">{item.weight != null && item.weight !== '' ? `${item.weight}g` : '—'}</span>
                       </div>
                     </div>
                     <button

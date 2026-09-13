@@ -8,7 +8,7 @@ const styles = `
 
   .wishlist-root {
     min-height: 100vh;
-    background: #F7F6F3;
+    background: #FAF6EC;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     color: #2C1810;
@@ -17,10 +17,12 @@ const styles = `
 
   /* ── GRADIENT HEADER ── */
   .header-block {
-    background: linear-gradient(135deg, #8B1A4A, #1B3A5C, #4A8B7C);
+    background: linear-gradient(135deg, #3D0A20 0%, #7A1E3F 55%, #A67C2E 135%);
     padding: calc(16px + env(safe-area-inset-top, 36px)) 16px 16px;
     border-bottom-left-radius: 28px;
     border-bottom-right-radius: 28px;
+    box-shadow: 0 10px 30px rgba(139, 26, 74, 0.25);
+    border-bottom: 1px solid rgba(201, 162, 39, 0.4);
   }
   .header-inner {
     display: flex;
@@ -141,13 +143,16 @@ const styles = `
 
   /* ── CARD ── */
   .wishlist-card {
-    background: #FFFFFF;
-    border-radius: 16px;
+    background: #FFFBF4;
+    border: 1px solid #EDE6DD;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(15,38,64,0.06);
+    box-shadow: 0 4px 14px rgba(44, 24, 16, 0.08);
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  .wishlist-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(44, 24, 16, 0.12); }
   .card-link {
     text-decoration: none;
     display: flex;
@@ -335,10 +340,10 @@ export default function Wishlist() {
               </div>
 
               <div className="wishlist-grid">
-                {items.map((item) => {
+                {items.map((item, i) => {
                   const imageUri = buildImageUrl(item.thumbnailUrl || item.imageUrl);
                   return (
-                    <div key={item._id} className="wishlist-card">
+                    <div key={item._id || `wish-${i}`} className="wishlist-card">
                       <Link
                         to={`/design/${item._id}`}
                         state={{ catalogName: item.catalogName }}
@@ -346,21 +351,21 @@ export default function Wishlist() {
                       >
                         <div className="card-image-wrap">
                           {imageUri ? (
-                            <img className="card-image" src={imageUri} alt={item.catalogName || 'Design'} loading="lazy" />
+                            <img className="card-image" src={imageUri} alt={item.catalogName || 'Design'} loading="lazy" width={400} height={440} onError={(e) => { if (e.currentTarget.dataset.fbk) return; e.currentTarget.dataset.fbk = '1'; e.currentTarget.src = 'https://placehold.co/400x440/F5F0EB/C8C8C4?text=No+Image'; }} />
                           ) : (
                             <span className="image-placeholder">◇</span>
                           )}
                         </div>
                         <div className="card-body">
-                          <h3 className="card-title">{item.catalogName}</h3>
+                          <h3 className="card-title">{item.catalogName || 'Untitled'}</h3>
                           <div className="card-chips">
                             <div className="chip">
                               <span className="chip-label">SKU</span>
-                              <span className="chip-value">{item.sku}</span>
+                              <span className="chip-value">{item.sku || '—'}</span>
                             </div>
                             <div className="chip">
                               <span className="chip-label">Wt</span>
-                              <span className="chip-value">{item.weight}g</span>
+                              <span className="chip-value">{item.weight != null && item.weight !== '' ? `${item.weight}g` : '—'}</span>
                             </div>
                           </div>
                           <button
