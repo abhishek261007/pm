@@ -881,24 +881,17 @@ export default function Design() {
                 ))}
               </nav>
 
-              {/* SEO-only craft copy: hidden visually, readable by crawlers */}
-              <div className="sr-only">
-                <h2>Craftsmanship — hand-finished in Manekchowk</h2>
-                <p>
-                  Every piece is shaped, engraved and polished by heritage silversmiths —
-                  no two finishes are exactly alike.
+              <details className="info-card" style={{ marginTop: 12 }}>
+                <summary style={{ cursor: 'pointer', fontWeight: 500, padding: '4px 0' }}>
+                  About this design
+                </summary>
+                <p style={{ marginTop: 10, lineHeight: 1.6, color: '#4A4A4A', fontSize: 13 }}>
+                  Explore this silver jewellery design from PM Jewellers. Each design
+                  has its own look and character; view the image and listed details to
+                  decide whether it suits your style or occasion. Contact us for
+                  availability and further product information.
                 </p>
-                <h2>Materials and care — hallmarked silver, made to last</h2>
-                <p>
-                  Crafted in hallmarked silver. Store dry, wipe with a soft cloth,
-                  and keep away from perfume to preserve the finish.
-                </p>
-                <h2>Styling — from trousseau to festive</h2>
-                <p>
-                  Pairs with silk, velvet and bridal couture — layer with heirlooms
-                  for weddings, wear solo for quiet luxury.
-                </p>
-              </div>
+              </details>
 
               {/* Actions */}
               <div className="actions-card">
