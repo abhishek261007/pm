@@ -442,7 +442,7 @@ export default function Cart() {
                       src={
                         item.imageUrl?.startsWith('http')
                           ? item.imageUrl
-                          : `https://apis.27012610.xyz${item.imageUrl}`
+                          : `https://images.pmjewellers.com${item.imageUrl}`
                       }
                       onError={(e) => {
                         if (e.currentTarget.dataset.fbk) return;

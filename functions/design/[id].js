@@ -12,7 +12,7 @@ export async function onRequest(context) {
   
   // 2. Fetch design details from your API
   try {
-    const apiRes = await fetch('https://apis.27012610.xyz/public/designs');
+    const apiRes = await fetch('https://images.pmjewellers.com/public/designs');
     if (apiRes.ok) {
       const designs = await apiRes.json();
       const design = designs.find(d => d._id === designId);
@@ -21,7 +21,7 @@ export async function onRequest(context) {
         title = design.sku ? `Design ${design.sku} | PM Jewellers` : 'Design | PM Jewellers';
         imageUrl = design.imageUrl.startsWith('http') 
           ? design.imageUrl 
-          : `https://apis.27012610.xyz${design.imageUrl}`;
+          : `https://images.pmjewellers.com${design.imageUrl}`;
       }
     }
   } catch (err) {

@@ -720,7 +720,7 @@ export default function Design() {
   const seoImageUrl = currentDesign?.imageUrl?.startsWith('http')
     ? currentDesign.imageUrl
     : currentDesign?.imageUrl
-      ? `https://apis.27012610.xyz${currentDesign.imageUrl}`
+      ? `https://images.pmjewellers.com${currentDesign.imageUrl}`
       : 'https://pmjewellers.com/logo.png';
 
   return (
@@ -818,7 +818,7 @@ export default function Design() {
                     src={
                       currentDesign.imageUrl?.startsWith('http')
                         ? currentDesign.imageUrl
-                        : `https://apis.27012610.xyz${currentDesign.imageUrl}`
+                        : `https://images.pmjewellers.com${currentDesign.imageUrl}`
                     }
                     onError={(e) => {
                       if (e.currentTarget.dataset.fbk) return;
@@ -834,7 +834,7 @@ export default function Design() {
                     onClick={() => openModal(
                       currentDesign.imageUrl?.startsWith('http')
                         ? currentDesign.imageUrl
-                        : `https://apis.27012610.xyz${currentDesign.imageUrl}`
+                        : `https://images.pmjewellers.com${currentDesign.imageUrl}`
                     )}
                     style={{ cursor: 'pointer' }}
                   />
@@ -946,7 +946,7 @@ export default function Design() {
               const idx = activeIndex + offset;
               const d = designs[idx];
               if (!d?.imageUrl) return null;
-              const src = d.imageUrl.startsWith('http') ? d.imageUrl : `https://apis.27012610.xyz${d.imageUrl}`;
+              const src = d.imageUrl.startsWith('http') ? d.imageUrl : `https://images.pmjewellers.com${d.imageUrl}`;
               return <img key={d._id} src={src} alt="" />;
             })}
           </div>

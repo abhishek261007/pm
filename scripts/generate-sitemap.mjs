@@ -10,6 +10,13 @@
  */
 
 const API  = 'https://apis.27012610.xyz';
+const IMAGE_HOST = 'https://images.pmjewellers.com';
+
+function imageLocation(url) {
+  if (!url) return '';
+  if (url.startsWith('/')) return `${IMAGE_HOST}${url}`;
+  return url.replace(/^https:\/\/(?:apis|images)\.27012610\.xyz(?=\/)/, IMAGE_HOST);
+}
 const SITE = 'https://pmjewellers.com';
 const OUT  = 'public/sitemap.xml';
 const OUT_INDEX = 'public/sitemap-index.xml';
@@ -190,7 +197,7 @@ async function main() {
                     : (img.url || img.src || '');
                   if (!imgLoc) return null;
                   return {
-                    loc: imgLoc,
+                    loc: imageLocation(imgLoc),
                     title: idx === 0 ? meta.title : `${meta.title} — Image ${idx + 1}`,
                     caption: meta.caption,
                   };
@@ -203,12 +210,13 @@ async function main() {
                 const thumbUrl = (d.thumbnailUrl || d.imageUrl).startsWith('http')
                   ? (d.thumbnailUrl || d.imageUrl)
                   : `${API}${d.thumbnailUrl || d.imageUrl}`;
+                const imageUrl = imageLocation(thumbUrl);
                 const meta = generateImageMeta(d, cat.name);
                 // Check if thumbnail is already in images
-                const isDuplicate = designUrl.images.some(i => i.loc === thumbUrl);
+                const isDuplicate = designUrl.images.some(i => i.loc === imageUrl);
                 if (!isDuplicate) {
                   designUrl.images.unshift({
-                    loc: thumbUrl,
+                    loc: imageUrl,
                     title: meta.title,
                     caption: meta.caption,
                   });

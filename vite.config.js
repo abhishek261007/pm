@@ -12,7 +12,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,png,svg,ico,woff2}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/apis\.27012610\.xyz\/public\/.*/i,
+            urlPattern: /^https:\/\/images\.pmjewellers\.com\/public\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
@@ -24,7 +24,7 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: /^https:\/\/apis\.27012610\.xyz\/uploads\/.*/i,
+            urlPattern: /^https:\/\/images\.pmjewellers\.com\/uploads\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'image-cache',

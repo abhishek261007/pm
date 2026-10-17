@@ -12,7 +12,7 @@ export async function onRequest(context) {
   
   // 2. Fetch catalog details from your API
   try {
-    const apiRes = await fetch('https://apis.27012610.xyz/public/catalogs');
+    const apiRes = await fetch('https://images.pmjewellers.com/public/catalogs');
     if (apiRes.ok) {
       const catalogs = await apiRes.json();
       const catalog = catalogs.find(c => c._id === catalogId);
@@ -21,7 +21,7 @@ export async function onRequest(context) {
         catalogName = catalog.name || catalogName;
         imageUrl = catalog.heroImageUrl.startsWith('http') 
           ? catalog.heroImageUrl 
-          : `https://apis.27012610.xyz${catalog.heroImageUrl}`;
+          : `https://images.pmjewellers.com${catalog.heroImageUrl}`;
       }
     }
   } catch (err) {
