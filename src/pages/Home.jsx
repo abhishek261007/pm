@@ -9,7 +9,7 @@ import TrustMarquee from '../components/home/TrustMarquee';
 import LuxeFooter from '../components/home/LuxeFooter';
 import SEO from '../components/SEO';
 import { GALLERY, PDFS } from '../data/reels';
-import { pdfCoverUrl } from '../utils/media';
+import { reelPosterUrl, pdfCoverUrl } from '../utils/media';
 import { Link } from 'react-router-dom';
 import '../styles/home.css';
 
@@ -89,6 +89,34 @@ export default function Home() {
               </Link>
             </div>
           </ScrollReveal>
+        </section>
+
+        {/* ── JEWELLERY SEARCH TERMS ── */}
+        <section className="section" aria-labelledby="jewellery-tags-heading">
+          <div className="section-head">
+            <h2 id="jewellery-tags-heading" className="section-heading">
+              Explore <em>Silver Jewellery</em>
+            </h2>
+            <p className="section-desc">
+              Browse styles and collections from PM Jewellers.
+            </p>
+          </div>
+          <nav aria-label="Silver jewellery topics" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 18 }}>
+            {[
+              'Antique Silver Juda', 'Bridal Silver Jewellery', 'Silver Payal',
+              'Silver Kamarband', 'Silver Bangles', 'Silver Jhumka',
+              'Traditional Silver Jewellery', 'Hallmarked Silver',
+              'Wedding Jewellery', 'Handcrafted Silver Designs',
+            ].map((topic) => (
+              <Link
+                key={topic}
+                to="/listing"
+                style={{ border: '1px solid #C9A227', borderRadius: 999, padding: '8px 14px', color: 'inherit', textDecoration: 'none', fontSize: 13 }}
+              >
+                #{topic.replaceAll(' ', '')}
+              </Link>
+            ))}
+          </nav>
         </section>
 
         {/* ── TRUST MARQUEE ── */}
