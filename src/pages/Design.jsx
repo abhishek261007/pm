@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
 import SEO, { createProductSchema } from '../components/SEO';
 import OrderIcon from '../components/OrderIcon';
+import { imageUrl } from '../utils/imageUrl';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -717,11 +718,7 @@ export default function Design() {
   };
 
   // Build image URL for SEO
-  const seoImageUrl = currentDesign?.imageUrl?.startsWith('http')
-    ? currentDesign.imageUrl
-    : currentDesign?.imageUrl
-      ? `https://images.pmjewellers.com${currentDesign.imageUrl}`
-      : 'https://pmjewellers.com/logo.png';
+  const seoImageUrl = imageUrl(currentDesign?.imageUrl) || 'https://pmjewellers.com/logo.png';
 
   return (
     <>
@@ -816,9 +813,7 @@ export default function Design() {
                   <img
                     className="design-image"
                     src={
-                      currentDesign.imageUrl?.startsWith('http')
-                        ? currentDesign.imageUrl
-                        : `https://images.pmjewellers.com${currentDesign.imageUrl}`
+                      imageUrl(currentDesign.imageUrl)
                     }
                     onError={(e) => {
                       if (e.currentTarget.dataset.fbk) return;
@@ -832,9 +827,7 @@ export default function Design() {
                     loading="eager"
                     fetchPriority="high"
                     onClick={() => openModal(
-                      currentDesign.imageUrl?.startsWith('http')
-                        ? currentDesign.imageUrl
-                        : `https://images.pmjewellers.com${currentDesign.imageUrl}`
+                      imageUrl(currentDesign.imageUrl)
                     )}
                     style={{ cursor: 'pointer' }}
                   />
@@ -946,7 +939,7 @@ export default function Design() {
               const idx = activeIndex + offset;
               const d = designs[idx];
               if (!d?.imageUrl) return null;
-              const src = d.imageUrl.startsWith('http') ? d.imageUrl : `https://images.pmjewellers.com${d.imageUrl}`;
+              const src = imageUrl(d.imageUrl);
               return <img key={d._id} src={src} alt="" />;
             })}
           </div>

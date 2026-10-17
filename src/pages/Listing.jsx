@@ -5,14 +5,13 @@ import { useCart } from '../context/CartContext';
 import TabBar from '../components/TabBar';
 import SEO from '../components/SEO';
 import OrderIcon from '../components/OrderIcon';
-
-const API_BASE = 'https://apis.27012610.xyz';
+import { imageUrl as normalizeImageUrl } from '../utils/imageUrl';
 
 function buildHeroUrl(heroImageUrl, updatedAt) {
   if (!heroImageUrl) return null;
   const cacheBuster = updatedAt ? `v=${encodeURIComponent(updatedAt)}` : `v=${Date.now()}`;
-  if (heroImageUrl.startsWith('http')) return `${heroImageUrl}${heroImageUrl.includes('?') ? '&' : '?'}${cacheBuster}`;
-  return `${API_BASE}${heroImageUrl}?${cacheBuster}`;
+  const url = normalizeImageUrl(heroImageUrl);
+  return `${url}${url.includes('?') ? '&' : '?'}${cacheBuster}`;
 }
 
 const styles = `

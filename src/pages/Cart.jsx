@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { imageUrl } from '../utils/imageUrl';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -440,9 +441,7 @@ export default function Cart() {
                     <img
                       className="item-img"
                       src={
-                        item.imageUrl?.startsWith('http')
-                          ? item.imageUrl
-                          : `https://images.pmjewellers.com${item.imageUrl}`
+                        imageUrl(item.imageUrl)
                       }
                       onError={(e) => {
                         if (e.currentTarget.dataset.fbk) return;

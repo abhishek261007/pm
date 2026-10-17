@@ -5,16 +5,14 @@ import { useCart } from '../context/CartContext';
 import useWishlistStore from '../store/wishlistStore';
 import SEO, { createCatalogSchema } from '../components/SEO';
 import OrderIcon from '../components/OrderIcon';
+import { imageUrl as normalizeImageUrl } from '../utils/imageUrl';
 
-const API_BASE = 'https://apis.27012610.xyz';
 const PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.abhishek261007.pmj';
 
 /* ─── Pure helpers ─── */
 function buildImageUrl(imageUrl) {
-  if (!imageUrl) return null;
-  if (imageUrl.startsWith('http')) return imageUrl;
-  return `${API_BASE}${imageUrl}`;
+  return normalizeImageUrl(imageUrl);
 }
 
 const styles = `

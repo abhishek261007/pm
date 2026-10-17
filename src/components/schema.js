@@ -2,6 +2,8 @@
  * Schema generators for structured data
  */
 
+import { imageUrl } from '../utils/imageUrl';
+
 export function createProductSchema(product) {
   return {
     "@context": "https://schema.org",
@@ -10,7 +12,7 @@ export function createProductSchema(product) {
     "description": product.description || "Premium silver jewellery design from PM Jewellers, Ahmedabad",
     "image": product.images?.map(img =>
       typeof img === 'string'
-        ? (img.startsWith('http') ? img : `https://images.pmjewellers.com/uploads/${img}`)
+        ? (img.startsWith('http') ? imageUrl(img) : `https://images.pmjewellers.com/uploads/${img}`)
         : (img.url || img.src)
     ).filter(Boolean) || [],
     "brand": {
@@ -69,7 +71,7 @@ export function createCatalogSchema(catalog, designs = []) {
       "name": design.sku || design.name || `Silver Design ${index + 1}`,
       "image": (design.thumbnailUrl || design.imageUrl)
         ? ((design.thumbnailUrl || design.imageUrl).startsWith('http')
-            ? (design.thumbnailUrl || design.imageUrl)
+            ? imageUrl(design.thumbnailUrl || design.imageUrl)
             : `https://images.pmjewellers.com${design.thumbnailUrl || design.imageUrl}`)
         : undefined,
     }))

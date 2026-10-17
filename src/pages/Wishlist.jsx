@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import useWishlistStore from '../store/wishlistStore';
 import TabBar from '../components/TabBar';
 import OrderIcon from '../components/OrderIcon';
+import { imageUrl as normalizeImageUrl } from '../utils/imageUrl';
 
 const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -287,12 +288,8 @@ const styles = `
   }
 `;
 
-const API_BASE = 'https://apis.27012610.xyz';
-
 function buildImageUrl(imageUrl) {
-  if (!imageUrl) return null;
-  if (imageUrl.startsWith('http')) return imageUrl;
-  return `${API_BASE}${imageUrl}`;
+  return normalizeImageUrl(imageUrl);
 }
 
 export default function Wishlist() {

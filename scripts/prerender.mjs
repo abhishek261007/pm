@@ -31,7 +31,8 @@ function esc(str) {
 
 function imageUrl(url) {
   if (!url) return `${SITE}/logo.png`;
-  return url.startsWith('http') ? url : `${API}${url}`;
+  const absoluteUrl = url.startsWith('http') ? url : `${API}${url}`;
+  return absoluteUrl.replace(/^https:\/\/(?:images|apis)\.27012610\.xyz(?=\/)/, 'https://images.pmjewellers.com');
 }
 
 // ── Category content map ──
