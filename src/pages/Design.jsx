@@ -865,6 +865,22 @@ export default function Design() {
                 </div>
               </div>
 
+              <nav aria-label="Silver jewellery topics" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, margin: '12px 0' }}>
+                {[
+                  'Antique Silver Juda', 'Bridal Silver Jewellery', 'Silver Payal',
+                  'Silver Kamarband', 'Silver Bangles', 'Silver Jhumka',
+                  'Traditional Silver Jewellery', 'Hallmarked Silver',
+                  'Wedding Jewellery', 'Handcrafted Silver Designs',
+                ].map((topic) => (
+                  <span
+                    key={topic}
+                    style={{ border: '1px solid #C9A227', borderRadius: 999, padding: '7px 11px', color: '#4A4A4A', fontSize: 12 }}
+                  >
+                    #{topic.replaceAll(' ', '')}
+                  </span>
+                ))}
+              </nav>
+
               {/* SEO-only craft copy: hidden visually, readable by crawlers */}
               <div className="sr-only">
                 <h2>Craftsmanship — hand-finished in Manekchowk</h2>
