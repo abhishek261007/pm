@@ -405,10 +405,14 @@ async function main() {
     let designs = [];
     try {
       const res = await fetch(`${API}/public/designs?catalogId=${cat._id}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       designs = await res.json();
-      if (!Array.isArray(designs)) designs = [];
+      if (!Array.isArray(designs)) throw new Error('designs response is not an array');
       designs = designs.filter(d => d.status === 'available');
-    } catch { /* skip */ }
+    } catch (err) {
+      console.error(`Failed to fetch designs for catalog ${cat._id} (${cat.name}): ${err.message}`);
+      process.exit(1);
+    }
 
     const catDir = path.join(DIST, 'catalog', cat._id);
     fs.mkdirSync(catDir, { recursive: true });
