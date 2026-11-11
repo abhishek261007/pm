@@ -164,7 +164,7 @@ function designHtml(baseHtml, design, catalogName) {
     <meta name="twitter:image" content="${imgUrl}">
     <script type="application/ld+json">${breadcrumbSchema([
       { name: 'Home', url: '/' },
-      { name: 'Catalogues', url: '/listing' },
+      { name: 'Catalogues', url: '/listing/' },
       { name: catalogName, url: `/catalog/${design.catalogId || design.catalog?._id || ''}` },
       { name: design.sku, url: `/design/${design._id}` }
     ])}</script>
@@ -211,7 +211,7 @@ function catalogHtml(baseHtml, catalog, designs) {
     <meta name="twitter:description" content="${esc(desc)}">
     <script type="application/ld+json">${breadcrumbSchema([
       { name: 'Home', url: '/' },
-      { name: 'Catalogues', url: '/listing' },
+      { name: 'Catalogues', url: '/listing/' },
       { name: catalog.name, url: `/catalog/${catalog._id}` }
     ])}</script>
     <script type="application/ld+json">${catalogSchema(catalog, designs)}</script>`;
@@ -293,20 +293,20 @@ function listingHtml(baseHtml, catalogs) {
   const head = `<title>${esc(title)}</title>
     <meta name="description" content="${esc(desc)}">
     <meta name="keywords" content="${esc(keywords)}">
-    <link rel="canonical" href="${SITE}/listing">
+    <link rel="canonical" href="${SITE}/listing/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="${SITE_NAME}">
     <meta property="og:title" content="${esc(title)}">
     <meta property="og:description" content="${esc(desc)}">
     <meta property="og:image" content="${SITE}/logo.png">
-    <meta property="og:url" content="${SITE}/listing">
+    <meta property="og:url" content="${SITE}/listing/">
     <meta property="og:locale" content="en_IN">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${esc(title)}">
     <meta name="twitter:description" content="${esc(desc)}">
     <script type="application/ld+json">${breadcrumbSchema([
       { name: 'Home', url: '/' },
-      { name: 'Catalogues', url: '/listing' }
+      { name: 'Catalogues', url: '/listing/' }
     ])}</script>`;
 
   const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
@@ -390,9 +390,7 @@ async function main() {
   console.log('  ✓ Home page');
 
   for (const page of STATIC_PAGES) {
-    const dir = path.join(DIST, page.path.slice(1));
-    fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), staticPageHtml(baseHtml, page), 'utf-8');
+    fs.writeFileSync(path.join(DIST, `${page.path.slice(1)}.html`), staticPageHtml(baseHtml, page), 'utf-8');
     console.log(`  ✓ ${page.path}`);
   }
 
@@ -400,6 +398,9 @@ async function main() {
   fs.mkdirSync(listingDir, { recursive: true });
   fs.writeFileSync(path.join(listingDir, 'index.html'), listingHtml(baseHtml, catalogs), 'utf-8');
   console.log('  ✓ Listing page');
+
+  fs.mkdirSync(path.join(DIST, 'catalog'), { recursive: true });
+  fs.mkdirSync(path.join(DIST, 'design'), { recursive: true });
 
   for (const cat of catalogs) {
     let designs = [];
@@ -414,16 +415,14 @@ async function main() {
       process.exit(1);
     }
 
-    const catDir = path.join(DIST, 'catalog', cat._id);
-    fs.mkdirSync(catDir, { recursive: true });
-    fs.writeFileSync(path.join(catDir, 'index.html'), catalogHtml(baseHtml, cat, designs), 'utf-8');
+    // Cloudflare Pages serves extensionless /catalog/<id> with 200 for <id>.html,
+    // and 308s /<id> -> /<id>. Use .html files so the served URL matches the canonical (no trailing slash).
+    fs.writeFileSync(path.join(DIST, 'catalog', `${cat._id}.html`), catalogHtml(baseHtml, cat, designs), 'utf-8');
     catalogCount++;
 
     for (const d of designs) {
       if (sampleMode && !SAMPLE_DESIGN_IDS.has(d._id)) continue;
-      const designDir = path.join(DIST, 'design', d._id);
-      fs.mkdirSync(designDir, { recursive: true });
-      fs.writeFileSync(path.join(designDir, 'index.html'), designHtml(baseHtml, d, cat.name), 'utf-8');
+      fs.writeFileSync(path.join(DIST, 'design', `${d._id}.html`), designHtml(baseHtml, d, cat.name), 'utf-8');
       designCount++;
     }
 
