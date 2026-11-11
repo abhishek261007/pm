@@ -73,7 +73,6 @@ function productSchema(design, catalogName) {
     "category": catalogName || 'Silver Jewellery',
     "material": "Silver",
     "itemCondition": "https://schema.org/NewCondition",
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "150", "bestRating": "5" },
     "image": [imgUrl],
     "offers": {
       "@type": "Offer",
