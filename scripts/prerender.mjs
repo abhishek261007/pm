@@ -119,10 +119,22 @@ function breadcrumbSchema(items) {
   });
 }
 
-// ── Inject SEO head + body content into full HTML template ──
-function injectHtml(baseHtml, headTags, bodyContent) {
+// ── Strip the static SEO head block from the base HTML so route heads REPLACE it ──
+function stripSeoHead(baseHtml) {
   return baseHtml
-    .replace(/<head>/, `<head>\n    ${headTags}`)
+    .replace(/<title>[\s\S]*?<\/title>\s*/gi, '')
+    .replace(/<meta\s+name="(description|keywords)"[^>]*>\s*/gi, '')
+    .replace(/<link\s+rel="canonical"[^>]*>\s*/gi, '')
+    .replace(/<meta\s+property="og:[^"]*"[^>]*>\s*/gi, '')
+    .replace(/<meta\s+name="twitter:[^"]*"[^>]*>\s*/gi, '')
+    .replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>\s*/gi, '');
+}
+
+// ── Inject an SEO head (or keep the static one) + body content ──
+function injectHtml(baseHtml, headTags, bodyContent, { keepStaticHead = false } = {}) {
+  const html = keepStaticHead ? baseHtml : stripSeoHead(baseHtml);
+  return html
+    .replace(/<head>/, headTags ? `<head>\n    ${headTags}` : '<head>')
     .replace(/<div id="root"><\/div>/, bodyContent);
 }
 
@@ -161,7 +173,7 @@ function designHtml(baseHtml, design, catalogName) {
 
   const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
     <div style="background:#FCF9F1;padding:24px 20px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
-      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(catalogName)}</h1>
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(catalogName)} — ${esc(design.sku)}</h1>
     </div>
     <div style="padding:16px;max-width:600px;margin:0 auto">
       <img src="${imgUrl}" alt="Premium ${esc(catalogName)} silver ${design.sku} ${design.weight}g design" style="width:100%;border-radius:18px;border:1px solid #E4D6B6;box-shadow:0 10px 30px rgba(30,24,16,0.07);margin-bottom:14px" width="600" height="600" fetchpriority="high">
@@ -234,10 +246,6 @@ function catalogHtml(baseHtml, catalog, designs) {
 
 // ── Generate HTML for the Home page ──
 function homeHtml(baseHtml, catalogs) {
-  const title = `${SITE_NAME} — Wholesale Silver Jewellery | Juda, Payal, Bangles, Rings, Earrings`;
-  const desc = `${SITE_NAME} is Ahmedabad's trusted wholesale silver jewellery supplier since 2005. Shop silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings. 100+ design catalogues. Buy pure silver jewellery online.`;
-  const keywords = 'silver jewellery, silver juda, silver payal, silver kamarband, silver purse, silver bangles, silver necklace, silver earrings, silver rings, wholesale silver jewellery, antique silver jewellery, bridal silver jewellery, hallmarked silver, PM Jewellers, Ahmedabad, Gujarat, buy silver jewellery online';
-
   const catCards = catalogs.slice(0, 12).map(c => {
     const img = imageUrl(c.heroImageUrl);
     return `<a href="/catalog/${c._id}" style="text-decoration:none;display:block;background:#FFFDF7;border:1px solid #E4D6B6;border-radius:20px;box-shadow:0 10px 30px rgba(30,24,16,0.07);padding:12px">
@@ -246,32 +254,7 @@ function homeHtml(baseHtml, catalogs) {
     </a>`;
   }).join('\n          ');
 
-  const head = `<title>${esc(title)}</title>
-    <meta name="description" content="${esc(desc)}">
-    <meta name="keywords" content="${esc(keywords)}">
-    <link rel="canonical" href="${SITE}/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="${SITE_NAME}">
-    <meta property="og:title" content="${esc(title)}">
-    <meta property="og:description" content="${esc(desc)}">
-    <meta property="og:image" content="${SITE}/logo.png">
-    <meta property="og:url" content="${SITE}/">
-    <meta property="og:locale" content="en_IN">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${esc(title)}">
-    <meta name="twitter:description" content="${esc(desc)}">
-    <script type="application/ld+json">${JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "JewelryStore",
-      "name": SITE_NAME,
-      "description": desc,
-      "url": SITE,
-      "logo": `${SITE}/logo.png`,
-      "address": { "@type": "PostalAddress", "streetAddress": "Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk", "addressLocality": "Ahmedabad", "addressRegion": "Gujarat", "postalCode": "380001", "addressCountry": "IN" },
-      "areaServed": { "@type": "City", "name": "Ahmedabad" },
-      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "150", "bestRating": "5" }
-    })}</script>`;
-
+  // Home keeps the static <head> (single, complete set) — see T-2. Only the body is injected.
   const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
     <div style="background:#FCF9F1;padding:48px 20px 36px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px;text-align:center">
       <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:#8C6A24;margin:0 0 8px">Since 2005 · Manekchowk</p>
@@ -291,7 +274,7 @@ function homeHtml(baseHtml, catalogs) {
     </div>
   </div></div>`;
 
-  return injectHtml(baseHtml, head, body);
+  return injectHtml(baseHtml, null, body, { keepStaticHead: true });
 }
 
 // ── Generate HTML for the Listing page ──
@@ -330,7 +313,7 @@ function listingHtml(baseHtml, catalogs) {
   const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
     <div style="background:#FCF9F1;padding:24px 20px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
       <p style="font-size:10px;font-weight:600;letter-spacing:3px;color:#8C6A24;margin:0 0 2px">Since 2005</p>
-      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">${esc(SITE_NAME)}</h1>
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;color:#1E1810;margin:0">Silver Jewellery Collections</h1>
     </div>
     <div style="padding:16px">
       <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:#8C6A24;margin:0 0 14px">COLLECTIONS <span style="font-weight:600;color:#8C6A24">${catalogs.length}</span></p>
@@ -343,11 +326,52 @@ function listingHtml(baseHtml, catalogs) {
   return injectHtml(baseHtml, head, body);
 }
 
+// ── Generate HTML for a simple static page (about / contact / privacy) ──
+function staticPageHtml(baseHtml, { path: pagePath, title, description, h1, line }) {
+  const canonical = `${SITE}${pagePath}`;
+  const head = `<title>${esc(title)}</title>
+    <meta name="description" content="${esc(description)}">
+    <link rel="canonical" href="${canonical}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="${SITE_NAME}">
+    <meta property="og:title" content="${esc(title)}">
+    <meta property="og:description" content="${esc(description)}">
+    <meta property="og:image" content="${SITE}/logo.png">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${esc(title)}">
+    <meta name="twitter:description" content="${esc(description)}">`;
+
+  const body = `<div id="root"><div style="min-height:100vh;background:#F6F0E2;font-family:'Outfit','Helvetica Neue',Helvetica,Arial,sans-serif;color:#1E1810">
+    <div style="background:#FCF9F1;padding:48px 20px 36px;border-bottom:1px solid #E4D6B6;border-bottom-left-radius:22px;border-bottom-right-radius:22px">
+      <h1 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:500;color:#1E1810;margin:0 0 10px">${esc(h1)}</h1>
+      <p style="font-size:13px;font-weight:300;color:#5C5344;line-height:1.6;margin:0">${esc(line)}</p>
+    </div>
+  </div></div>`;
+
+  return injectHtml(baseHtml, head, body);
+}
+
+const STATIC_PAGES = [
+  { path: '/about', title: 'About PM Jewellers — Wholesale Silver Jewellery since 2005 | Manekchowk, Ahmedabad', description: 'PM Jewellers is a wholesale silver jewellery supplier in Manekchowk, Ahmedabad, since 2005. Silver juda, payal, kamarband, purse, bangles, necklace, earrings and rings.', h1: 'About PM Jewellers', line: 'Wholesale silver jewellery supplier since 2005, Manekchowk, Ahmedabad.' },
+  { path: '/contact', title: 'Contact PM Jewellers — Wholesale Silver Jewellery, Manekchowk, Ahmedabad', description: 'Contact PM Jewellers, wholesale silver jewellery, Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk, Ahmedabad 380001, Gujarat.', h1: 'Contact PM Jewellers', line: 'Chandidham Complex, 1204/F2, MGH Road, Old City, Manekchowk, Ahmedabad 380001, Gujarat.' },
+  { path: '/privacy', title: 'Privacy Policy | PM Jewellers', description: 'Privacy policy for PM Jewellers, pmjewellers.com.', h1: 'Privacy Policy', line: 'Privacy policy for PM Jewellers.' },
+];
+
 async function main() {
   const t0 = Date.now();
   console.log('Pre-rendering all pages from API data...\n');
 
   const baseHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
+  if (!baseHtml.includes('<div id="root"></div>')) {
+    console.error('dist/index.html is already pre-rendered (or not a fresh vite build). Run `vite build` first.');
+    process.exit(1);
+  }
+
+  // --sample: only the 3 design sample URLs from the audit (first pass). Without it, all designs are generated.
+  const sampleMode = process.argv.includes('--sample');
+  const SAMPLE_DESIGN_IDS = new Set(['6a251d62a8d1c2b6f54f7228', '6a195c9c141aae1cc7fde206', '6a1944dcaa930cf3c735ef68']);
 
   let designCount = 0;
   let catalogCount = 0;
@@ -365,6 +389,13 @@ async function main() {
 
   fs.writeFileSync(path.join(DIST, 'index.html'), homeHtml(baseHtml, catalogs), 'utf-8');
   console.log('  ✓ Home page');
+
+  for (const page of STATIC_PAGES) {
+    const dir = path.join(DIST, page.path.slice(1));
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), staticPageHtml(baseHtml, page), 'utf-8');
+    console.log(`  ✓ ${page.path}`);
+  }
 
   const listingDir = path.join(DIST, 'listing');
   fs.mkdirSync(listingDir, { recursive: true });
@@ -386,6 +417,7 @@ async function main() {
     catalogCount++;
 
     for (const d of designs) {
+      if (sampleMode && !SAMPLE_DESIGN_IDS.has(d._id)) continue;
       const designDir = path.join(DIST, 'design', d._id);
       fs.mkdirSync(designDir, { recursive: true });
       fs.writeFileSync(path.join(designDir, 'index.html'), designHtml(baseHtml, d, cat.name), 'utf-8');
@@ -396,7 +428,7 @@ async function main() {
   }
 
   const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
-  console.log(`\nDone: Home + Listing + ${catalogCount} catalog + ${designCount} design pages in ${elapsed}s`);
+  console.log(`\nDone: Home + Listing + ${STATIC_PAGES.length} static + ${catalogCount} catalog + ${designCount} design pages in ${elapsed}s${sampleMode ? ' (--sample: only 3 design samples)' : ''}`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
